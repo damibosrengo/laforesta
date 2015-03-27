@@ -28,3 +28,7 @@ phpunit.phar
 
 #ignore log directory
 log
+
+#ignore assets
+assets
+
