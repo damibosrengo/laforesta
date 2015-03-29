@@ -233,3 +233,14 @@ div.search-form
 {
 	background: #80CFFF;
 }
+
+#center_box_home {
+    margin: 10px auto;
+    padding:15px;
+    text-align:center;
+}
+
+#center_box_home img {
+    display: block;
+    margin:12px auto;
+}
