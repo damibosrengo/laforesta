@@ -2,7 +2,10 @@
 
 class SiteController extends Controller
 {
-	/**
+
+    public $layout = 'laforesta/column1';
+
+    /**
 	 * Declares class-based actions.
 	 */
 	public function actions()

@@ -32,3 +32,5 @@ log
 #ignore assets
 assets
 
+#ignore runtime logs
+protected/runtime
