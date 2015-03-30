@@ -30,7 +30,7 @@
 		<?php $this->widget('zii.widgets.CMenu',array(
 			'items'=>array(
 				array('label'=>'Home', 'url'=>array('/site/index')),
-				array('label'=>'Insumos', 'url'=>array('/insumos/index')),
+				array('label'=>'Insumos', 'url'=>array('/insumo/index')),
 				array('label'=>'Centro de costos', 'url'=>array('/calculo/index')),
 			),
 		)); ?>
