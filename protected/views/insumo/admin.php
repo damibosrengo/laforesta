@@ -1,62 +1,41 @@
 <?php
 $this->breadcrumbs=array(
 	'Insumos'=>array('index'),
-	'Administrar',
+	'Listado',
 );
 
 $this->menu=array(
-	array('label'=>'Listar Insumos', 'url'=>array('index')),
 	array('label'=>'Nuevo Insumo', 'url'=>array('create')),
 );
 
-Yii::app()->clientScript->registerScript('search', "
-$('.search-button').click(function(){
-	$('.search-form').toggle();
-	return false;
-});
-$('.search-form form').submit(function(){
-	$('#insumo-grid').yiiGridView('update', {
-		data: $(this).serialize()
-	});
-	return false;
-});
-");
 ?>
 
 <h1>Administrar Insumos</h1>
 
-<p>
-Opcionalmente puedes usar comparadores (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
-o <b>=</b>) al comienzo de los valores que utilizas ara buscar.
-</p>
-
-<?php echo CHtml::link('Búsqueda avanzada','#',array('class'=>'search-button')); ?>
-<div class="search-form" style="display:none">
-<?php $this->renderPartial('_search',array(
-	'model'=>$model,
-)); ?>
-</div><!-- search-form -->
+<?php echo CHtml::button('Reset', array('submit' => array('insumo/index'))); ?>
+<?php $tipos =CHtml::listData(TipoInsumo::model()->findAll(),'id_tipo','nombre'); ?>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'insumo-grid',
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
 	'columns'=>array(
-		'id_insumo',
 		'nombre',
-		'id_tipo',
-		'descripcion',
-		'costo_base',
-		'habilitado',
-		/*
-		'largo',
-		'ancho',
-		'id_unidad',
-		'cantidad_total',
-		'costo_x_unidad',
-		*/
+		array('header'=>'Tipo','name'=>'id_tipo','filter'=>$tipos,
+            'value'=>'$data->tipo->nombre'),
+		array('header'=>'Descripción','name'=>'descripcion'),
+		array('header'=>'Estado','name'=>'habilitado','filter'=>array('1'=>'Habilitado','0'=>'Deshabilitado'),
+            'value'=>'($data->habilitado=="1")?("Habilitado"):("Deshabilitado")'),
+        array('header'=>'Costo','name'=>'costo_base','filter'=>'','htmlOptions'=>array('class'=>'right'),
+            'value'=>function ($data){
+                        return number_format($data->costo_base, 2,',','');
+                    }
+            ),
 		array(
 			'class'=>'CButtonColumn',
+            'viewButtonUrl'=> '$this->grid->controller->createUrl("/insumo/view", array("id"=>$data->id_insumo))',
+            'updateButtonUrl'=> '$this->grid->controller->createUrl("/insumo/update", array("id"=>$data->id_insumo))',
+            'deleteButtonUrl'=> '$this->grid->controller->createUrl("/insumo/delete", array("id"=>$data->id_insumo))',
 		),
 	),
 )); ?>

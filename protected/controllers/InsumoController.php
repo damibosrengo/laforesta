@@ -36,7 +36,7 @@ class InsumoController extends Controller
 
 		if(isset($_POST['Insumo']))
 		{
-			$model->attributes=$_POST['Insumo'];
+            $model->attributes=$_POST['Insumo'];
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id_insumo));
 		}
@@ -93,25 +93,14 @@ class InsumoController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Insumo');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
-	}
+        $model=new Insumo('search');
+        $model->unsetAttributes();  // clear any default values
+        if(isset($_GET['Insumo']))
+            $model->attributes=$_GET['Insumo'];
 
-	/**
-	 * Manages all models.
-	 */
-	public function actionAdmin()
-	{
-		$model=new Insumo('search');
-		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Insumo']))
-			$model->attributes=$_GET['Insumo'];
-
-		$this->render('admin',array(
-			'model'=>$model,
-		));
+        $this->render('admin',array(
+            'model'=>$model,
+        ));
 	}
 
 	/**

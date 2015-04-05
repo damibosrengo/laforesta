@@ -22,12 +22,11 @@ class Insumo extends CActiveRecord
 	 */
 	public function rules()
 	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
 		return array(
-			// The following rule is used by search().
-			// Please remove those attributes that should not be searched.
-			array('', 'safe', 'on'=>'search'),
+			array('nombre,id_tipo,costo_base', 'required', 'on'=>'insert,update'),
+            array('descripcion,habilitado,largo,ancho,id_unidad,cantidad_total,
+                costo_x_unidad','safe','on'=>'insert,update'),
+            array('nombre,id_tipo,descripcion,habilitado','safe','on'=>'search'),
 		);
 	}
 
@@ -36,10 +35,10 @@ class Insumo extends CActiveRecord
 	 */
 	public function relations()
 	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
-		return array(
-		);
+
+        return array(
+            'tipo'=>array(self::BELONGS_TO, 'TipoInsumo', 'id_tipo'),
+        );
 	}
 
 	/**
@@ -68,8 +67,16 @@ class Insumo extends CActiveRecord
 		// should not be searched.
 
 		$criteria=new CDbCriteria;
+        $criteria->compare('nombre',$this->nombre,true);
+        $criteria->compare('id_tipo',$this->id_tipo);
+        $criteria->compare('descripcion',$this->descripcion ,true);
+        $criteria->compare('habilitado',$this->habilitado);
+
 
 		return new CActiveDataProvider('Insumo', array(
+            'Pagination' => array (
+                'PageSize' => 20
+              ),
 			'criteria'=>$criteria,
 		));
 	}

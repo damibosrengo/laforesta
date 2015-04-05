@@ -244,3 +244,8 @@ div.search-form
     display: block;
     margin:12px auto;
 }
+
+table.items tr td.right {
+    text-align: right;
+    padding-right: 2px;
+}
