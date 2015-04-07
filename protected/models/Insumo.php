@@ -38,6 +38,7 @@ class Insumo extends CActiveRecord
 
         return array(
             'tipo'=>array(self::BELONGS_TO, 'TipoInsumo', 'id_tipo'),
+            'unidad'=>array(self::BELONGS_TO, 'Unidad', 'id_unidad'),
         );
 	}
 
@@ -47,6 +48,10 @@ class Insumo extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
+            'id_tipo'=>'Tipo de insumo',
+            'descripcion'=>'Descripción',
+            'habilitado' =>'Estado',
+            'id_unidad' => 'Unidad'
 		);
 	}
 
