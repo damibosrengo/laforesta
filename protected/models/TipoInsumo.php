@@ -8,6 +8,10 @@
 
 class TipoInsumo extends CActiveRecord
 {
+    const TIPO_DIRECTO = "1";
+    const TIPO_SUPERFICIE = "2";
+    const TIPO_LINEAL = "3";
+
     public $primaryKey ='id_tipo';
 
     public function tableName()

@@ -29,6 +29,7 @@ class Insumo extends CActiveRecord
                 'safe','on'=>'insert,update'),
             array('nombre,id_tipo,descripcion,habilitado',
                 'safe','on'=>'search'),
+            array('id_unidad, cantidad_total,largo, ancho', 'ext.validations.RequiredInsumoTipo'),
 		);
 	}
 
