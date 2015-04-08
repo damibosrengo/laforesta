@@ -249,3 +249,7 @@ table.items tr td.right {
     text-align: right;
     padding-right: 2px;
 }
+
+div.boxinput_ini {
+    display: none;
+}

@@ -23,10 +23,12 @@ class Insumo extends CActiveRecord
 	public function rules()
 	{
 		return array(
-			array('nombre,id_tipo,costo_base', 'required', 'on'=>'insert,update'),
-            array('descripcion,habilitado,largo,ancho,id_unidad,cantidad_total,
-                costo_x_unidad','safe','on'=>'insert,update'),
-            array('nombre,id_tipo,descripcion,habilitado','safe','on'=>'search'),
+			array('nombre,id_tipo,costo_base',
+                'required', 'on'=>'insert,update'),
+            array('descripcion,habilitado,largo,ancho,id_unidad,cantidad_total',
+                'safe','on'=>'insert,update'),
+            array('nombre,id_tipo,descripcion,habilitado',
+                'safe','on'=>'search'),
 		);
 	}
 
