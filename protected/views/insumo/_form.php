@@ -103,6 +103,7 @@
         var idSelect = '#' + <?php echo "'".CHtml::modelname($model)."'"; ?> + '_id_tipo';
         $(idSelect).change(function() {
             setTipo($(this).val());
+            $('.errorSummary, .errorMessage').hide();
         });
         setTipo($(idSelect).val());
     <?php else: ?>

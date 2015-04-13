@@ -14,19 +14,9 @@ $this->menu=array(
 
 <h1>Insumo <?php echo $model->nombre; ?></h1>
 
-<?php $this->widget('zii.widgets.CDetailView', array(
+<?php
+
+    $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
-	'attributes'=>array(
-		'id_insumo',
-		'nombre',
-		'id_tipo',
-		'descripcion',
-		'costo_base',
-		'habilitado',
-		'largo',
-		'ancho',
-		'id_unidad',
-		'cantidad_total',
-		'costo_x_unidad',
-	),
+	'attributes'=>$this->showablesAttributes($model),
 )); ?>

@@ -106,4 +106,15 @@ class Insumo extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+    protected function beforeSave(){
+        if($this->id_tipo == TipoInsumo::TIPO_LINEAL){
+            if ($this->cantidad_total > 0) {
+                $this->costo_x_unidad = number_format($this->costo_base / $this->cantidad_total, 3);
+            } else {
+                $this->costo_x_unidad = $this->costo_base;
+            }
+        }
+        return parent::beforeSave();
+    }
 }

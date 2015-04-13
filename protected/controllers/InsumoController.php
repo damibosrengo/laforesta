@@ -133,4 +133,31 @@ class InsumoController extends Controller
 			Yii::app()->end();
 		}
 	}
+
+    protected function showablesAttributes($model)
+    {
+        if ($model->id_tipo == TipoInsumo::TIPO_DIRECTO){
+            return array(
+                        array('name'=>'id_tipo','value'=>$model->tipo->nombre),
+                        'nombre',
+                        array('name'=>'habilitado','value' => $model->habilitado==1 ? 'Habilitado':'Deshabilitado'),
+                        'descripcion',
+                        'costo_base');
+        }elseif ($model->id_tipo == TipoInsumo::TIPO_LINEAL) {
+            return array(
+                array('name'=>'id_tipo','value'=>$model->tipo->nombre),
+                'nombre',
+                array('name'=>'habilitado','value' => $model->habilitado==1 ? 'Habilitado':'Deshabilitado'),
+                'descripcion','costo_base','cantidad_total',
+                array('name'=>'id_unidad','value'=>$model->unidad->nombre),
+                'costo_x_unidad');
+        }elseif ($model->id_tipo == TipoInsumo::TIPO_SUPERFICIE){
+            return array(
+                array('name'=>'id_tipo','value'=>$model->tipo->nombre),
+                'nombre',
+                array('name'=>'habilitado','value' => $model->habilitado==1 ? 'Habilitado':'Deshabilitado'),
+                'descripcion','costo_base','largo','ancho',
+                array('name'=>'id_unidad','value'=>$model->unidad->nombre));
+        }
+    }
 }
