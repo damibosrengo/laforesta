@@ -12,27 +12,34 @@
         'enableAjaxValidation'=>false,
     ));
 
-    $descripciones = CHtml::listData(TipoInsumo::model()->findAll(),'nombre','descripcion');
+    if ($model->getScenario() != 'update'){
+        $descripciones = CHtml::listData(TipoInsumo::model()->findAll(),'nombre','descripcion');
+    }
+
 ?>
 
 	<?php echo $form->errorSummary($model); ?>
 
-    <p class="note">Tipos de insumos:</p>
-    <ul>
-        <?php foreach ($descripciones as $nombre=>$descripcion): ?>
-            <li class="">
-                <strong><?php echo $nombre; ?>: </strong> <?php echo $descripcion; ?>
-            </li>
-        <?php endforeach; ?>
-    </ul>
+    <?php  if ($model->getScenario() != 'update'): ?>
+        <p class="note">Tipos de insumos:</p>
+        <ul>
+            <?php foreach ($descripciones as $nombre=>$descripcion): ?>
+                <li class="">
+                    <strong><?php echo $nombre; ?>: </strong> <?php echo $descripcion; ?>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    <?php endif ?>
 
     <p class="note">Los campos con <span class="required">*</span> son obligatorios.</p>
 
-    <div class="row">
-        <?php echo $form->labelEx($model,'id_tipo'); ?>
-        <?php echo $form->dropDownList($model,'id_tipo',CHtml::listData(TipoInsumo::model()->findAll(),'id_tipo','nombre'),array('empty'=>'Selecciona tipo de insumo')); ?>
-        <?php echo $form->error($model,'id_tipo'); ?>
-    </div>
+    <?php  if ($model->getScenario() != 'update'): ?>
+        <div class="row">
+            <?php echo $form->labelEx($model,'id_tipo'); ?>
+            <?php echo $form->dropDownList($model,'id_tipo',CHtml::listData(TipoInsumo::model()->findAll(),'id_tipo','nombre'),array('empty'=>'Selecciona tipo de insumo')); ?>
+            <?php echo $form->error($model,'id_tipo'); ?>
+        </div>
+    <?php endif ?>
 
 	<div class="row boxinput_ini" id="box_nombre">
 		<?php echo $form->labelEx($model,'nombre'); ?>
@@ -92,9 +99,15 @@
 
 <script type="text/javascript">
     //<![CDATA[
+    <?php  if ($model->getScenario() != 'update'): ?>
         var idSelect = '#' + <?php echo "'".CHtml::modelname($model)."'"; ?> + '_id_tipo';
         $(idSelect).change(function() {
             setTipo($(this).val());
         });
+        setTipo($(idSelect).val());
+    <?php else: ?>
+        setTipo('<?php echo $model->id_tipo ?>');
+    <?php endif ?>
+
     //]]>
 </script>
