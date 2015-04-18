@@ -24,6 +24,7 @@ class Unidad extends CActiveRecord
     {
         return array(
             'insumos'=>array(self::HAS_MANY, 'Insumo', 'id_unidad'),
+            'calculos'=>array(self::HAS_MANY,'Calculo','id_uniad'),
         );
     }
 }

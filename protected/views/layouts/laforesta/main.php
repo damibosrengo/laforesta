@@ -31,7 +31,7 @@
 			'items'=>array(
 				array('label'=>'Home', 'url'=>array('/site/index')),
 				array('label'=>'Insumos', 'url'=>array('/insumo/index')),
-				array('label'=>'Centro de costos', 'url'=>array('/calculo/index')),
+				array('label'=>'Centro de costos', 'url'=>array('/costos/index')),
 			),
 		)); ?>
 	</div><!-- mainmenu -->

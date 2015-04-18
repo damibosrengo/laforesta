@@ -1,46 +1,17 @@
 <?php
 
-/**
- * This is the model class for table "Insumo".
- *
- * The followings are the available columns in table 'Insumo':
- */
 class Insumo extends CActiveRecord
 {
-    public $primaryKey ='id_insumo';
+    public $primaryKey ='id_calculo';
 
     /**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'insumo';
+		return 'calculo';
 	}
 
-	/**
-	 * @return array validation rules for model attributes.
-	 */
-	public function rules()
-	{
-		return array(
-			array('id_tipo',
-                'required','on'=>'insert'),
-            array('nombre,costo_base,habilitado',
-                'required', 'on'=>'insert,update'),
-            array('descripcion,largo,ancho,id_unidad,cantidad_total',
-                'safe','on'=>'insert,update'),
-            array('nombre,id_tipo,descripcion,habilitado',
-                'safe','on'=>'search'),
-            array('id_unidad, cantidad_total,largo, ancho',
-                'ext.validations.RequiredInsumoTipo','on'=>'insert,update'),
-            array('habilitado',
-                'boolean','strict'=>true,'on'=>'insert,update'),
-            array('id_unidad',
-                'exist','attributeName'=>'id_unidad','className'=>'Unidad','on'=>'insert,update'),
-            array('costo_base,largo,ancho,cantidad_total',
-                'numerical','min'=>0,'tooSmall'=>'Debe ser un número positivo','on'=>'insert,update')
-		);
-	}
 
 	/**
 	 * @return array relational rules.
@@ -49,9 +20,9 @@ class Insumo extends CActiveRecord
 	{
 
         return array(
-            'tipo'=>array(self::BELONGS_TO, 'TipoInsumo', 'id_tipo'),
+            'insumo'=>array(self::BELONGS_TO, 'Insumo', 'id_insumo'),
+            'producto'=>array(self::BELONGS_TO, 'Producto', 'id_producto'),
             'unidad'=>array(self::BELONGS_TO, 'Unidad', 'id_unidad'),
-            'calculos'=>array(self::HAS_MANY,'Calculo','id_insumo'),
         );
 	}
 

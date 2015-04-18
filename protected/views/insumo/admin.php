@@ -22,7 +22,7 @@ $this->menu=array(
 	'columns'=>array(
 		'nombre',
 		array('header'=>'Tipo','name'=>'id_tipo','filter'=>$tipos,
-            'value'=>'$data->tipo->nombre'),
+            'value'=>'$data->tipo->nombre','htmlOptions'=>array('style' => 'width: 85px;')),
 		array('header'=>'Descripción','name'=>'descripcion'),
 		array('header'=>'Estado','name'=>'habilitado','filter'=>array('1'=>'Habilitado','0'=>'Deshabilitado'),
             'value'=>'($data->habilitado=="1")?("Habilitado"):("Deshabilitado")'),
