@@ -1,6 +1,6 @@
 <?php
 
-class Insumo extends CActiveRecord
+class Calculo extends CActiveRecord
 {
     public $primaryKey ='id_calculo';
 

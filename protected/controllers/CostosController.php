@@ -14,6 +14,15 @@ class CostosController extends Controller
      */
     public $layout='//layouts/laforesta/column2';
 
+    protected function getOptionsInsumos(){
+        $options = CHtml::listData(Insumo::model()->findAllByAttributes(array('habilitado'=>'1')),'id_insumo','nombre');
+        $result = array();
+        foreach ($options as $value){
+            $result[] = $value;
+        }
+        return $result;
+    }
+
     /**
      * @var CActiveRecord the currently loaded data model instance.
      */
@@ -29,5 +38,10 @@ class CostosController extends Controller
         $this->render('admin_productos',array(
             'model'=>$model,
         ));
+    }
+
+    public function actionNew()
+    {
+        $this->render('new');
     }
 }
