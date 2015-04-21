@@ -1,3 +1,8 @@
+<script type="text/javascript">
+    //<![CDATA[
+    var urlGetInsumo = '<?php echo Yii::app()->createUrl('costos/getDataInsumo'); ?>';
+    //]]>
+</script>
 <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/costos.js"></script>
 <?php
 $this->breadcrumbs=array(
@@ -33,7 +38,17 @@ $this->menu=array(
             ),
         ));
 
-       //TODO FORMS PARA CADA TIPO http://www.yiiframework.com/doc/guide/1.1/en/form.builder
+        $model = new CostosInsumoDirectoForm;
+        $form = new CForm('application.views.costos._costosInsumoDirectoForm', $model);
+        $this->renderPartial('_costosInsumo', array('form'=>$form,'typeForm'=>'boxForm_directo'));
+
+        $model = new CostosInsumoLinealForm;
+        $form = new CForm('application.views.costos._costosInsumoLinealForm', $model);
+        $this->renderPartial('_costosInsumo', array('form'=>$form,'typeForm'=>'boxForm_lineal'));
+
+        $model = new CostosInsumoSuperficieForm;
+        $form = new CForm('application.views.costos._costosInsumoSuperficieForm', $model);
+        $this->renderPartial('_costosInsumo', array('form'=>$form,'typeForm'=>'boxForm_superficie'));
 
     ?>
 
