@@ -1,6 +1,6 @@
 <script type="text/javascript">
     //<![CDATA[
-    var urlGetInsumo = '<?php echo Yii::app()->createUrl('costos/getDataInsumo'); ?>';
+    var urlGetInsumo = '<?php echo Yii::app()->createUrl('insumo/getDataInsumo'); ?>';
     //]]>
 </script>
 <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/costos.js"></script>

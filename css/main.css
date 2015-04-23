@@ -253,3 +253,8 @@ table.items tr td.right {
 div.boxinput_ini {
     display: none;
 }
+
+div.add-insumo-boxform{
+    width:45%;
+    display: none;
+}

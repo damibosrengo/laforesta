@@ -17,6 +17,9 @@ return array(
         'idInsumo'=>array(
             'type'=>'hidden',
         ),
+        'nombre'=>array(
+            'type'=>'hidden',
+        )
 
     ),
 
@@ -25,5 +28,10 @@ return array(
             'type'=>'submit',
             'label'=>'Aceptar',
         ),
+        'cancel'=>array(
+            'onclick'=> 'javascript:cancelAddInsumo();',
+            'type'=>'reset',
+            'label'=>'Cancelar'
+        )
     ),
 );

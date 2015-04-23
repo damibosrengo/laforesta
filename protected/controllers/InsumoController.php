@@ -105,6 +105,18 @@ class InsumoController extends Controller
         ));
 	}
 
+    /**
+     * show data of insumo called by nombre post
+     */
+    public function actiongetDataInsumo(){
+        if(isset($_POST['name'])) {
+            $insumo = Insumo::model()->findByAttributes(array('nombre'=>$_POST['name']));
+            if (!empty($insumo)){
+                echo CJSON::encode($insumo->attributes);
+            }
+        }
+    }
+
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.

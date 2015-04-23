@@ -17,6 +17,9 @@ return array(
         'idInsumo'=>array(
             'type'=>'hidden',
         ),
+        'nombre'=>array(
+            'type'=>'hidden',
+        ),
         'unidad'=>array(
             'type'=>'dropdownlist',
             'items'=>CHtml::listData(Unidad::model()->findAll(),'id_unidad','nombre'),
@@ -37,5 +40,10 @@ return array(
             'type'=>'submit',
             'label'=>'Aceptar',
         ),
+        'cancel'=>array(
+            'onclick'=> 'javascript:cancelAddInsumo();',
+            'type'=>'reset',
+            'label'=>'Cancelar'
+        )
     ),
 );
