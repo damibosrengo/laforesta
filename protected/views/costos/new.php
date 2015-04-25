@@ -31,36 +31,40 @@ $this->menu=array(
             // additional javascript options for the autocomplete plugin
             'options'=>array(
                 'minLength'=>'2',
+                'select' => 'js:function (e,ui) { cancelAddInsumo();showFormInsumo(e,ui);}'
             ),
             'htmlOptions'=>array(
 
             ),
+
         ));
 
         $model = new CostosInsumoDirectoForm;
         $form = new CForm('application.views.costos._costosInsumoDirectoForm', $model);
         $form->action = 'javascript: submitInsumoDirecto()';
+        $form->id = 'CostoInsumoDirecto';
         $this->renderPartial('_costosInsumo', array('form'=>$form,'typeForm'=>'boxForm_directo'));
 
         $model = new CostosInsumoLinealForm;
         $form = new CForm('application.views.costos._costosInsumoLinealForm', $model);
         $form->action = 'javascript: submitInusmoLineal()';
+        $form->id = 'CostoInsumoLineal';
         $this->renderPartial('_costosInsumo', array('form'=>$form,'typeForm'=>'boxForm_lineal'));
 
         $model = new CostosInsumoSuperficieForm;
         $form = new CForm('application.views.costos._costosInsumoSuperficieForm', $model);
         $form->action = 'javascript: submitInsumoSuperficie()';
+        $form->id = 'CostoInsumoSuperficie';
         $this->renderPartial('_costosInsumo', array('form'=>$form,'typeForm'=>'boxForm_superficie'));
 
     ?>
 
-
-
-    <?php
-
-        echo CHtml::button("Agregar",array('title'=>"Agregar",'id'=>'add_insumo','onclick'=>'showFormInsumo()'));
-    ?>
 </div>
 <div class="insumos_list">
     <table id="insumos_list"></table>
+    <form id="submit-calculo" method="post" action="<?php echo Yii::app()->createUrl('costos/calculate'); ?>" onsubmit="return checkInsumos()">
+        <input type="hidden" name="insumos_list_field" id="insumos_list_field" value=""/>
+        <?php echo CHtml::submitButton('Calcular',array('style'=>'float:right')); ?>
+    </form>
 </div>
+

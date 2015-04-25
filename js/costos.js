@@ -1,8 +1,8 @@
-function showFormInsumo(){
+function showFormInsumo(e,ui){
     $.ajax({
         method: "POST",
         url: urlGetInsumo,
-        data: {name: $('#insumo').val()}
+        data: {name: ui.item.value}
     })
         .done(function( data ) {
            if (data.length > 0) {
@@ -15,27 +15,28 @@ function showFormInsumo(){
 }
 
 function cancelAddInsumo(){
+    $("#CostoInsumoDirecto")[0].reset();
+    $("#CostoInsumoLineal")[0].reset();
+    $("#CostoInsumoSuperficie")[0].reset();
     $('#boxForm_superficie').hide();
     $('#boxForm_lineal').hide();
     $('#boxForm_directo').hide();
-    $('#add_insumo').show();
     $('#insumo').val('');
 }
 
 function buildForm(insumo){
     if (insumo.habilitado == '1'){
-        $('#add_insumo').hide();
         switch (insumo.id_tipo){
             case TIPO_INSUMO_DIRECTO:
             {
-                $('#boxForm_directo').slideDown(700);
+                $('#boxForm_directo').slideDown(600);
                 $('#CostosInsumoDirectoForm_idInsumo').val(insumo.id_insumo);
                 $('#CostosInsumoDirectoForm_nombre').val(insumo.nombre);
                 break;
             }
             case TIPO_INSUMO_LINEAL:
             {
-                $('#boxForm_lineal').slideDown(700);
+                $('#boxForm_lineal').slideDown(600);
                 $('#CostosInsumoLinealForm_unidad option:eq('+insumo.id_unidad+')').prop('selected','selected');
                 $('#CostosInsumoLinealForm_unidad').prop('disabled','disabled');
                 $('#CostosInsumoLinealForm_idInsumo').val(insumo.id_insumo);
@@ -44,7 +45,7 @@ function buildForm(insumo){
             }
             case TIPO_INSUMO_SUPERFICIE:
             {
-                $('#boxForm_superficie').slideDown(700);
+                $('#boxForm_superficie').slideDown(600);
                 $('#CostosInsumoSuperficieForm_unidad option:eq('+insumo.id_unidad+')').prop('selected','selected');
                 $('#CostosInsumoSuperficieForm_unidad').prop('disabled','disabled');
                 $('#CostosInsumoSuperficieForm_idInsumo').val(insumo.id_insumo);
@@ -69,12 +70,13 @@ function submitInsumoDirecto(){
     }
     var tdNombre = $('<td>' + nombre + '</td>');
     var tdCantidad = $('<td>'+ cantidad + '</td>');
-    var tdLkDelete = $('<td><a href="javascript: deleteInsumoList(' + idinsumo +')">Quitar</a></td>');
+    var tdLkDelete = $('<td><a href="javascript: deleteInsumoList(' + getNextInsumosList() +')">Quitar</a></td>');
     var tr = $('<tr id="tr_'+idinsumo+'"></tr>');
     tr.append(tdNombre);
     tr.append(tdCantidad);
     tr.append(tdLkDelete);
     $("#insumos_list").append(tr);
+    addInsumoToList(idinsumo,cantidad,'','');
     cancelAddInsumo();
     return false;
 }
@@ -93,12 +95,13 @@ function submitInusmoLineal(){
     }
     var tdNombre = $('<td>' + nombre + '</td>');
     var tdCantidad = $('<td>'+ cantidad + ' ' + unidad + '</td>');
-    var tdLkDelete = $('<td><a href="javascript: deleteInsumoList(' + idinsumo +')">Quitar</a></td>');
+    var tdLkDelete = $('<td><a href="javascript: deleteInsumoList(' + getNextInsumosList() +')">Quitar</a></td>');
     var tr = $('<tr id="tr_'+idinsumo+'"></tr>');
     tr.append(tdNombre);
     tr.append(tdCantidad);
     tr.append(tdLkDelete);
     $("#insumos_list").append(tr);
+    addInsumoToList(idinsumo,cantidad,'','');
     cancelAddInsumo();
     return false;
 
@@ -134,12 +137,67 @@ function submitInsumoSuperficie(){
     }
     var tdNombre = $('<td>' + nombre + '</td>');
     var tdCantidad = $('<td>'+ cantidad +' (' + largo + ' x ' + ancho + ' ' + unidad + ')</td>');
-    var tdLkDelete = $('<td><a href="javascript: deleteInsumoList(' + idinsumo +')">Quitar</a></td>');
+    var tdLkDelete = $('<td><a href="javascript: deleteInsumoList(' + getNextInsumosList() +')">Quitar</a></td>');
     var tr = $('<tr id="tr_'+idinsumo+'"></tr>');
     tr.append(tdNombre);
     tr.append(tdCantidad);
     tr.append(tdLkDelete);
     $("#insumos_list").append(tr);
+    addInsumoToList(idinsumo,cantidad,largo,ancho);
     cancelAddInsumo();
     return false;
+}
+
+function checkInsumos(){
+    var insumosList = $("#insumos_list_field").val();
+    if (insumosList.length > 0){
+        return true;
+    } else {
+        alert('Debe agregar al menos algún insumo para obtener un cálcuo');
+    }
+    return false;
+}
+
+function addInsumoToList(idinsumo,cantidad,largo,ancho){
+    var obj = {};
+    obj.idInsumo=idinsumo;
+    obj.cantidad=cantidad;
+    if (largo.length > 0){
+        obj.largo=largo;
+    }
+    if (ancho.length > 0){
+        obj.ancho=ancho;
+    }
+    var insumosList = $("#insumos_list_field").val();
+    if (insumosList.length > 0) {
+        var objList = $.parseJSON(insumosList);
+        objList.push(JSON.stringify(obj));
+        $("#insumos_list_field").val(JSON.stringify(objList));
+    } else {
+        var newVal = [];
+        newVal.push(JSON.stringify(obj));
+        $("#insumos_list_field").val(JSON.stringify(newVal));
+    }
+}
+
+function getCantInsumosList(){
+    var insumosList = $("#insumos_list_field").val();
+    if (insumosList.length > 0) {
+        var objList = $.parseJSON(insumosList);
+        return objList.length;
+    }
+    return 0;
+}
+
+function getNextInsumosList(){
+    return getCantInsumosList() +1;
+}
+
+function deleteInsumoList(index){
+    var insumosList = $("#insumos_list_field").val();
+    if (insumosList.length > 0) {
+        var objList = $.parseJSON(insumosList);
+        objList.splice(index,1);
+    }
+    //TOO RENDER TABLE LIST FROM objlist
 }
