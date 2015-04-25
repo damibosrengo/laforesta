@@ -255,6 +255,17 @@ div.boxinput_ini {
 }
 
 div.add-insumo-boxform{
-    width:45%;
+    width: auto;
     display: none;
+}
+
+div.form-costos {
+    width: 50%;
+    float: left;
+}
+
+div.insumos_list{
+    width: 45%;
+    float:right;
+    margin: 30px 5px 10px 30px;
 }

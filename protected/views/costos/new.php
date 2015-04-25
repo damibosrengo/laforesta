@@ -18,8 +18,7 @@ $this->menu=array(
 
 <h1>Seleccionar insumos</h1>
 
-<div class="form">
-
+<div class="form form-costos">
     <?php $options = $this->getOptionsInsumos();?>
 
     Agregar insumo:
@@ -40,14 +39,17 @@ $this->menu=array(
 
         $model = new CostosInsumoDirectoForm;
         $form = new CForm('application.views.costos._costosInsumoDirectoForm', $model);
+        $form->action = 'javascript: submitInsumoDirecto()';
         $this->renderPartial('_costosInsumo', array('form'=>$form,'typeForm'=>'boxForm_directo'));
 
         $model = new CostosInsumoLinealForm;
         $form = new CForm('application.views.costos._costosInsumoLinealForm', $model);
+        $form->action = 'javascript: submitInusmoLineal()';
         $this->renderPartial('_costosInsumo', array('form'=>$form,'typeForm'=>'boxForm_lineal'));
 
         $model = new CostosInsumoSuperficieForm;
         $form = new CForm('application.views.costos._costosInsumoSuperficieForm', $model);
+        $form->action = 'javascript: submitInsumoSuperficie()';
         $this->renderPartial('_costosInsumo', array('form'=>$form,'typeForm'=>'boxForm_superficie'));
 
     ?>
@@ -58,6 +60,7 @@ $this->menu=array(
 
         echo CHtml::button("Agregar",array('title'=>"Agregar",'id'=>'add_insumo','onclick'=>'showFormInsumo()'));
     ?>
-
-
+</div>
+<div class="insumos_list">
+    <table id="insumos_list"></table>
 </div>
