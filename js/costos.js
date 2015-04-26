@@ -68,15 +68,8 @@ function submitInsumoDirecto(){
         alert('Ingrese una cantidad a utilizar válida');
         return false;
     }
-    var tdNombre = $('<td>' + nombre + '</td>');
-    var tdCantidad = $('<td>'+ cantidad + '</td>');
-    var tdLkDelete = $('<td><a href="javascript: deleteInsumoList(' + getNextInsumosList() +')">Quitar</a></td>');
-    var tr = $('<tr id="tr_'+idinsumo+'"></tr>');
-    tr.append(tdNombre);
-    tr.append(tdCantidad);
-    tr.append(tdLkDelete);
-    $("#insumos_list").append(tr);
-    addInsumoToList(idinsumo,cantidad,'','');
+    addInsumoToList(idinsumo,cantidad,nombre,'','','');
+    renderList();
     cancelAddInsumo();
     return false;
 }
@@ -93,15 +86,8 @@ function submitInusmoLineal(){
         alert('Ingrese una cantidad a utilizar válida');
         return false;
     }
-    var tdNombre = $('<td>' + nombre + '</td>');
-    var tdCantidad = $('<td>'+ cantidad + ' ' + unidad + '</td>');
-    var tdLkDelete = $('<td><a href="javascript: deleteInsumoList(' + getNextInsumosList() +')">Quitar</a></td>');
-    var tr = $('<tr id="tr_'+idinsumo+'"></tr>');
-    tr.append(tdNombre);
-    tr.append(tdCantidad);
-    tr.append(tdLkDelete);
-    $("#insumos_list").append(tr);
-    addInsumoToList(idinsumo,cantidad,'','');
+    addInsumoToList(idinsumo,cantidad,nombre,unidad,'','');
+    renderList();
     cancelAddInsumo();
     return false;
 
@@ -135,15 +121,8 @@ function submitInsumoSuperficie(){
         alert('Ingrese el ancho a utilizar válido');
         return false;
     }
-    var tdNombre = $('<td>' + nombre + '</td>');
-    var tdCantidad = $('<td>'+ cantidad +' (' + largo + ' x ' + ancho + ' ' + unidad + ')</td>');
-    var tdLkDelete = $('<td><a href="javascript: deleteInsumoList(' + getNextInsumosList() +')">Quitar</a></td>');
-    var tr = $('<tr id="tr_'+idinsumo+'"></tr>');
-    tr.append(tdNombre);
-    tr.append(tdCantidad);
-    tr.append(tdLkDelete);
-    $("#insumos_list").append(tr);
-    addInsumoToList(idinsumo,cantidad,largo,ancho);
+    addInsumoToList(idinsumo,cantidad,nombre,unidad,largo,ancho);
+    renderList();
     cancelAddInsumo();
     return false;
 }
@@ -158,15 +137,20 @@ function checkInsumos(){
     return false;
 }
 
-function addInsumoToList(idinsumo,cantidad,largo,ancho){
+function addInsumoToList(idinsumo,cantidad,nombre,unidad,largo,ancho){
     var obj = {};
     obj.idInsumo=idinsumo;
     obj.cantidad=cantidad;
+    obj.nombre=nombre;
+
     if (largo.length > 0){
         obj.largo=largo;
     }
     if (ancho.length > 0){
         obj.ancho=ancho;
+    }
+    if (unidad.length > 0){
+        obj.unidad=unidad;
     }
     var insumosList = $("#insumos_list_field").val();
     if (insumosList.length > 0) {
@@ -180,24 +164,38 @@ function addInsumoToList(idinsumo,cantidad,largo,ancho){
     }
 }
 
-function getCantInsumosList(){
+function deleteInsumoList(index) {
     var insumosList = $("#insumos_list_field").val();
     if (insumosList.length > 0) {
         var objList = $.parseJSON(insumosList);
-        return objList.length;
+        objList.splice(index, 1);
+        $("#insumos_list_field").val(JSON.stringify(objList));
     }
-    return 0;
+    renderList();
 }
 
-function getNextInsumosList(){
-    return getCantInsumosList() +1;
-}
-
-function deleteInsumoList(index){
+function renderList(){
+    $("#insumos_list").empty();
     var insumosList = $("#insumos_list_field").val();
     if (insumosList.length > 0) {
         var objList = $.parseJSON(insumosList);
-        objList.splice(index,1);
+        $.each(objList,function (index,item)
+            {
+                item =  $.parseJSON(item);
+                var tdNombre = $('<td>' + item.nombre + '</td>');
+                if (item.largo != undefined) {
+                    var tdCantidad = $('<td>' + item.cantidad + ' (' +  item.largo + ' x ' +  item.ancho + ' ' +  item.unidad + ')</td>');
+                } else if(item.unidad != undefined) {
+                    var tdCantidad = $('<td>'+  item.cantidad + ' ' +  item.unidad + '</td>');
+                } else {
+                    var tdCantidad = $('<td>'+  item.cantidad + '</td>');
+                }
+                var tdLkDelete = $('<td><a href="javascript: deleteInsumoList(' + index + ')">Quitar</a></td>');
+                var tr = $('<tr id="tr_' +  item.idInsumo + '"></tr>');
+                tr.append(tdNombre);
+                tr.append(tdCantidad);
+                tr.append(tdLkDelete);
+                $("#insumos_list").append(tr);
+            });
     }
-    //TOO RENDER TABLE LIST FROM objlist
 }
