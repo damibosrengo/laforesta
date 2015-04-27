@@ -118,4 +118,20 @@ class Insumo extends CActiveRecord
         }
         return parent::beforeSave();
     }
+
+    /**
+     * @param $dataUso
+     * Return array
+     */
+    public function getUso($dataUso){
+        return 'lala';
+    }
+
+    public function getCostoTotalInsumo($dataUso){
+        return 120;
+    }
+
+    public function getCostoUnitario(){
+        return 10;
+    }
 }

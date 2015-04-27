@@ -44,4 +44,14 @@ class CostosController extends Controller
     {
         $this->render('new');
     }
+
+    public function actionCalculate(){
+        if (empty($_POST['insumos_list_field'])){
+            $this->redirect(array('new'));
+            exit;
+        }
+        $insumoList = json_decode($_POST['insumos_list_field'],true);
+        $this->render('calculator',array('insumosList'=>$insumoList));
+    }
+
 }
