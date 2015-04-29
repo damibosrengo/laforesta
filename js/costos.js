@@ -199,3 +199,32 @@ function renderList(){
             });
     }
 }
+
+function checkCalculo(){
+    if (!checkInsumos()){
+        return false;
+    }
+    var porcentaje = $("#porcentaje").val()
+    if (porcentaje.length > 0){
+        if (isNaN(porcentaje)){
+            alert('El porcentaje ingresado no es válido');
+            return false;
+        }
+        if ($("#porcentaje_concepto").length == 0){
+            alert('Debe especificar el concepto del porcentaje añadido');
+            return false;
+        }
+    }
+    var fijo = $("#fijo").val();
+    if (fijo.length > 0){
+        if (isNaN(fijo)){
+            alert('El costo fjo ingresado no es válido');
+            return false;
+        }
+        if ($("#fijo_concepto").length == 0){
+            alert('Debe especificar el concepto del costo fijo añadido');
+            return false;
+        }
+    }
+    return true;
+}
