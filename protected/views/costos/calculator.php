@@ -1,3 +1,4 @@
+<?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
 <?php
 $this->breadcrumbs=array(
     'Costos'=>array('index'),
@@ -10,11 +11,11 @@ $this->menu=array(
     array('label'=>'Nuevo cálculo','url'=>array('new')),
 );
 ?>
-
-<h1>Cálcular costo</h1>
+<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/costos.js"></script>
+<h1>Calcular costo</h1>
 
 <form id="submit-calculo" method="post" action="<?php echo Yii::app()->createUrl('costos/calculate'); ?>" onsubmit="return checkCalculo()">
-<input type="hidden" name="insumos_list_field" id="insumos_list_field" value="<?php echo $_POST['insumos_list_field']; ?>" />
+<input type="hidden" name="insumos_list_field" id="insumos_list_field" value="<?php echo htmlentities($_POST['insumos_list_field']); ?>" />
     <table class="calculo_list">
     <tr>
         <th>Insumo</th>
@@ -44,10 +45,10 @@ $this->menu=array(
         <td class="extras">
             Añadir % en concepto de:</td>
         <td>
-            <input type="text" name="porcentaje_concepto" />
+            <input type="text" name="porcentaje_concepto" id="porcentaje_concepto" />
         </td>
         <td>
-            <input type="text" class="tiny_text" name="porcentaje" />%
+            <input type="text" class="tiny_text" name="porcentaje" id="porcentaje"/> %
         </td>
         <td>
             <?php echo CHtml::submitButton('Añadir',array('style'=>'float:right')); ?>
@@ -57,10 +58,10 @@ $this->menu=array(
         <td class="extras">
             Añadir costo fijo en concepto de:</td>
         <td>
-            <input type="text" name="fijo_concepto" />
+            <input type="text" name="fijo_concepto" id="fijo_concepto" />
         </td>
         <td>
-            <input type="text" class="tiny_text" name="fijo" />
+            <input type="text" class="tiny_text" name="fijo" id="fijo" />
         </td>
         <td>
             <?php echo CHtml::submitButton('Añadir',array('style'=>'float:right')); ?>

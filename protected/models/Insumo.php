@@ -124,7 +124,22 @@ class Insumo extends CActiveRecord
      * Return array
      */
     public function getUso($dataUso){
-        return 'lala';
+        $cantidad = (isset($dataUso['cantidad']))?$dataUso['cantidad']:0;
+        switch ($this->id_tipo){
+            case TipoInsumo::TIPO_DIRECTO: {
+                return $cantidad;
+                break;
+            }
+            case TipoInsumo::TIPO_LINEAL: {
+                return $cantidad . ' ' . $this->unidad->nombre;
+                break;
+            }
+            case TipoInsumo::TIPO_SUPERFICIE: {
+                $largo = (isset($dataUso['largo']))?$dataUso['largo']:0;
+                $ancho = (isset($dataUso['ancho']))?$dataUso['ancho']:0;
+                return $cantidad . ' de ' . $largo . $this->unidad->nombre . ' X ' . $ancho . $this->unidad->nombre;
+            }
+        }
     }
 
     public function getCostoTotalInsumo($dataUso){
@@ -132,6 +147,9 @@ class Insumo extends CActiveRecord
     }
 
     public function getCostoUnitario(){
-        return 10;
+        if ($this->id_tipo == TipoInsumo::TIPO_LINEAL){
+            return $this->costo_x_unidad;
+        }
+        return $this->costo_base;
     }
 }

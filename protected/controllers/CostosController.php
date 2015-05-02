@@ -51,6 +51,12 @@ class CostosController extends Controller
             exit;
         }
         $insumoList = json_decode($_POST['insumos_list_field'],true);
+        if (!empty($_POST['porcentaje']) && is_numeric($_POST['porcentaje'])){
+            //TODO CALCULATE ADN INCLUDE %
+        }
+        if (!empty($_POST['fijo']) && is_numeric($_POST['fijo'])){
+            //TODO CALCULATE ADN INCLUDE fijo
+        }
         $this->render('calculator',array('insumosList'=>$insumoList));
     }
 
