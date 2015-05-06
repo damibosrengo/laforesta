@@ -15,15 +15,18 @@ $this->menu=array(
 <h1>Calcular costo</h1>
 
 <form id="submit-calculo" method="post" action="<?php echo Yii::app()->createUrl('costos/calculate'); ?>" onsubmit="return checkCalculo()">
-<input type="hidden" name="insumos_list_field" id="insumos_list_field" value="<?php echo htmlentities($_POST['insumos_list_field']); ?>" />
+<input type="hidden" name="insumos_list_field" id="insumos_list_field" value="<?php echo $this->getInsumosListFieldValue(); ?>" />
+<input type="hidden" name="extras_list_field" id="extras_list_field" value="<?php echo $this->getExtrasListFieldValue(); ?>" />
     <table class="calculo_list">
+    <!------------------------------TABLE HEAD ----------------------------------->
     <tr>
         <th>Insumo</th>
         <th>Costo unitario</th>
         <th>Uso</th>
         <th>Costo total</th>
     </tr>
-    <?php $index = 0; $totalInsumos=0 ?>
+    <!------------------------------ INSUMOS LIST ----------------------------------->
+    <?php $index = 0; ?>
     <?php foreach ($insumosList as $insumoPost): ?>
         <?php $itemPost = json_decode($insumoPost,true); ?>
         <?php $insumoModel = Insumo::model()->findByPk($itemPost['idInsumo']) ?>
@@ -35,11 +38,34 @@ $this->menu=array(
             <td><?php echo $insumoModel->getUso($itemPost) ?></td>
             <td><?php echo $totalRow ?></td>
         </tr>
-    <?php $index++; $totalInsumos += $totalRow ?>
+    <?php $index++; ?>
     <?php endforeach ?>
     <tr>
-        <td class="total_insumos" colspan="3">TOTAL INSUMOS</td>
-        <td class="total_insumos"><?php echo $totalInsumos ?></td>
+        <td class="subtotal" colspan="3">SUBTOTAL INSUMOS</td>
+        <td class="subtotal"><?php echo $this->getInsumosTotal() ?></td>
+    </tr>
+    <!------------------------------EXTRAS LIST ----------------------------------->
+    <?php $index = 0; ?>
+    <?php foreach ($extrasList as $extraItem): ?>
+        <?php $item = json_decode($extraItem,true); ?>
+        <?php $cssClass = ($index%2==0)?'pair':'odd' ?>
+        <tr class="<?php echo $cssClass; ?>">
+            <td colspan ="2">
+                <?php echo $item['concepto'] ?>
+                <a href="javascript:quitarExtra(<?php echo $index ?>)">(Remover)</a>
+            </td>
+            <td><?php echo $item['uso'] ?></td>
+            <td><?php echo $item['rowtotal'] ?></td>
+        </tr>
+        <?php $index++;?>
+    <?php endforeach ?>
+    <tr>
+        <td class="subtotal" colspan="3">SUBTOTAL EXTRAS</td>
+        <td class="subtotal"><?php echo $this->getExtrasTotal() ?> </td>
+    </tr>
+    <tr>
+        <td class="total" colspan="3">TOTAL</td>
+        <td class="subtotal"><?php echo $this->getTotal() ?> </td>
     </tr>
     <tr>
         <td class="extras">

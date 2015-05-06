@@ -218,7 +218,7 @@ function checkCalculo(){
     var fijo = $("#fijo").val();
     if (fijo.length > 0){
         if (isNaN(fijo)){
-            alert('El costo fjo ingresado no es válido');
+            alert('El costo fijo ingresado no es válido');
             return false;
         }
         if ($("#fijo_concepto").length == 0){
@@ -227,4 +227,12 @@ function checkCalculo(){
         }
     }
     return true;
+}
+
+function quitarExtra(indexExtra){
+    var extrasList = $("#extras_list_field").val();
+    var list = $.parseJSON(extrasList);
+    list.splice(indexExtra,1);
+    $("#extras_list_field").val(JSON.stringify(list));
+    $("#submit-calculo").submit();
 }
