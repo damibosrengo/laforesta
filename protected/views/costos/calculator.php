@@ -95,3 +95,10 @@ $this->menu=array(
     </tr>
 </table>
 </form>
+<div class="buttons_actions">
+    <form id="edit_insumos_form" method="post" action="<?php echo Yii::app()->createUrl('costos/new'); ?>">
+        <input type="hidden" name="insumos_list_field" id="insumos_list_field" value="<?php echo $this->getInsumosListFieldValue(); ?>"/>
+        <input type="hidden" name="extras_list_field" id="extras_list_field" value="<?php echo $this->getExtrasListFieldValue(); ?>" />
+        <?php echo CHtml::submitButton('Editar Insumos'); ?>
+    </form>
+</div>
