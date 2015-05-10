@@ -25,6 +25,7 @@ class Insumo extends CActiveRecord
 		return array(
 			array('id_tipo',
                 'required','on'=>'insert'),
+            array('nombre','unique', 'on'=>'insert,update'),
             array('nombre,costo_base,habilitado',
                 'required', 'on'=>'insert,update'),
             array('descripcion,largo,ancho,id_unidad,cantidad_total',
