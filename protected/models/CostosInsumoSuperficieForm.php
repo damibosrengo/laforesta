@@ -20,7 +20,7 @@ class CostosInsumoSuperficieForm extends CFormModel
         return array(
             array('idInsumo,cantidad,nombre,largo,ancho','required'),
             array('idInsumo','exist','attributeName'=>'id_insumo','className'=>'Insumo',
-                'criteria'=>array('condition'=>'id_tipo='.TipoInsumo::TIPO_DIRECTO)),
+                'criteria'=>array('condition'=>'id_tipo='.TipoInsumo::TIPO_SUPERFICIE)),
             array('unidad','safe'),
             array('cantidad,largo,ancho', 'numerical','min'=>0)
         );

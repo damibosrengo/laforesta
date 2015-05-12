@@ -137,28 +137,57 @@ function checkInsumos(){
     return false;
 }
 
+function mergeInsumoList(list,obj){
+    var flagExists = false;
+    $.each(list,function(index, item){
+       if (!flagExists) {
+           var itemObj = $.parseJSON(item);
+           if (itemObj.idInsumo == obj.idInsumo) {
+               if (obj.cortes != undefined && obj.cortes.length > 0) {
+                   itemObj.cortes.push(obj.cortes[0]);
+               } else {
+                   itemObj.cantidad = parseFloat(itemObj.cantidad) + parseFloat(obj.cantidad);
+               }
+               list.splice(index, 1);
+               list.push(JSON.stringify(itemObj));
+               flagExists = true;
+           }
+       }
+    });
+
+    if (!flagExists){
+        list.push(JSON.stringify(obj));
+    }
+    return list;
+}
+
 function addInsumoToList(idinsumo,cantidad,nombre,unidad,largo,ancho){
     var obj = {};
     obj.idInsumo=idinsumo;
     obj.cantidad=cantidad;
     obj.nombre=nombre;
 
-    if (largo.length > 0){
-        obj.largo=largo;
+    if (largo.length > 0 || ancho.length > 0){
+        var corte = {};
+        corte.cantidad = obj.cantidad;
+        corte.largo = largo;
+        corte.ancho = ancho;
+        obj.cantidad = 0;
+        obj.cortes = [];
+        obj.cortes.push(JSON.stringify(corte));
     }
-    if (ancho.length > 0){
-        obj.ancho=ancho;
-    }
+
     if (unidad.length > 0){
         obj.unidad=unidad;
     }
     var insumosList = $("#insumos_list_field").val();
     if (insumosList.length > 0) {
         var objList = $.parseJSON(insumosList);
-        objList.push(JSON.stringify(obj));
+        objList = mergeInsumoList(objList,obj);
         $("#insumos_list_field").val(JSON.stringify(objList));
     } else {
         var newVal = [];
+
         newVal.push(JSON.stringify(obj));
         $("#insumos_list_field").val(JSON.stringify(newVal));
     }
@@ -183,8 +212,13 @@ function renderList(){
             {
                 item =  $.parseJSON(item);
                 var tdNombre = $('<td>' + item.nombre + '</td>');
-                if (item.largo != undefined) {
-                    var tdCantidad = $('<td>' + item.cantidad + ' (' +  item.largo + ' x ' +  item.ancho + ' ' +  item.unidad + ')</td>');
+                if (item.cortes != undefined && item.cortes.length > 0) {
+                    var tdCantidad = '';
+                    $.each(item.cortes,function(cIndex,cItem){
+                        var cte = $.parseJSON(cItem);
+                        tdCantidad += cte.cantidad + ' (' +  cte.largo + ' x ' +  cte.ancho + ' ' +  item.unidad + ");<br> ";
+                    })
+                    tdCantidad = $('<td>' + tdCantidad + '</td>');
                 } else if(item.unidad != undefined) {
                     var tdCantidad = $('<td>'+  item.cantidad + ' ' +  item.unidad + '</td>');
                 } else {

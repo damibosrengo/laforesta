@@ -12,7 +12,7 @@ return array(
     'elements'=>array(
         'cantidad'=>array(
             'type'=>'text',
-            'maxlength'=>3,
+            'maxlength'=>7,
         ),
         'idInsumo'=>array(
             'type'=>'hidden',
