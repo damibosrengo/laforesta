@@ -136,9 +136,16 @@ class Insumo extends CActiveRecord
                 break;
             }
             case TipoInsumo::TIPO_SUPERFICIE: {
-                $largo = (isset($dataUso['largo']))?$dataUso['largo']:0;
-                $ancho = (isset($dataUso['ancho']))?$dataUso['ancho']:0;
-                return $cantidad . ' de ' . $largo . $this->unidad->nombre . ' X ' . $ancho . $this->unidad->nombre;
+                $cortes =$dataUso['cortes'];
+                $result = '';
+                foreach ($cortes as $itemcorte) {
+                    $corte = json_decode($itemcorte,true);
+                    $largo = (isset($corte['largo'])) ? $corte['largo'] : 0;
+                    $ancho = (isset($corte['ancho'])) ? $corte['ancho'] : 0;
+                    $result .= $corte['cantidad'] . ' de ' . $largo . $this->unidad->nombre . ' X ' . $ancho . $this->unidad->nombre . '<br/>';
+                }
+                return $result;
+                break;
             }
         }
     }
