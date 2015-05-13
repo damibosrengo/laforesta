@@ -7,7 +7,11 @@
  */
 class Insumo extends CActiveRecord
 {
+    const ERROR_PARAMS = -1;
+    const ERROR_CONNECTION = -2;
+
     public $primaryKey ='id_insumo';
+    protected $ws_url_optcortes = 'http://www.placacentro.com/optimizador.exe';
 
     /**
 	 * @return string the associated database table name
@@ -162,9 +166,21 @@ class Insumo extends CActiveRecord
                 break;
             }
             case TipoInsumo::TIPO_SUPERFICIE: {
-                $largo = (isset($dataUso['largo']))?$dataUso['largo']:0;
-                $ancho = (isset($dataUso['ancho']))?$dataUso['ancho']:0;
-                return 120;
+                $cortes = (isset($dataUso['cortes']))?$dataUso['cortes']:null;
+                if (!$this->validateCortes($cortes)){
+                    return self::ERROR_PARAMS;
+                    break;
+                }
+                $get = $this->getUrlParamsWs($cortes);
+                $optimusCuts = file_get_contents($this->ws_url_optcortes.'?'.$get);
+                $optimusCuts = json_decode($optimusCuts,true);
+                if (empty($optimusCuts)){
+                    return self::ERROR_CONNECTION;
+                    break;
+                } else {
+                    return $this->getCostoSuperficieUsada($optimusCuts);
+                }
+                break;
             }
         }
     }
@@ -174,5 +190,61 @@ class Insumo extends CActiveRecord
             return $this->costo_x_unidad;
         }
         return $this->costo_base;
+    }
+
+    protected function validateCortes($cortes){
+        if (empty($cortes)){
+            return false;
+        }
+        foreach ($cortes as $c){
+            $cut = json_decode($c,true);
+            if ($cut['largo'] >= $this->largo || $cut['ancho'] >= $this->ancho){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public function getAnchoMM (){
+        if ($this->unidad->nombre == 'MM'){
+            return $this->ancho;
+        }
+        if ($this->unidad->nombre == 'CM'){
+            return $this->ancho * 10;
+        }
+        if ($this->unidad->nombre == 'M'){
+            return $this->ancho * 1000;
+        }
+    }
+
+    public function getLargoMM(){
+        if ($this->unidad->nombre == 'MM'){
+            return $this->largo;
+        }
+        if ($this->unidad->nombre == 'CM'){
+            return $this->largo * 10;
+        }
+        if ($this->unidad->nombre == 'M'){
+            return $this->largo * 1000;
+        }
+    }
+
+    protected function getUrlParamsWs($cortes){
+        $result = "ancho=".$this->getAnchoMM()."&alto=".$this->getLargoMM()."&hoja=3&minimo=1&";
+        $index = 1;
+        foreach ($cortes as $c){
+            $cut = json_decode($c,true);
+            $cantidad = (isset($cut['cantidad']))?$cut['cantidad']:0;
+            $ancho  = (isset($cut['ancho']))?$cut['ancho']:0;
+            $largo = (isset($cut['largo']))?$cut['largo']:0;
+            $result .= "cantidad_$index=$cantidad&ancho_$index=$ancho&alto_$index=$largo&rotar_$index=1&";
+            $index++;
+        }
+        $result .= "num=$index";
+        return $result;
+    }
+
+    protected function getCostoSuperficieUsada ($cortes){
+        return 120;
     }
 }

@@ -82,6 +82,11 @@ class CostosController extends Controller
                 $item = json_decode($insumoJson,true);
                 $insumoModel = Insumo::model()->findByPk($item['idInsumo']);
                 $totalRow = $insumoModel->getCostoTotalInsumo($item);
+                if ($totalRow == Insumo::ERROR_PARAMS){
+                    return 'Hubo un error en los parámetros de algún insumo';
+                } elseif ($totalRow == Insumo::ERROR_CONNECTION){
+                    return 'Hubo un error al calcular el costo de algún insumo';
+                }
                 $result += $totalRow;
             }
             $this->insumosTotal = $result;

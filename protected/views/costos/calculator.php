@@ -36,7 +36,17 @@ $this->menu=array(
             <td><?php echo $insumoModel->nombre ?></td>
             <td><?php echo $insumoModel->getCostoUnitario() ?></td>
             <td><?php echo $insumoModel->getUso($itemPost) ?></td>
-            <td><?php echo $totalRow ?></td>
+            <td>
+                <?php
+                    if ($totalRow == Insumo::ERROR_PARAMS){
+                        echo 'Hay un error con los parámetros del insumo';
+                    } elseif ($totalRow == Insumo::ERROR_CONNECTION){
+                        echo 'Hubo un error al calcular el costo de este insumo';
+                    } else {
+                        echo $totalRow;
+                    }
+                ?>
+            </td>
         </tr>
     <?php $index++; ?>
     <?php endforeach ?>
