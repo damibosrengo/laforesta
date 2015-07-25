@@ -172,7 +172,7 @@ class Insumo extends CActiveRecord
                     break;
                 }
                 $get = $this->getUrlParamsWs($cortes);
-                $optimusCuts = file_get_contents($this->ws_url_optcortes.'?'.$get);
+                $optimusCuts = @file_get_contents($this->ws_url_optcortes.'?'.$get);
                 $optimusCuts = json_decode($optimusCuts,true);
                 if (empty($optimusCuts)){
                     return self::ERROR_CONNECTION;
