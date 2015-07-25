@@ -33,10 +33,14 @@ return array(
             'type'=>'text',
             'maxlength'=>6,
         ),
+        'girar'=>array(
+            'type'=>'dropdownlist',
+             'items'=>array('0'=>'No','1'=>'Si')
+        )
     ),
 
     'buttons'=>array(
-        'login'=>array(
+        'aceptar'=>array(
             'type'=>'submit',
             'label'=>'Aceptar',
         ),

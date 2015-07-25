@@ -100,6 +100,7 @@ function submitInsumoSuperficie(){
     var unidad = $("#CostosInsumoSuperficieForm_unidad option:selected").html();
     var largo = $('#CostosInsumoSuperficieForm_largo').val();
     var ancho = $('#CostosInsumoSuperficieForm_ancho').val();
+    var girar = $('#CostosInsumoSuperficieForm_girar').val();
     if (cantidad.length == 0){
         alert('Ingrese la cantidad a utilizar');
         return false;
@@ -121,7 +122,7 @@ function submitInsumoSuperficie(){
         alert('Ingrese el ancho a utilizar válido');
         return false;
     }
-    addInsumoToList(idinsumo,cantidad,nombre,unidad,largo,ancho);
+    addInsumoToList(idinsumo,cantidad,nombre,unidad,largo,ancho,girar);
     renderList();
     cancelAddInsumo();
     return false;
@@ -161,7 +162,7 @@ function mergeInsumoList(list,obj){
     return list;
 }
 
-function addInsumoToList(idinsumo,cantidad,nombre,unidad,largo,ancho){
+function addInsumoToList(idinsumo,cantidad,nombre,unidad,largo,ancho,girar){
     var obj = {};
     obj.idInsumo=idinsumo;
     obj.cantidad=cantidad;
@@ -172,6 +173,7 @@ function addInsumoToList(idinsumo,cantidad,nombre,unidad,largo,ancho){
         corte.cantidad = obj.cantidad;
         corte.largo = largo;
         corte.ancho = ancho;
+        corte.girar = girar;
         obj.cantidad = 0;
         obj.cortes = [];
         obj.cortes.push(JSON.stringify(corte));
@@ -216,7 +218,12 @@ function renderList(){
                     var tdCantidad = '';
                     $.each(item.cortes,function(cIndex,cItem){
                         var cte = $.parseJSON(cItem);
-                        tdCantidad += cte.cantidad + ' (' +  cte.largo + ' x ' +  cte.ancho + ' ' +  item.unidad + ");<br> ";
+                        if (cte.girar == '1'){
+                            girar = 'Si';
+                        } else {
+                            girar = 'No';
+                        }
+                        tdCantidad += cte.cantidad + ' (' +  cte.largo + ' x ' +  cte.ancho + ' ' +  item.unidad + ', girar '+ girar +");<br> ";
                     })
                     tdCantidad = $('<td>' + tdCantidad + '</td>');
                 } else if(item.unidad != undefined) {

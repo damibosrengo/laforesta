@@ -14,6 +14,7 @@ class CostosInsumoSuperficieForm extends CFormModel
     public $largo;
     public $ancho;
     public $nombre;
+    public $girar;
 
     public function rules()
     {
@@ -21,7 +22,7 @@ class CostosInsumoSuperficieForm extends CFormModel
             array('idInsumo,cantidad,nombre,largo,ancho','required'),
             array('idInsumo','exist','attributeName'=>'id_insumo','className'=>'Insumo',
                 'criteria'=>array('condition'=>'id_tipo='.TipoInsumo::TIPO_SUPERFICIE)),
-            array('unidad','safe'),
+            array('unidad,girar','safe'),
             array('cantidad,largo,ancho', 'numerical','min'=>0)
         );
     }
