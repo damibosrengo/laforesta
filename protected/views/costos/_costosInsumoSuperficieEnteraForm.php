@@ -10,6 +10,10 @@ return array(
     'title'=>'Ingresar insumo superficie',
 
     'elements'=>array(
+        'cantidad'=>array(
+            'type'=>'text',
+            'maxlength'=>3,
+        ),
         'idInsumo'=>array(
             'type'=>'hidden',
         ),
@@ -18,31 +22,11 @@ return array(
         ),
         'plancha_entera'=>array(
             'type'=>'checkbox',
-            'checked'=>false,
+            'checked'=>true,
             'value'=>'1',
             'onclick'=> 'javascript:changeSuperficieScenario(this);',
         ),
-        'cantidad'=>array(
-            'type'=>'text',
-            'maxlength'=>3,
-        ),
-        'unidad'=>array(
-            'type'=>'dropdownlist',
-            'items'=>CHtml::listData(Unidad::model()->findAll(),'id_unidad','nombre'),
-            'prompt'=>'Selecciona la unidad',
-        ),
-        'largo'=>array(
-            'type'=>'text',
-            'maxlength'=>6,
-        ),
-        'ancho'=>array(
-            'type'=>'text',
-            'maxlength'=>6,
-        ),
-        'girar'=>array(
-            'type'=>'dropdownlist',
-             'items'=>array('0'=>'No','1'=>'Si')
-        )
+
     ),
 
     'buttons'=>array(

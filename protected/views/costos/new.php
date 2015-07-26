@@ -51,7 +51,13 @@ $this->menu=array(
         $form->id = 'CostoInsumoLineal';
         $this->renderPartial('_costosInsumo', array('form'=>$form,'typeForm'=>'boxForm_lineal'));
 
-        $model = new CostosInsumoSuperficieForm;
+        $model = new CostosInsumoSuperficieEnteraForm();
+        $form = new CForm('application.views.costos._costosInsumoSuperficieEnteraForm', $model);
+        $form->action = 'javascript: submitInsumoSuperficieEntera()';
+        $form->id = 'CostoInsumoSuperficieEntera';
+        $this->renderPartial('_costosInsumo', array('form'=>$form,'typeForm'=>'boxForm_superficieEntera'));
+
+        $model = new CostosInsumoSuperficieForm();
         $form = new CForm('application.views.costos._costosInsumoSuperficieForm', $model);
         $form->action = 'javascript: submitInsumoSuperficie()';
         $form->id = 'CostoInsumoSuperficie';

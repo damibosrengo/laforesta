@@ -142,14 +142,19 @@ class Insumo extends CActiveRecord
                 break;
             }
             case TipoInsumo::TIPO_SUPERFICIE: {
-                $cortes = $dataUso['cortes'];
-                $result = '';
-                foreach ($cortes as $itemcorte) {
-                    $corte = json_decode($itemcorte, true);
-                    $largo = (isset($corte['largo'])) ? $corte['largo'] : 0;
-                    $ancho = (isset($corte['ancho'])) ? $corte['ancho'] : 0;
-                    $girar = (isset($corte['girar'])) ? ($corte['girar'] == '1') ? 'Si' : 'No' : 'No';
-                    $result .= $corte['cantidad'] . ' de ' . $largo . $this->unidad->nombre . ' X ' . $ancho . $this->unidad->nombre . ' Girar '. $girar . '<br/>';
+                if (empty($dataUso['plancha_entera'])) {
+                    $cortes = $dataUso['cortes'];
+                    $result = '';
+                    foreach ($cortes as $itemcorte) {
+                        $corte = json_decode($itemcorte, true);
+                        $largo = (isset($corte['largo'])) ? $corte['largo'] : 0;
+                        $ancho = (isset($corte['ancho'])) ? $corte['ancho'] : 0;
+                        $girar = (isset($corte['girar'])) ? ($corte['girar'] == '1') ? 'Si' : 'No' : 'No';
+                        $result .= $corte['cantidad'] . ' de ' . $largo . $this->unidad->nombre . ' X ' . $ancho . $this->unidad->nombre . ' Girar ' . $girar . '<br/>';
+                    }
+                } else {
+                    $planchas = ($cantidad>1)?'planchas':'plancha';
+                    $result = $cantidad . ' '.$planchas;
                 }
                 return $result;
                 break;
@@ -162,20 +167,24 @@ class Insumo extends CActiveRecord
         $cantidad = (isset($dataUso['cantidad'])) ? $dataUso['cantidad'] : 0;
         switch ($this->id_tipo) {
             case TipoInsumo::TIPO_SUPERFICIE: {
-                $cortes = (isset($dataUso['cortes'])) ? $dataUso['cortes'] : null;
-                if (!$this->validateCortes($cortes)) {
-                    return self::ERROR_PARAMS;
-                    break;
-                }
-                $unidad = (isset($dataUso['unidad'])) ? $dataUso['unidad'] : null;
-                $get = $this->getUrlParamsWs($cortes);
-                $optimusCuts = @file_get_contents($this->ws_url_optcortes . '?' . $get);
-                $optimusCuts = json_decode($optimusCuts, true);
-                if (empty($optimusCuts)) {
-                    return self::ERROR_CONNECTION;
-                    break;
+                if (empty($dataUso['plancha_entera'])) {
+                    $cortes = (isset($dataUso['cortes'])) ? $dataUso['cortes'] : null;
+                    if (!$this->validateCortes($cortes)) {
+                        return self::ERROR_PARAMS;
+                        break;
+                    }
+                    $unidad = (isset($dataUso['unidad'])) ? $dataUso['unidad'] : null;
+                    $get = $this->getUrlParamsWs($cortes);
+                    $optimusCuts = @file_get_contents($this->ws_url_optcortes . '?' . $get);
+                    $optimusCuts = json_decode($optimusCuts, true);
+                    if (empty($optimusCuts)) {
+                        return self::ERROR_CONNECTION;
+                        break;
+                    } else {
+                        return $this->getCostoSuperficieUsada($optimusCuts);
+                    }
                 } else {
-                    return $this->getCostoSuperficieUsada($optimusCuts);
+                    return $cantidad * $this->getCostoUnitario();
                 }
                 break;
             }
