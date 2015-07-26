@@ -27,15 +27,13 @@ $this->menu=array(
     </tr>
     <!------------------------------ INSUMOS LIST ----------------------------------->
     <?php $index = 0; ?>
-    <?php foreach ($insumosList as $insumoPost): ?>
-        <?php $itemPost = json_decode($insumoPost,true); ?>
-        <?php $insumoModel = Insumo::model()->findByPk($itemPost['idInsumo']) ?>
-        <?php $totalRow = $insumoModel->getCostoTotalInsumo($itemPost) ?>
+    <?php foreach ($insumosList as $insumo): ?>
+        <?php $totalRow = $insumo->getCostoTotalInsumo() ?>
         <?php $cssClass = ($index%2==0)?'pair':'odd' ?>
         <tr class="<?php echo $cssClass; ?>">
-            <td><?php echo $insumoModel->nombre ?></td>
-            <td><?php echo $insumoModel->getCostoUnitario() ?></td>
-            <td><?php echo $insumoModel->getUso($itemPost) ?></td>
+            <td><?php echo $insumo->nombre ?></td>
+            <td><?php echo $insumo->getCostoUnitario() ?></td>
+            <td><?php echo $insumo->getUso() ?></td>
             <td>
                 <?php
                     if ($totalRow == Insumo::ERROR_PARAMS){

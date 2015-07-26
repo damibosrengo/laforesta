@@ -13,6 +13,9 @@ class Insumo extends CActiveRecord
     public $primaryKey = 'id_insumo';
     protected $ws_url_optcortes = 'http://www.placacentro.com/optimizador.exe';
 
+    public $postData = null;
+    public  $costoTotal = null;
+
     /**
      * @return string the associated database table name
      */
@@ -129,8 +132,9 @@ class Insumo extends CActiveRecord
      * @param $dataUso
      * Return array
      */
-    public function getUso($dataUso)
+    public function getUso()
     {
+        $dataUso = $this->postData;
         $cantidad = (isset($dataUso['cantidad'])) ? $dataUso['cantidad'] : 0;
         switch ($this->id_tipo) {
             case TipoInsumo::TIPO_DIRECTO: {
@@ -162,37 +166,41 @@ class Insumo extends CActiveRecord
         }
     }
 
-    public function getCostoTotalInsumo($dataUso)
+    public function getCostoTotalInsumo()
     {
-        $cantidad = (isset($dataUso['cantidad'])) ? $dataUso['cantidad'] : 0;
-        switch ($this->id_tipo) {
-            case TipoInsumo::TIPO_SUPERFICIE: {
-                if (empty($dataUso['plancha_entera'])) {
-                    $cortes = (isset($dataUso['cortes'])) ? $dataUso['cortes'] : null;
-                    if (!$this->validateCortes($cortes)) {
-                        return self::ERROR_PARAMS;
-                        break;
-                    }
-                    $unidad = (isset($dataUso['unidad'])) ? $dataUso['unidad'] : null;
-                    $get = $this->getUrlParamsWs($cortes);
-                    $optimusCuts = @file_get_contents($this->ws_url_optcortes . '?' . $get);
-                    $optimusCuts = json_decode($optimusCuts, true);
-                    if (empty($optimusCuts)) {
-                        return self::ERROR_CONNECTION;
-                        break;
+        if ($this->costoTotal == null) {
+            $dataUso = $this->postData;
+            $cantidad = (isset($dataUso['cantidad'])) ? $dataUso['cantidad'] : 0;
+            switch ($this->id_tipo) {
+                case TipoInsumo::TIPO_SUPERFICIE: {
+                    if (empty($dataUso['plancha_entera'])) {
+                        $cortes = (isset($dataUso['cortes'])) ? $dataUso['cortes'] : null;
+                        if (!$this->validateCortes($cortes)) {
+                            $this->costoTotal = self::ERROR_PARAMS;
+                            break;
+                        }
+                        $unidad = (isset($dataUso['unidad'])) ? $dataUso['unidad'] : null;
+                        $get = $this->getUrlParamsWs($cortes);
+                        $optimusCuts = @file_get_contents($this->ws_url_optcortes . '?' . $get);
+                        $optimusCuts = json_decode($optimusCuts, true);
+                        if (empty($optimusCuts)) {
+                            $this->costoTotal = self::ERROR_CONNECTION;
+                            break;
+                        } else {
+                            $this->costoTotal = $this->getCostoSuperficieUsada($optimusCuts);
+                        }
                     } else {
-                        return $this->getCostoSuperficieUsada($optimusCuts);
+                        $this->costoTotal = $cantidad * $this->getCostoUnitario();
                     }
-                } else {
-                    return $cantidad * $this->getCostoUnitario();
+                    break;
                 }
-                break;
-            }
-            default: {
-                return $cantidad * $this->getCostoUnitario();
-                break;
+                default: {
+                    $this->costoTotal = $cantidad * $this->getCostoUnitario();
+                    break;
+                }
             }
         }
+        return $this->costoTotal;
     }
 
     public function getCostoUnitario()
