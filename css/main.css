@@ -269,3 +269,8 @@ div.insumos_list{
     float:right;
     margin: 30px 5px 10px 30px;
 }
+
+div.secondary-form {
+    margin-top: 10px;
+    display: none;
+}

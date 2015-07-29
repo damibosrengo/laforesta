@@ -28,7 +28,9 @@ class Producto extends CActiveRecord
     public function rules()
     {
         return array(
-            array('id_producto,nombre,descripcion,from_date,to_date','safe','on'=>'search')
+            array('id_producto,nombre,descripcion,from_date,to_date','safe','on'=>'search'),
+            array('nombre,fecha,raw_data_insumos','required','on'=>'insert,update'),
+            array('descripcion,raw_data_extras','safe','on'=>'insert,update')
         );
     }
 
@@ -41,7 +43,7 @@ class Producto extends CActiveRecord
         $criteria->compare('id_producto',$this->id_producto);
         $criteria->compare('nombre',$this->nombre,true);
         $criteria->compare('descripcion',$this->descripcion ,true);
-        $criteria->compare('costo',$this->costo);
+//        $criteria->compare('costo',$this->getCosto());
 
         if (!empty($this->to_date )) {
             $criteria->addCondition('fecha <= "' . $this->to_date. '" ');
@@ -58,6 +60,10 @@ class Producto extends CActiveRecord
             ),
             'criteria'=>$criteria,
         ));
+    }
+
+    public function getCosto() {
+        return 120;
     }
 
 }

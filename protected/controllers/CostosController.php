@@ -35,6 +35,8 @@ class CostosController extends Controller
     private $_model;
 
 
+    /***********************************ACTIONS METHODS***********************************************/
+
     public function actionIndex()
     {
         $model = new Producto('search');
@@ -62,6 +64,18 @@ class CostosController extends Controller
         $extraList = $this->getExtrasList();
         $this->render('calculator', array('insumosList' => $insumoList, 'extrasList' => $extraList));
     }
+
+    public function actionSaveProducto(){
+
+        if (empty($_POST['insumos_list_field'])) {
+            Yii::app()->user->setFlash('error', "Hubo un error y el producto no pudo ser guardado, vuelva a intentarlo");
+            $this->redirect(array('index'));
+            exit;
+        }
+    }
+
+
+    /***********************************************GET DATA METHODS***********************************/
 
     /**
      * Return a json withs extra items values

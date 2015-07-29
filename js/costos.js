@@ -322,3 +322,13 @@ function quitarExtra(indexExtra){
     $("#extras_list_field").val(JSON.stringify(list));
     $("#submit-calculo").submit();
 }
+
+function showProductForm(el){
+    $('#product-form-box').slideDown(200);
+    el.hide();
+}
+
+function hideProductForm(){
+    $('#product-form-box').slideUp(100);
+    $('#showFormButton').show();
+}

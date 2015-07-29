@@ -104,9 +104,14 @@ $this->menu=array(
 </table>
 </form>
 <div class="buttons_actions">
-    <form id="edit_insumos_form" method="post" action="<?php echo Yii::app()->createUrl('costos/new'); ?>">
+    <form id="edit_insumos_form" method="post" action="<?php echo Yii::app()->createUrl('costos/new'); ?>" style="display: inline">
         <input type="hidden" name="insumos_list_field" id="insumos_list_field" value="<?php echo $this->getInsumosListFieldValue(); ?>"/>
         <input type="hidden" name="extras_list_field" id="extras_list_field" value="<?php echo $this->getExtrasListFieldValue(); ?>" />
         <?php echo CHtml::submitButton('Editar Insumos'); ?>
     </form>
+    <?php echo CHtml::button("Guardar producto",array('title'=>"Guardar Producto",'onclick'=>'showProductForm(this)','id'=>'showFormButton')); ?>
+    <?php
+        $model = new Producto();
+        $this->renderPartial('_productoForm', array('model'=>$model));
+    ?>
 </div>

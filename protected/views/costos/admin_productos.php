@@ -8,7 +8,11 @@ $this->menu=array(
 	array('label'=>'Nuevo Cálculo', 'url'=>array('new')),
 );
 
+foreach(Yii::app()->user->getFlashes() as $key => $message) {
+    echo '<div class="flash-' . $key . '">' . $message . "</div>\n";
+}
 ?>
+
 <h1>Costo de productos</h1>
 
 <?php echo CHtml::button('Reset', array('submit' => array('costos/index'))); ?>
