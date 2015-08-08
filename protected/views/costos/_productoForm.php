@@ -7,6 +7,7 @@
         'clientOptions'=>array(
             'validateOnSubmit'=>true,
         ),
+        'action' => Yii::app()->createUrl('producto/create'),
         'enableAjaxValidation'=>false,
     ));
 

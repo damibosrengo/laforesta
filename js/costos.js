@@ -325,7 +325,7 @@ function quitarExtra(indexExtra){
 
 function showProductForm(el){
     $('#product-form-box').slideDown(200);
-    el.hide();
+    $('#'+el.id).hide();
 }
 
 function hideProductForm(){
