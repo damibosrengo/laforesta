@@ -154,13 +154,13 @@ class CostosController extends Controller
         if (!empty($_POST['porcentaje']) && is_numeric($_POST['porcentaje'])) {
             $concepto = isset($_POST['porcentaje_concepto']) ? $_POST['porcentaje_concepto'] : '';
             $extra = new Extra(Extra::TIPO_EXTRA_PORCENTAJE, $_POST['porcentaje'], $concepto);
-            $item = array('type' => $extra->type, 'index' => count($list), 'concepto' => $extra->concepto, 'uso' => $extra->valor . '%', 'rowtotal' => $extra->getRowTotal($this->getInsumosTotal()));
+            $item = array('type' => $extra->type, 'index' => count($list), 'concepto' => $extra->concepto, 'uso' => $extra->valor . '%','valor_bruto' => $extra->valor, 'rowtotal' => $extra->getRowTotal($this->getInsumosTotal()));
             $list[] = json_encode($item);
         }
         if (!empty($_POST['fijo']) && is_numeric($_POST['fijo'])) {
             $concepto = isset($_POST['fijo_concepto']) ? $_POST['fijo_concepto'] : '';
             $extra = new Extra(Extra::TIPO_EXTRA_FIJO, $_POST['fijo'], $concepto);
-            $item = array('type' => $extra->type, 'index' => count($list), 'concepto' => $extra->concepto, 'uso' => $extra->valor, 'rowtotal' => $extra->getRowTotal($this->getInsumosTotal()));
+            $item = array('type' => $extra->type, 'index' => count($list), 'concepto' => $extra->concepto, 'uso' => $extra->valor, 'valor_bruto' => $extra->valor, 'rowtotal' => $extra->getRowTotal($this->getInsumosTotal()));
             $list[] = json_encode($item);
         }
         return $list;

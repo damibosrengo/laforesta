@@ -23,6 +23,7 @@ class Producto
     {
         return array(
             'calculos' => array(self::HAS_MANY, 'Calculo', 'id_producto'),
+            'extras' => array(self::HAS_MANY, 'Extra', 'id_producto'),
         );
     }
 
@@ -91,9 +92,26 @@ class Producto
                 $calculo->id_producto = $this->id_producto;
                 $calculo->id_insumo = $insumo['idInsumo'];
                 $calculo->cantidad_uso = $insumo['cantidad'];
-                $calculo->id_unidad = $insumo['unidad'];
-                $calculo->plancha_entera = $insumo['plancha_entera'];
+                if (!empty($insumo['unidad'])) {
+                    $unidad = Unidad::model()->findByAttributes(array('nombre' => $insumo['unidad']));
+                    $calculo->id_unidad = $unidad->id_unidad;
+                }
+                $calculo->plancha_entera = (isset($insumo['plancha_entera']))?$insumo['plancha_entera']:null;
+                $calculo->cortes = (isset($insumo['cortes']))?json_encode($insumo['cortes']):null;
                 $calculo->save();
+            }
+        }
+
+        $extras = json_decode($this->raw_data_extras);
+        if ($extras){
+            foreach ($extras as $jsonExtras){
+                $extraData =json_decode($jsonExtras,true);
+                if ($extraData){
+                    $extra = new Extra($extraData['type'], $extraData['valor_bruto'], $extraData['concepto'],true);
+                }
+                $extra->id_producto = $this->id_producto;
+                $extra->save();
+
             }
         }
     }
