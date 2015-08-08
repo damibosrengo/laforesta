@@ -26,49 +26,13 @@ class Calculo extends CActiveRecord
         );
 	}
 
-	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
-	public function attributeLabels()
-	{
-		return array(
-            'id_tipo'=>'Tipo de insumo',
-            'descripcion'=>'Descripción',
-            'habilitado' =>'Estado',
-            'id_unidad' => 'Unidad'
-		);
-	}
+    public function rules()
+    {
+        return array(
+            array('id_producto,id_insumo,cantidad_uso,id_unidad,plancha_entera', 'safe', 'on' => 'insert,update')
+        );
+    }
 
-	/**
-	 * Retrieves a list of models based on the current search/filter conditions.
-	 *
-	 * Typical usecase:
-	 * - Initialize the model fields with values from filter form.
-	 * - Execute this method to get CActiveDataProvider instance which will filter
-	 * models according to data in model fields.
-	 * - Pass data provider to CGridView, CListView or any similar widget.
-	 *
-	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
-	 */
-	public function search()
-	{
-		// Warning: Please modify the following code to remove attributes that
-		// should not be searched.
-
-		$criteria=new CDbCriteria;
-        $criteria->compare('nombre',$this->nombre,true);
-        $criteria->compare('id_tipo',$this->id_tipo);
-        $criteria->compare('descripcion',$this->descripcion ,true);
-        $criteria->compare('habilitado',$this->habilitado);
-
-
-		return new CActiveDataProvider('Insumo', array(
-            'Pagination' => array (
-                'PageSize' => 20
-              ),
-			'criteria'=>$criteria,
-		));
-	}
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -79,14 +43,4 @@ class Calculo extends CActiveRecord
 		return parent::model($className);
 	}
 
-    protected function beforeSave(){
-        if($this->id_tipo == TipoInsumo::TIPO_LINEAL){
-            if ($this->cantidad_total > 0) {
-                $this->costo_x_unidad = number_format($this->costo_base / $this->cantidad_total, 3);
-            } else {
-                $this->costo_x_unidad = $this->costo_base;
-            }
-        }
-        return parent::beforeSave();
-    }
 }

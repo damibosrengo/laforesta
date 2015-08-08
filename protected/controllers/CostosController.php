@@ -19,16 +19,6 @@ class CostosController extends Controller
 
     public $insumosList = array();
 
-    protected function getOptionsInsumos()
-    {
-        $options = CHtml::listData(Insumo::model()->findAllByAttributes(array('habilitado' => '1')), 'id_insumo', 'nombre');
-        $result = array();
-        foreach ($options as $value) {
-            $result[] = $value;
-        }
-        return $result;
-    }
-
     /**
      * @var CActiveRecord the currently loaded data model instance.
      */
@@ -73,7 +63,6 @@ class CostosController extends Controller
             exit;
         }
     }
-
 
     /***********************************************GET DATA METHODS***********************************/
 
@@ -175,6 +164,16 @@ class CostosController extends Controller
             $list[] = json_encode($item);
         }
         return $list;
+    }
+
+    protected function getOptionsInsumos()
+    {
+        $options = CHtml::listData(Insumo::model()->findAllByAttributes(array('habilitado' => '1')), 'id_insumo', 'nombre');
+        $result = array();
+        foreach ($options as $value) {
+            $result[] = $value;
+        }
+        return $result;
     }
 
 }

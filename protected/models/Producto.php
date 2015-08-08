@@ -74,10 +74,27 @@ class Producto
             {
                 $this->fecha = date('Y-m-d');
                 $this->raw_data_insumos = html_entity_decode($this->raw_data_insumos);
+                $this->raw_data_extras =  html_entity_decode($this->raw_data_extras);
                 return true;
             }
             return false;
         }
 
+    }
+
+    public function afterSave() {
+        $insumos = json_decode($this->raw_data_insumos);
+        if ($insumos){
+            foreach ($insumos as $jsonInsumo){
+                $insumo = json_decode($jsonInsumo,true);
+                $calculo = new Calculo();
+                $calculo->id_producto = $this->id_producto;
+                $calculo->id_insumo = $insumo['idInsumo'];
+                $calculo->cantidad_uso = $insumo['cantidad'];
+                $calculo->id_unidad = $insumo['unidad'];
+                $calculo->plancha_entera = $insumo['plancha_entera'];
+                $calculo->save();
+            }
+        }
     }
 }

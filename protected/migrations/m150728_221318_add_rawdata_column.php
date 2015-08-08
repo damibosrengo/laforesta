@@ -4,8 +4,8 @@ class m150728_221318_add_rawdata_column extends CDbMigration
 {
 	public function up()
 	{
-        $this->addColumn('producto','raw_data_insumos','varchar(300)');
-        $this->addColumn('producto','raw_data_extras','varchar(300)');
+        $this->addColumn('producto','raw_data_insumos','text');
+        $this->addColumn('producto','raw_data_extras','text');
 	}
 
 	public function down()
