@@ -157,6 +157,23 @@ class InsumoController extends Controller
         }
     }
 
+    public function actionMassiveImport(){
+//        $file = CUploadedFile::getInstanceByName('upload/test.csv');
+        $importer = new YiiExcelImporter('/srv/laforesta/upload/test.csv');
+        $importer->import('Insumo',[
+            ['attribute'=>'nombre','value'=>'$row[0]'],
+            ['attribute'=>'id_tipo','value'=>'$row[1]'],
+            ['attribute'=>'descripcion','value'=>'$row[2]'],
+            ['attribute'=>'costo_base','value'=>'$row[3]'],
+            ['attribute'=>'habilitado','value'=>'$row[4]'],
+            ['attribute'=>'largo','value'=>'$row[5]'],
+            ['attribute'=>'ancho','value'=>'$row[6]'],
+            ['attribute'=>'id_unidad','value'=>'$row[7]'],
+            ['attribute'=>'cantidad_total','value'=>'$row[8]'],
+            ['attribute'=>'costo_x_unidad','value'=>'$row[9]']
+        ]);
+    }
+
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
