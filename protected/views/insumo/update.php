@@ -7,7 +7,6 @@ $this->breadcrumbs=array(
 
 $this->menu=array(
 	array('label'=>'Listar Insumos', 'url'=>array('index')),
-	array('label'=>'Nuevo Insumo', 'url'=>array('create')),
 	array('label'=>'Ver Insumo', 'url'=>array('view', 'id'=>$model->id_insumo)),
 );
 ?>

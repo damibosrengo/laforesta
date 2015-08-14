@@ -158,20 +158,25 @@ class InsumoController extends Controller
     }
 
     public function actionMassiveImport(){
+        if (isset($_FILES['file'])) {
+
 //        $file = CUploadedFile::getInstanceByName('upload/test.csv');
-        $importer = new YiiExcelImporter('/srv/laforesta/upload/test.csv');
-        $importer->import('Insumo',[
-            ['attribute'=>'nombre','value'=>'$row[0]'],
-            ['attribute'=>'id_tipo','value'=>'$row[1]'],
-            ['attribute'=>'descripcion','value'=>'$row[2]'],
-            ['attribute'=>'costo_base','value'=>'$row[3]'],
-            ['attribute'=>'habilitado','value'=>'$row[4]'],
-            ['attribute'=>'largo','value'=>'$row[5]'],
-            ['attribute'=>'ancho','value'=>'$row[6]'],
-            ['attribute'=>'id_unidad','value'=>'$row[7]'],
-            ['attribute'=>'cantidad_total','value'=>'$row[8]'],
-            ['attribute'=>'costo_x_unidad','value'=>'$row[9]']
-        ]);
+            $importer = new YiiExcelImporter('/srv/laforesta/upload/test.csv');
+            $importer->import('Insumo', [
+                ['attribute' => 'nombre', 'value' => '$row[0]'],
+                ['attribute' => 'id_tipo', 'value' => '$row[1]'],
+                ['attribute' => 'descripcion', 'value' => '$row[2]'],
+                ['attribute' => 'costo_base', 'value' => '$row[3]'],
+                ['attribute' => 'habilitado', 'value' => '$row[4]'],
+                ['attribute' => 'largo', 'value' => '$row[5]'],
+                ['attribute' => 'ancho', 'value' => '$row[6]'],
+                ['attribute' => 'id_unidad', 'value' => '$row[7]'],
+                ['attribute' => 'cantidad_total', 'value' => '$row[8]'],
+                ['attribute' => 'costo_x_unidad', 'value' => '$row[9]']
+            ]);
+        } else {
+            $this->render('importForm');
+        }
     }
 
 	/**
