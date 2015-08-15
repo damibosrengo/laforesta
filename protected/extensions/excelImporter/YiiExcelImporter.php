@@ -13,7 +13,7 @@ class YiiExcelImporter {
      * Excel's parsed rows. Arrays of arrays
      * @var array
      */
-    private $_rows = [];
+    protected $_rows = [];
     /**
      * Rows getter
      * @return array
@@ -47,7 +47,7 @@ class YiiExcelImporter {
      * @param integer $total
      * @return boolean
      */
-    private function validateExpectedColsCount($rows, $total) {
+    protected function validateExpectedColsCount($rows, $total) {
         foreach ($rows as $line) {
             if (count($line) != $total) {
                 return false;
@@ -61,7 +61,7 @@ class YiiExcelImporter {
      * @param integer $start
      * @return array
      */
-    private function getAllRows($filename) {
+    protected function getAllRows($filename) {
         $allRows = [];
         if (($fp = fopen($filename, 'r')) !== FALSE) {
             while (($line = fgetcsv($fp, 0, ";")) !== FALSE) {
@@ -77,7 +77,7 @@ class YiiExcelImporter {
      * @param integer $start
      * @return array
      */
-    private function removeUnusedRows($rows, $start) {
+    protected function removeUnusedRows($rows, $start) {
         for ($i = 0; $i < $start; $i++) {
             unset($rows[$i]);
         }
@@ -133,7 +133,7 @@ class YiiExcelImporter {
      * @param array $attributes
      * @return boolean
      */
-    private function isModelUnique($class, $attributes) {
+    protected function isModelUnique($class, $attributes) {
         if (empty($attributes)) {
             return true;
         }

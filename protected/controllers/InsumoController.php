@@ -159,9 +159,8 @@ class InsumoController extends Controller
 
     public function actionMassiveImport(){
         if (isset($_FILES['file'])) {
-
-//        $file = CUploadedFile::getInstanceByName('upload/test.csv');
-            $importer = new YiiExcelImporter('/srv/laforesta/upload/test.csv');
+        $file = CUploadedFile::getInstanceByName('file');
+            $importer = new InsumoImporter($file->tempName);
             $importer->import('Insumo', [
                 ['attribute' => 'nombre', 'value' => '$row[0]'],
                 ['attribute' => 'id_tipo', 'value' => '$row[1]'],
@@ -174,9 +173,8 @@ class InsumoController extends Controller
                 ['attribute' => 'cantidad_total', 'value' => '$row[8]'],
                 ['attribute' => 'costo_x_unidad', 'value' => '$row[9]']
             ]);
-        } else {
-            $this->render('importForm');
         }
+        $this->render('importForm');
     }
 
 	/**
