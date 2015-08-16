@@ -301,4 +301,13 @@ class Insumo extends CActiveRecord
         return $planchas * $this->getCostoUnitario();
 
     }
+
+    public function getInstanceByName($name){
+        $exist = $this->findByAttributes(array('nombre'=>$name));
+        if ($exist){
+            return $exist;
+        }
+        return null;
+
+    }
 }

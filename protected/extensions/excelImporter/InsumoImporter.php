@@ -10,6 +10,15 @@ class InsumoImporter
     extends YiiExcelImporter
 {
 
+    protected function getExpressionToName($expressions) {
+        foreach ($expressions as $expr){
+            if ($expr['attribute'] == 'nombre'){
+                return $expr['value'];
+            }
+        }
+        return null;
+    }
+
     public function import($class, $configs)
     {
         $rows = $this->getRows();
@@ -18,9 +27,12 @@ class InsumoImporter
         $linea = 2;
         foreach ($rows as $line) {
             /* @var $model CActiveRecord */
-            $model = new $class;
-//            $model->setScenario('update');
-//            $model->setIsNewRecord('false');
+            $model = Insumo::model()->getInstanceByName(Yii::app()->evaluateExpression($this->getExpressionToName($configs), array('row' => $line)));
+            if (empty($model)){
+                $model = new Insumo();
+            } else {
+                $model->setScenario('update');
+            }
             $uniqueAttributes = [];
             foreach ($configs as $config) {
                 if (isset($config['attribute']) && $model->hasAttribute($config['attribute'])) {
@@ -57,7 +69,7 @@ class InsumoImporter
 
     protected function setOks($qty){
         if ($qty>0) {
-            Yii::app()->user->setFlash('success', "Se insertaron con éxito $qty insumos");
+            Yii::app()->user->setFlash('success', "Se insertaron/actualizaron con éxito $qty insumos");
         } else {
             Yii::app()->user->setFlash('error',"No se pudo insertar ningún insumo");
         }
