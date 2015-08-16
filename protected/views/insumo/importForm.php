@@ -4,7 +4,11 @@
 
     <?php
         foreach (Yii::app()->user->getFlashes() as $key => $message) {
-            echo '<div class="flash-' . $key . '">' . $message . "</div>\n";
+            if (strpos($key,'error') !== false){
+                echo '<div class="flash-error">' . $message . "</div>";
+            } else {
+                echo '<div class="flash-' . $key . '">' . $message . "</div>";
+            }
         }
     ?>
 

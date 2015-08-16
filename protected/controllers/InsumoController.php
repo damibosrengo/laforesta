@@ -166,12 +166,12 @@ class InsumoController extends Controller
                 ['attribute' => 'id_tipo', 'value' => '$row[1]'],
                 ['attribute' => 'descripcion', 'value' => '$row[2]'],
                 ['attribute' => 'costo_base', 'value' => '$row[3]'],
-                ['attribute' => 'habilitado', 'value' => '$row[4]'],
-                ['attribute' => 'largo', 'value' => '$row[5]'],
-                ['attribute' => 'ancho', 'value' => '$row[6]'],
-                ['attribute' => 'id_unidad', 'value' => '$row[7]'],
-                ['attribute' => 'cantidad_total', 'value' => '$row[8]'],
-                ['attribute' => 'costo_x_unidad', 'value' => '$row[9]']
+                ['attribute' => 'habilitado', 'value' => '"1"'],
+                ['attribute' => 'largo', 'value' => '$row[4]'],
+                ['attribute' => 'ancho', 'value' => '$row[5]'],
+                ['attribute' => 'id_unidad', 'value' => '$row[6]'],
+                ['attribute' => 'cantidad_total', 'value' => '$row[7]'],
+                ['attribute' => 'costo_x_unidad', 'value' => '$row[7]']
             ]);
         }
         $this->render('importForm');

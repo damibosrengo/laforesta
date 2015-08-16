@@ -19,6 +19,8 @@ class InsumoImporter
         foreach ($rows as $line) {
             /* @var $model CActiveRecord */
             $model = new $class;
+//            $model->setScenario('update');
+//            $model->setIsNewRecord('false');
             $uniqueAttributes = [];
             foreach ($configs as $config) {
                 if (isset($config['attribute']) && $model->hasAttribute($config['attribute'])) {
@@ -40,7 +42,7 @@ class InsumoImporter
             if ($this->isModelUnique($class, $uniqueAttributes)) {
                 if (!$model->save()){
                     if ($model->hasErrors()){
-                        $errors['linea '.$linea] = $model->getErrors();
+                        $errors['Línea '.$linea] = $model->getErrors();
                     }
                 } else {
                     $countInserted++;
@@ -66,7 +68,7 @@ class InsumoImporter
             foreach ($errors as $line=>$errorsLine){
                 foreach ($errorsLine as $errorsModel){
                     foreach ($errorsModel as $e) {
-                        Yii::app()->user->setFlash('error', "$line: $e");
+                        Yii::app()->user->setFlash("error_$line", "$line: $e");
                     }
                 }
             }
