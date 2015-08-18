@@ -166,10 +166,12 @@ class Insumo extends CActiveRecord
         }
     }
 
-    public function getCostoTotalInsumo()
+    public function getCostoTotalInsumo($dataUso = null)
     {
         if ($this->costoTotal == null) {
-            $dataUso = $this->postData;
+            if (empty($dataUso)){
+                $dataUso = $this->postData;
+            }
             $cantidad = (isset($dataUso['cantidad'])) ? $dataUso['cantidad'] : 0;
             switch ($this->id_tipo) {
                 case TipoInsumo::TIPO_SUPERFICIE: {

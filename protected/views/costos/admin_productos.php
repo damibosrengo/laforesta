@@ -50,6 +50,7 @@ foreach(Yii::app()->user->getFlashes() as $key => $message) {
 		array(
 			'class'=>'CButtonColumn',
             'deleteButtonUrl'=> '$this->grid->controller->createUrl("/producto/delete", array("id"=>$data->id_producto))',
+            'viewButtonUrl'=>'$this->grid->controller->createUrl("/producto/view", array("id"=>$data->id_producto))',
             'template'=>'{view}{delete}'
 		),
 	),

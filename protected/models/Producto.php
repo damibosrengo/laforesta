@@ -48,11 +48,11 @@ class Producto
 //        $criteria->compare('costo',$this->getCosto());
 
         if (!empty($this->to_date)) {
-            $criteria->addCondition('fecha <= "' . $this->to_date . '" ');
+            $criteria->addCondition(' UNIX_TIMESTAMP(fecha) <= "' . CDateTimeParser::parse($this->to_date,'dd-MM-yyyy') . '" ');
         }
 
         if (!empty($this->from_date)) {
-            $criteria->addCondition('fecha  >= "' . $this->from_date . '" ');
+            $criteria->addCondition(' UNIX_TIMESTAMP(fecha)  >= "' . CDateTimeParser::parse($this->from_date,'dd-MM-yyyy') . '" ');
         }
 
 
@@ -115,4 +115,5 @@ class Producto
             }
         }
     }
+
 }
