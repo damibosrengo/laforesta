@@ -42,11 +42,6 @@ foreach(Yii::app()->user->getFlashes() as $key => $message) {
                     'htmlOptions' => array('placeHolder'=>'A:', 'id'=>'to_date','style'=>'width:80px;display: block;'),
                 ), true ),
         ),
-        array('header'=>'Costo','name'=>'costo','filter'=>'','htmlOptions'=>array('class'=>'right'),
-            'value'=>function ($data){
-                return number_format($data->costo, 2,',','');
-            }
-        ),
 		array(
 			'class'=>'CButtonColumn',
             'deleteButtonUrl'=> '$this->grid->controller->createUrl("/producto/delete", array("id"=>$data->id_producto))',

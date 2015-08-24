@@ -5,7 +5,8 @@
  *
  * The followings are the available columns in table 'Insumo':
  */
-class Insumo extends CActiveRecord
+class Insumo
+    extends CActiveRecord
 {
     const ERROR_PARAMS = -1;
     const ERROR_CONNECTION = -2;
@@ -14,7 +15,7 @@ class Insumo extends CActiveRecord
     protected $ws_url_optcortes = 'http://www.placacentro.com/optimizador.exe';
 
     public $postData = null;
-    public  $costoTotal = null;
+    public $costoTotal = null;
 
     /**
      * @return string the associated database table name
@@ -57,8 +58,8 @@ class Insumo extends CActiveRecord
     {
 
         return array(
-            'tipo' => array(self::BELONGS_TO, 'TipoInsumo', 'id_tipo'),
-            'unidad' => array(self::BELONGS_TO, 'Unidad', 'id_unidad'),
+            'tipo'     => array(self::BELONGS_TO, 'TipoInsumo', 'id_tipo'),
+            'unidad'   => array(self::BELONGS_TO, 'Unidad', 'id_unidad'),
             'calculos' => array(self::HAS_MANY, 'Calculo', 'id_insumo'),
         );
     }
@@ -69,10 +70,10 @@ class Insumo extends CActiveRecord
     public function attributeLabels()
     {
         return array(
-            'id_tipo' => 'Tipo de insumo',
+            'id_tipo'     => 'Tipo de insumo',
             'descripcion' => 'Descripción',
-            'habilitado' => 'Estado',
-            'id_unidad' => 'Unidad'
+            'habilitado'  => 'Estado',
+            'id_unidad'   => 'Unidad'
         );
     }
 
@@ -103,12 +104,13 @@ class Insumo extends CActiveRecord
             'Pagination' => array(
                 'PageSize' => 20
             ),
-            'criteria' => $criteria,
+            'criteria'   => $criteria,
         ));
     }
 
     /**
      * Returns the static model of the specified AR class.
+     *
      * @return Insumo the static model class
      */
     public static function model($className = __CLASS__)
@@ -125,6 +127,7 @@ class Insumo extends CActiveRecord
                 $this->costo_x_unidad = $this->costo_base;
             }
         }
+
         return parent::beforeSave();
     }
 
@@ -157,9 +160,10 @@ class Insumo extends CActiveRecord
                         $result .= $corte['cantidad'] . ' de ' . $largo . $this->unidad->nombre . ' X ' . $ancho . $this->unidad->nombre . ' Girar ' . $girar . '<br/>';
                     }
                 } else {
-                    $planchas = ($cantidad>1)?'planchas':'plancha';
-                    $result = $cantidad . ' '.$planchas;
+                    $planchas = ($cantidad > 1) ? 'planchas' : 'plancha';
+                    $result = $cantidad . ' ' . $planchas;
                 }
+
                 return $result;
                 break;
             }
@@ -169,7 +173,7 @@ class Insumo extends CActiveRecord
     public function getCostoTotalInsumo($dataUso = null)
     {
         if ($this->costoTotal == null) {
-            if (empty($dataUso)){
+            if (empty($dataUso)) {
                 $dataUso = $this->postData;
             }
             $cantidad = (isset($dataUso['cantidad'])) ? $dataUso['cantidad'] : 0;
@@ -202,6 +206,7 @@ class Insumo extends CActiveRecord
                 }
             }
         }
+
         return $this->costoTotal;
     }
 
@@ -210,6 +215,7 @@ class Insumo extends CActiveRecord
         if ($this->id_tipo == TipoInsumo::TIPO_LINEAL) {
             return $this->costo_x_unidad;
         }
+
         return $this->costo_base;
     }
 
@@ -221,10 +227,12 @@ class Insumo extends CActiveRecord
         foreach ($cortes as $c) {
             $cut = json_decode($c, true);
             if (($cut['largo'] >= $this->largo || $cut['ancho'] >= $this->ancho)
-                && ($cut['largo'] >= $this->ancho || $cut['ancho'] >= $this->largo)) {
+                && ($cut['largo'] >= $this->ancho || $cut['ancho'] >= $this->largo)
+            ) {
                 return false;
             }
         }
+
         return true;
     }
 
@@ -282,34 +290,68 @@ class Insumo extends CActiveRecord
             $cantidad = (isset($cut['cantidad'])) ? $cut['cantidad'] : 0;
             $ancho = (isset($cut['ancho'])) ? $this->getValueInMM($cut['ancho']) : 0;
             $largo = (isset($cut['largo'])) ? $this->getValueInMM($cut['largo']) : 0;
-            $result .= "cantidad_$index=$cantidad&ancho_$index=$ancho&alto_$index=$largo&rotar_$index=".$cut['girar']."&";
+            $result .= "cantidad_$index=$cantidad&ancho_$index=$ancho&alto_$index=$largo&rotar_$index=" . $cut['girar'] . "&";
             $index++;
         }
         $result .= "num=$index";
+
         return $result;
     }
 
     protected function getCostoSuperficieUsada($cortes)
     {
         $planchas = 0;
-        foreach ($cortes as $corte){
+        foreach ($cortes as $corte) {
             $covertura = $corte['cover'];
-            if ($covertura > 50){
+            if ($covertura > 50) {
                 $planchas += 1;
             } else {
                 $planchas += 0.5;
             }
         }
+
         return $planchas * $this->getCostoUnitario();
 
     }
 
-    public function getInstanceByName($name){
-        $exist = $this->findByAttributes(array('nombre'=>$name));
-        if ($exist){
+    public function getInstanceByName($name)
+    {
+        $exist = $this->findByAttributes(array('nombre' => $name));
+        if ($exist) {
             return $exist;
         }
+
         return null;
 
+    }
+
+    public function getDescriptionUso($dataUso)
+    {
+        switch ($this->id_tipo) {
+            case TipoInsumo::TIPO_DIRECTO: {
+                if ($dataUso['cantidad'] == 1) {
+                    return '(x 1 unidad)';
+                } else {
+                    return '(x ' . $dataUso['cantidad'] . ' unidades)';
+                }
+                break;
+            }
+            case TipoInsumo::TIPO_LINEAL: {
+                return '(x '.$dataUso['cantidad'].' '.$dataUso['unidad'].')';
+                break;
+            }
+            case TipoInsumo::TIPO_SUPERFICIE: {
+                if ($dataUso['plancha_entera'] == 1){
+                    if ($dataUso['cantidad'] == 1){
+                        return '(x 1 plancha)';
+                    } else {
+                        return '(x '.$dataUso['cantidad'].' planchas)';
+                    }
+                } else {
+                    return 'varios cortes';
+                }
+                break;
+            }
+        }
     }
 }

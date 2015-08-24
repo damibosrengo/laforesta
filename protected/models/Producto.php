@@ -45,7 +45,6 @@ class Producto
         $criteria->compare('id_producto', $this->id_producto);
         $criteria->compare('nombre', $this->nombre, true);
         $criteria->compare('descripcion', $this->descripcion, true);
-//        $criteria->compare('costo',$this->getCosto());
 
         if (!empty($this->to_date)) {
             $criteria->addCondition(' UNIX_TIMESTAMP(fecha) <= "' . CDateTimeParser::parse($this->to_date,'dd-MM-yyyy') . '" ');
@@ -62,11 +61,6 @@ class Producto
             ),
             'criteria'   => $criteria,
         ));
-    }
-
-    public function getCosto()
-    {
-        return 120;
     }
 
     public function beforeSave()
@@ -107,11 +101,11 @@ class Producto
             foreach ($extras as $jsonExtras){
                 $extraData =json_decode($jsonExtras,true);
                 if ($extraData){
-                    $extra = new Extra($extraData['type'], $extraData['valor_bruto'], $extraData['concepto'],true);
+                    $data = array('type'=>$extraData['type'],'valor'=>$extraData['valor_bruto'],'concepto'=>$extraData['concepto'],'_new'=>true);
+                    $extra = Extra::model()->loadData($data);
                 }
                 $extra->id_producto = $this->id_producto;
                 $extra->save();
-
             }
         }
     }

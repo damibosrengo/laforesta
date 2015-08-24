@@ -54,11 +54,10 @@ class Extra extends CActiveRecord {
         return parent::model($className);
     }
 
-    public function __construct($type,$valor,$concepto='',$new=false){
-        $this->type = $type;
-        $this->concepto = $concepto;
-        $this->valor = $valor;
-        $this->_new = $new;
+    public function loadData($data){
+        foreach ($data as $attribute=>$value){
+            $this->$attribute = $value;
+        }
     }
 
     public function getRowtotal($total){

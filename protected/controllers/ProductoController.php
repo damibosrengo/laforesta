@@ -75,27 +75,86 @@ class ProductoController
 
     protected function showablesAttributes($model)
     {
-        $insumosData = array();
-        $i = 0;
-        $dataInsumos = json_decode($model->raw_data_insumos, true);
-        foreach ($dataInsumos as $dataInsumo) {
-            $dataUso = json_decode($dataInsumo, true);
-            $insumo = Insumo::model()->findByPk($dataUso['idInsumo']);
-            $nombre = $insumo->nombre;
-            $costo = $insumo->getCostoTotalInsumo($dataUso);
-            $dataCalculo = array('name' => $nombre, 'value' => $costo);
-            $i++;
-            $insumosData[] = $dataCalculo;
-        }
         $result = array(
             array('name' => 'nombre', 'value' => $model->nombre),
             array('name' => 'descripcion', 'value' => $model->descripcion),
             array('name' => 'fecha', 'value' => date('d-m-Y', strtotime($model->fecha))),
         );
 
-        $result = array_merge($result, $insumosData);
+
+        $result = array_merge($result);
 
         return $result;
 
+    }
+
+    public function insumosView($model)
+    {
+        $insumosData = array();
+        $dataInsumos = json_decode($model->raw_data_insumos, true);
+        $subtotal = 0;
+        foreach ($dataInsumos as $dataInsumo) {
+            $dataUso = json_decode($dataInsumo, true);
+            $insumo = Insumo::model()->findByPk($dataUso['idInsumo']);
+            $nombre = $insumo->nombre;
+            $costo = $insumo->getCostoTotalInsumo($dataUso);
+            $subtotal += $costo;
+            $descripcionUso = $insumo->getDescriptionUso($dataUso);
+            $dataCalculo = array('name' => $nombre, 'value' => number_format($costo, 2) . ' ' . $descripcionUso);
+            $insumosData[] = $dataCalculo;
+        }
+        $insumosData[] = array('name' => 'Subtotal', 'value' => number_format($subtotal, 2));
+
+        return $insumosData;
+    }
+
+    public function extrasView($model, $subtotal)
+    {
+        $e = Extra::model();
+        $extrasProducto = $model->extras;
+        $extrasView = array();
+        $subtotalExtras = 0;
+        foreach ($extrasProducto as $extra) {
+            $detail = '';
+            if ($extra->type == Extra::TIPO_EXTRA_PORCENTAJE) {
+                $detail = '(' . $extra->valor . '%)';
+            }
+            $extraValue = $extra->getRowTotal($subtotal);
+            $subtotalExtras += $extraValue;
+            $dataExtra = array('name' => $extra->concepto, 'value' => number_format($extraValue, 2) . ' ' . $detail);
+            $extrasView[] = $dataExtra;
+        }
+        $extrasView[] = array('name' => 'Subtotal extras', 'value' => number_format($subtotalExtras, 2));
+
+        return $extrasView;
+    }
+
+    function actionUpdate()
+    {
+        $model = $this->loadModel();
+        $url = Yii::app()->createAbsoluteUrl('costos/calculate');
+        $params = array('insumos_list_field' => $model->raw_data_insumos, 'extras_list_field' => $model->raw_data_extras);
+        $params = http_build_query($params);
+        //open connection
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_HEADER, 1);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        //set the url, number of POST vars, POST data
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+
+        //execute post
+        $result = curl_exec($ch);
+        if ($result === false){
+            echo 'Curl error: ' . curl_error($ch);
+        } else {
+            echo$result;
+        }
+
+        //close connection
+        curl_close($ch);
     }
 }
