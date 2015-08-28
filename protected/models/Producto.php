@@ -78,6 +78,8 @@ class Producto
     }
 
     public function afterSave() {
+        //first clear
+        Calculo::model()->deleteAllByAttributes(array('id_producto' => $this->id_producto));
         $insumos = json_decode($this->raw_data_insumos);
         if ($insumos){
             foreach ($insumos as $jsonInsumo){
@@ -96,13 +98,16 @@ class Producto
             }
         }
 
+        //first clear
+        Extra::model()->deleteAllByAttributes(array('id_producto' => $this->id_producto));
         $extras = json_decode($this->raw_data_extras);
         if ($extras){
             foreach ($extras as $jsonExtras){
                 $extraData =json_decode($jsonExtras,true);
                 if ($extraData){
                     $data = array('type'=>$extraData['type'],'valor'=>$extraData['valor_bruto'],'concepto'=>$extraData['concepto'],'_new'=>true);
-                    $extra = Extra::model()->loadData($data);
+                    $extra = new Extra();
+                    $extra->loadData($data);
                 }
                 $extra->id_producto = $this->id_producto;
                 $extra->save();

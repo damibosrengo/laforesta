@@ -154,14 +154,16 @@ class CostosController extends Controller
         if (!empty($_POST['porcentaje']) && is_numeric($_POST['porcentaje'])) {
             $concepto = isset($_POST['porcentaje_concepto']) ? $_POST['porcentaje_concepto'] : '';
             $data = array('type'=>Extra::TIPO_EXTRA_PORCENTAJE,'valor'=>$_POST['porcentaje'],'concepto'=>$concepto);
-            $extra = Extra::model()->loadData($data);
+            $extra = Extra::model();
+            $extra->loadData($data);
             $item = array('type' => $extra->type, 'index' => count($list), 'concepto' => $extra->concepto, 'uso' => $extra->valor . '%','valor_bruto' => $extra->valor, 'rowtotal' => $extra->getRowTotal($this->getInsumosTotal()));
             $list[] = json_encode($item);
         }
         if (!empty($_POST['fijo']) && is_numeric($_POST['fijo'])) {
             $concepto = isset($_POST['fijo_concepto']) ? $_POST['fijo_concepto'] : '';
             $data = array('type'=>Extra::TIPO_EXTRA_FIJO,'valor'=>$_POST['fijo'],'concepto'=>$concepto);
-            $extra = Extra::model()->loadData($data);
+            $extra = Extra::model();
+            $extra->loadData($data);
             $item = array('type' => $extra->type, 'index' => count($list), 'concepto' => $extra->concepto, 'uso' => $extra->valor, 'valor_bruto' => $extra->valor, 'rowtotal' => $extra->getRowTotal($this->getInsumosTotal()));
             $list[] = json_encode($item);
         }
@@ -176,6 +178,26 @@ class CostosController extends Controller
             $result[] = $value;
         }
         return $result;
+    }
+
+    /**
+     * Returns the data model based on the primary key given in the GET variable.
+     * If the data model is not found, an HTTP exception will be raised.
+     */
+    public function loadModel()
+    {
+        if ($this->_model === null) {
+            if (isset($_GET['id'])) {
+                $this->_model = Producto::model()->findbyPk($_GET['id']);
+            } elseif (isset($_POST['Producto']) && !empty($_POST['Producto']['id_producto'])){
+                $this->_model = Producto::model()->findbyPk($_POST['Producto']['id_producto']);
+            } else {
+                $this->_model = new Producto();
+            }
+
+        }
+
+        return $this->_model;
     }
 
 }

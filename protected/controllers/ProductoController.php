@@ -17,7 +17,7 @@ class ProductoController
      */
     public function actionCreate()
     {
-        $model = new Producto();
+        $model = $this->loadModel();
 
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
@@ -25,6 +25,9 @@ class ProductoController
         if (isset($_POST['Producto'])) {
 
             $model->attributes = $_POST['Producto'];
+            if (!empty($model->id_producto)){
+                $model->_new = false;
+            }
             if ($model->save()) {
                 $this->redirect('index.php?r=costos/index');
                 exit;
@@ -42,7 +45,7 @@ class ProductoController
 
             // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
             if (!isset($_GET['ajax']))
-                $this->redirect(array('index'));
+                $this->redirect(array('costos/index'));
         } else
             throw new CHttpException(400, 'Invalid request. Please do not repeat this request again.');
     }
@@ -54,10 +57,14 @@ class ProductoController
     public function loadModel()
     {
         if ($this->_model === null) {
-            if (isset($_GET['id']))
+            if (isset($_GET['id'])) {
                 $this->_model = Producto::model()->findbyPk($_GET['id']);
-            if ($this->_model === null)
-                throw new CHttpException(404, 'The requested page does not exist.');
+            } elseif (isset($_POST['Producto']) && !empty($_POST['Producto']['id_producto'])){
+                $this->_model = Producto::model()->findbyPk($_POST['Producto']['id_producto']);
+            } else {
+                $this->_model = new Producto();
+            }
+
         }
 
         return $this->_model;
@@ -110,7 +117,6 @@ class ProductoController
 
     public function extrasView($model, $subtotal)
     {
-        $e = Extra::model();
         $extrasProducto = $model->extras;
         $extrasView = array();
         $subtotalExtras = 0;
@@ -133,12 +139,14 @@ class ProductoController
     {
         $model = $this->loadModel();
         $url = Yii::app()->createAbsoluteUrl('costos/calculate');
-        $params = array('insumos_list_field' => $model->raw_data_insumos, 'extras_list_field' => $model->raw_data_extras);
+        $params = array(
+            'insumos_list_field' => $model->raw_data_insumos,
+            'extras_list_field' => $model->raw_data_extras,
+            'id_producto'=>$model->id_producto);
         $params = http_build_query($params);
         //open connection
         $ch = curl_init();
 
-        curl_setopt($ch, CURLOPT_HEADER, 1);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         //set the url, number of POST vars, POST data
         curl_setopt($ch, CURLOPT_URL, $url);

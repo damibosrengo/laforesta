@@ -10,6 +10,12 @@ $this->menu=array(
     array('label'=>'Costos', 'url'=>array('index')),
     array('label'=>'Nuevo cálculo','url'=>array('new')),
 );
+
+$model = $this->loadModel();
+if (!empty($_POST['id_producto'])){
+    $model = $model->findByPk($_POST['id_producto']);
+}
+
 ?>
 <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/costos.js"></script>
 <h1>Calcular costo</h1>
@@ -17,6 +23,7 @@ $this->menu=array(
 <form id="submit-calculo" method="post" action="<?php echo Yii::app()->createUrl('costos/calculate'); ?>" onsubmit="return checkCalculo()">
 <input type="hidden" name="insumos_list_field" id="insumos_list_field" value="<?php echo $this->getInsumosListFieldValue(); ?>" />
 <input type="hidden" name="extras_list_field" id="extras_list_field" value="<?php echo $this->getExtrasListFieldValue(); ?>" />
+<input type="hidden" name="id_producto" id="ir_producto" value="<?php echo $model->id_producto ?>" />
     <table class="calculo_list">
     <!------------------------------TABLE HEAD ----------------------------------->
     <tr>
@@ -111,7 +118,6 @@ $this->menu=array(
     </form>
     <?php echo CHtml::button("Guardar producto",array('title'=>"Guardar Producto",'onclick'=>'showProductForm(this)','id'=>'showFormButton')); ?>
     <?php
-        $model = new Producto();
         $this->renderPartial('_productoForm', array('model'=>$model));
     ?>
 </div>

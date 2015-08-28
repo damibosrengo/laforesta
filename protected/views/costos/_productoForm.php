@@ -20,17 +20,18 @@
 
 	<div class="row" id="box_nombre">
 		<?php echo $form->labelEx($model,'nombre'); ?>
-		<?php echo $form->textField($model,'nombre',array('size'=>60,'maxlength'=>60)); ?>
+		<?php echo $form->textField($model,'nombre',array('size'=>60,'maxlength'=>60,'value'=>$model->nombre)); ?>
 		<?php echo $form->error($model,'nombre'); ?>
 	</div>
 
 	<div class="row" id="box_descripcion">
 		<?php echo $form->labelEx($model,'descripcion'); ?>
-		<?php echo $form->textArea($model,'descripcion',array('size'=>300,'maxlength'=>200)); ?>
+		<?php echo $form->textArea($model,'descripcion',array('size'=>300,'maxlength'=>200,'value'=>$model->nombre)); ?>
 		<?php echo $form->error($model,'descripcion'); ?>
 	</div>
 
     <?php echo $form->hiddenField($model,'fecha',array('value'=>date('Y-m-d',strtotime('Now')))); ?>
+    <?php echo $form->hiddenField($model,'id_producto',array('value'=>$model->id_producto)); ?>
     <?php echo $form->hiddenField($model,'raw_data_insumos',array('value'=> $this->getInsumosListFieldValue())); ?>
     <?php echo $form->hiddenField($model,'raw_data_extras',array('value'=> $this->getExtrasListFieldValue())); ?>
 
