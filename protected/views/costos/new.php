@@ -71,6 +71,7 @@ $this->menu=array(
     <form id="submit-calculo" method="post" action="<?php echo Yii::app()->createUrl('costos/calculate'); ?>" onsubmit="return checkInsumos()">
         <input type="hidden" name="insumos_list_field" id="insumos_list_field" value="<?php echo $this->getInsumosListFieldValue(); ?>" />
         <input type="hidden" name="extras_list_field" id="extras_list_field" value="<?php echo $this->getExtrasListFieldValue(); ?>" />
+        <input type="hidden" name="id_producto" id="ir_producto" value="<?php echo $_POST['id_producto'] ?>" />
         <?php echo CHtml::submitButton('Calcular',array('style'=>'float:right')); ?>
     </form>
 </div>

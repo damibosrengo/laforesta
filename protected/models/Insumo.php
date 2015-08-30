@@ -348,7 +348,7 @@ class Insumo
                         return '(x '.$dataUso['cantidad'].' planchas)';
                     }
                 } else {
-                    return 'varios cortes';
+                    return '(cortes)';
                 }
                 break;
             }
