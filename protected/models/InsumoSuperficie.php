@@ -29,7 +29,7 @@ class InsumoSuperficie extends Insumo {
         return $result;
     }
 
-    public function getCostoTotalInsumo() {
+    public function getCostoTotalInsumo($dataUso = null) {
         if ($this->costoTotal == null) {
             if (empty($dataUso)) {
                 $dataUso = $this->postData;
@@ -40,7 +40,6 @@ class InsumoSuperficie extends Insumo {
                 if (!$this->validateCortes($cortes)) {
                     $this->costoTotal = self::ERROR_PARAMS;
                 } else {
-                    $unidad = (isset($dataUso['unidad'])) ? $dataUso['unidad'] : null;
                     $get = $this->getUrlParamsWs($cortes);
                     $optimusCuts = @file_get_contents($this->ws_url_optcortes . '?' . $get);
                     $optimusCuts = json_decode($optimusCuts, true);
@@ -72,4 +71,15 @@ class InsumoSuperficie extends Insumo {
             return '(cortes)';
         }
     }
+
+    /**
+     * Returns the static model of the specified AR class.
+     *
+     * @return Insumo the static model class
+     */
+    public static function model($className = __CLASS__)
+    {
+        return parent::model($className);
+    }
+
 }
