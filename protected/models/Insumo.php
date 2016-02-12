@@ -5,14 +5,13 @@
  *
  * The followings are the available columns in table 'Insumo':
  */
-abstract class Insumo
+class Insumo
     extends CActiveRecord
 {
     const ERROR_PARAMS = -1;
     const ERROR_CONNECTION = -2;
 
     public $primaryKey = 'id_insumo';
-    protected $ws_url_optcortes = 'http://www.placacentro.com/optimizador.exe';
 
     public $postData = null;
     public $costoTotal = null;
@@ -139,114 +138,6 @@ abstract class Insumo
         return parent::model($className);
     }
 
-    /**
-     * @param $dataUso
-     * Return array
-     */
-    public abstract function getUso();
-
-
-    public abstract function getCostoTotalInsumo($dataUso = null);
-
-
-    public abstract function getCostoUnitario();
-
-
-    protected function validateCortes($cortes)
-    {
-        if (empty($cortes)) {
-            return false;
-        }
-        foreach ($cortes as $c) {
-            $cut = json_decode($c, true);
-            if (($cut['largo'] >= $this->largo || $cut['ancho'] >= $this->ancho)
-                && ($cut['largo'] >= $this->ancho || $cut['ancho'] >= $this->largo)
-            ) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    public function getValueInMM($value)
-    {
-        if ($this->unidad->nombre == 'MM') {
-            return $value;
-        }
-        if ($this->unidad->nombre == 'CM') {
-            return $value * 10;
-        }
-        if ($this->unidad->nombre == 'M') {
-            return $value * 1000;
-        }
-    }
-
-    public function getAnchoMM($ancho = null)
-    {
-        if (empty($ancho)) {
-            $ancho = $this->ancho;
-        }
-        if ($this->unidad->nombre == 'MM') {
-            return $ancho;
-        }
-        if ($this->unidad->nombre == 'CM') {
-            return $ancho * 10;
-        }
-        if ($this->unidad->nombre == 'M') {
-            return $ancho * 1000;
-        }
-    }
-
-    public function getLargoMM($largo = null)
-    {
-        if (empty($largo)) {
-            $largo = $this->largo;
-        }
-        if ($this->unidad->nombre == 'MM') {
-            return $largo;
-        }
-        if ($this->unidad->nombre == 'CM') {
-            return $largo * 10;
-        }
-        if ($this->unidad->nombre == 'M') {
-            return $largo * 1000;
-        }
-    }
-
-    protected function getUrlParamsWs($cortes)
-    {
-        $result = "ancho=" . $this->getAnchoMM() . "&alto=" . $this->getLargoMM() . "&hoja=3&minimo=0&";
-        $index = 1;
-        foreach ($cortes as $c) {
-            $cut = json_decode($c, true);
-            $cantidad = (isset($cut['cantidad'])) ? $cut['cantidad'] : 0;
-            $ancho = (isset($cut['ancho'])) ? $this->getValueInMM($cut['ancho']) : 0;
-            $largo = (isset($cut['largo'])) ? $this->getValueInMM($cut['largo']) : 0;
-            $result .= "cantidad_$index=$cantidad&ancho_$index=$ancho&alto_$index=$largo&rotar_$index=" . $cut['girar'] . "&";
-            $index++;
-        }
-        $result .= "num=$index";
-
-        return $result;
-    }
-
-    protected function getCostoSuperficieUsada($cortes)
-    {
-        $planchas = 0;
-        foreach ($cortes as $corte) {
-            $covertura = $corte['cover'];
-            if ($covertura > 50) {
-                $planchas += 1;
-            } else {
-                $planchas += 0.5;
-            }
-        }
-
-        return $planchas * $this->getCostoUnitario();
-
-    }
-
     public function getInstanceByName($name)
     {
         $exist = $this->findByAttributes(array('nombre' => $name));
@@ -258,6 +149,6 @@ abstract class Insumo
 
     }
 
-    public abstract function getDescriptionUso($dataUso);
+
 
 }
