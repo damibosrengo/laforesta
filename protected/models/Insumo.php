@@ -24,25 +24,44 @@ class Insumo
         return 'insumo';
     }
 
-    protected function instantiate($attributes){
-        switch($attributes['id_tipo']){
-            case  TipoInsumo::TIPO_LINEAL:{
-                return new InsumoLineal();
+    protected function instantiate($attributes)
+    {
+        switch ($attributes['id_tipo']) {
+            case  TipoInsumo::TIPO_LINEAL: {
+                $instance = new InsumoLineal();
+
+                return $instance->instantiate($attributes);
                 break;
             }
             case TipoInsumo::TIPO_DIRECTO: {
-                return new InsumoDirecto();
+                $instance = new InsumoDirecto();
+
+                return $instance->instantiate($attributes);
                 break;
             }
             case TipoInsumo::TIPO_SUPERFICIE: {
-                return new InsumoSuperficie();
+                $instance = new InsumoSuperficie();
+
+                return $instance->instantiate($attributes);
                 break;
             }
             default: {
-                throw new Exception("No se pudo establecer el tipo de insumo para el insumo de ID ".$attributes[$this->primaryKey]);
+                throw new Exception("No se pudo establecer el tipo de insumo para el insumo de ID " . $attributes[$this->primaryKey]);
             }
         }
-        return $attributes['is_student'] ? new Student(null) : new Teacher(null);
+    }
+
+    protected function beforeSave()
+    {
+        if ($this->id_tipo == TipoInsumo::TIPO_LINEAL) {
+            if ($this->cantidad_total > 0) {
+                $this->costo_x_unidad = number_format($this->costo_base / $this->cantidad_total, 3);
+            } else {
+                $this->costo_x_unidad = $this->costo_base;
+            }
+
+            return parent::beforeSave();
+        }
     }
 
     /**
@@ -148,7 +167,6 @@ class Insumo
         return null;
 
     }
-
 
 
 }

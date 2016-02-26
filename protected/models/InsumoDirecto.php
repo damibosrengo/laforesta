@@ -11,6 +11,11 @@ class InsumoDirecto
     implements InsumoInterface
 {
 
+
+    protected function instantiate($attributes) {
+        return CActiveRecord::instantiate($attributes);
+    }
+
     public function getUso()
     {
         $dataUso = $this->postData;

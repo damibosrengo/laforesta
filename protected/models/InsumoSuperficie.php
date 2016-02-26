@@ -13,6 +13,11 @@ class InsumoSuperficie
 
     protected $ws_url_optcortes = 'http://www.placacentro.com/optimizador.exe';
 
+
+    protected function instantiate($attributes) {
+        return CActiveRecord::instantiate($attributes);
+    }
+
     public function getUso()
     {
         $dataUso = $this->postData;

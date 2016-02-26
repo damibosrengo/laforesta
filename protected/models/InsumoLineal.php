@@ -11,6 +11,10 @@ class InsumoLineal
     implements InsumoInterface
 {
 
+    protected function instantiate($attributes) {
+        return CActiveRecord::instantiate($attributes);
+    }
+
     public function getUso()
     {
         $dataUso = $this->postData;
@@ -40,15 +44,6 @@ class InsumoLineal
     public function getDescriptionUso($dataUso)
     {
         return '(x ' . $dataUso['cantidad'] . ' ' . $dataUso['unidad'] . ')';
-    }
-
-    protected function beforeSave()
-    {
-        if ($this->cantidad_total > 0) {
-            $this->costo_x_unidad = number_format($this->costo_base / $this->cantidad_total, 3);
-        } else {
-            $this->costo_x_unidad = $this->costo_base;
-        }
     }
 
 }

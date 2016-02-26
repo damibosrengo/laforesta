@@ -99,9 +99,9 @@ class InsumoController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Insumo']))
+		if(isset($_POST[get_class($model)]))
 		{
-			$model->attributes=$_POST['Insumo'];
+			$model->attributes=$_POST[get_class($model)];
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id_insumo));
 		}
