@@ -51,7 +51,13 @@ $this->menu=array(
         $form->id = 'CostoInsumoLineal';
         $this->renderPartial('_costosInsumo', array('form'=>$form,'typeForm'=>'boxForm_lineal'));
 
-        $model = new CostosInsumoSuperficieForm;
+        $model = new CostosInsumoSuperficieEnteraForm();
+        $form = new CForm('application.views.costos._costosInsumoSuperficieEnteraForm', $model);
+        $form->action = 'javascript: submitInsumoSuperficieEntera()';
+        $form->id = 'CostoInsumoSuperficieEntera';
+        $this->renderPartial('_costosInsumo', array('form'=>$form,'typeForm'=>'boxForm_superficieEntera'));
+
+        $model = new CostosInsumoSuperficieForm();
         $form = new CForm('application.views.costos._costosInsumoSuperficieForm', $model);
         $form->action = 'javascript: submitInsumoSuperficie()';
         $form->id = 'CostoInsumoSuperficie';
@@ -65,6 +71,7 @@ $this->menu=array(
     <form id="submit-calculo" method="post" action="<?php echo Yii::app()->createUrl('costos/calculate'); ?>" onsubmit="return checkInsumos()">
         <input type="hidden" name="insumos_list_field" id="insumos_list_field" value="<?php echo $this->getInsumosListFieldValue(); ?>" />
         <input type="hidden" name="extras_list_field" id="extras_list_field" value="<?php echo $this->getExtrasListFieldValue(); ?>" />
+        <input type="hidden" name="id_producto" id="ir_producto" value="<?php echo $_POST['id_producto'] ?>" />
         <?php echo CHtml::submitButton('Calcular',array('style'=>'float:right')); ?>
     </form>
 </div>

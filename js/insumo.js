@@ -4,18 +4,18 @@ function setTipo(idTipo){
     switch (idTipo){
         case TIPO_INSUMO_DIRECTO:
         {
-            enableBase();
+            enableBase('Directo');
             break;
         }
         case TIPO_INSUMO_LINEAL:
         {
-            enableBase();
+            enableBase('Lineal');
             showLineal();
             break;
         }
         case TIPO_INSUMO_SUPERFICIE:
         {
-            enableBase();
+            enableBase('Superficie');
             showSuperficie();
             break;
         }
@@ -32,18 +32,21 @@ function hideAll(){
     $('#Insumo_id_tipo').removeAttr('disabled');
 }
 
-function enableBase(){
+function enableBase(sufix){
     $('#box_nombre, #box_descripcion, #box_costo_base, #box_habilitado, #box_submit').css('display','block');
-    $('#Insumo_nombre, #Insumo_descripcion, #Insumo_costo_base, #Insumo_habilitado, #Insumo_submit').removeAttr('disabled');
+    $('#Insumo'+sufix+'_nombre, #Insumo'+sufix+'_descripcion, #Insumo'+sufix+'_costo_base, #Insumo'+sufix+'_habilitado, #Insumo_submit').removeAttr('disabled');
+    $('#Insumo_nombre, #Insumo_descripcion, #Insumo_costo_base, #Insumo_habilitado').removeAttr('disabled');
 }
 
 
 function showLineal(){
     $('#box_unidad, #box_cantidad_total').css('display','block');
+    $('#InsumoLineal_id_unidad, #InsumoLineal_cantidad_total').removeAttr('disabled');
     $('#Insumo_id_unidad, #Insumo_cantidad_total').removeAttr('disabled');
 }
 
 function showSuperficie(){
     $('#box_unidad, #box_largo, #box_ancho').css('display','block');
+    $('#InsumoSuperficie_id_unidad, #InsumoSuperficie_largo, #InsumoSuperficie_ancho').removeAttr('disabled');
     $('#Insumo_id_unidad, #Insumo_largo, #Insumo_ancho').removeAttr('disabled');
 }

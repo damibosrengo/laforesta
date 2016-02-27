@@ -6,7 +6,6 @@ $this->breadcrumbs=array(
 
 $this->menu=array(
 	array('label'=>'Listar Insumos', 'url'=>array('index')),
-	array('label'=>'Nuevo Insumo', 'url'=>array('create')),
 	array('label'=>'Actualizar Insumo', 'url'=>array('update', 'id'=>$model->id_insumo)),
 	array('label'=>'Eliminar Insumo', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id_insumo),'confirm'=>Yii::t('zii','Are you sure you want to delete this item?'))),
 );

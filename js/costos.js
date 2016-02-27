@@ -18,7 +18,9 @@ function cancelAddInsumo(){
     $("#CostoInsumoDirecto")[0].reset();
     $("#CostoInsumoLineal")[0].reset();
     $("#CostoInsumoSuperficie")[0].reset();
+    $("#CostoInsumoSuperficieEntera")[0].reset();
     $('#boxForm_superficie').hide();
+    $('#boxForm_superficieEntera').hide();
     $('#boxForm_lineal').hide();
     $('#boxForm_directo').hide();
     $('#insumo').val('');
@@ -45,7 +47,9 @@ function buildForm(insumo){
             }
             case TIPO_INSUMO_SUPERFICIE:
             {
-                $('#boxForm_superficie').slideDown(600);
+                $('#boxForm_superficieEntera').slideDown(600);
+                $('#CostosInsumoSuperficieEnteraForm_idInsumo').val(insumo.id_insumo);
+                $('#CostosInsumoSuperficieEnteraForm_nombre').val(insumo.nombre);
                 $('#CostosInsumoSuperficieForm_unidad option:eq('+insumo.id_unidad+')').prop('selected','selected');
                 $('#CostosInsumoSuperficieForm_unidad').prop('disabled','disabled');
                 $('#CostosInsumoSuperficieForm_idInsumo').val(insumo.id_insumo);
@@ -54,6 +58,20 @@ function buildForm(insumo){
             }
         }
 
+    }
+}
+
+function changeSuperficieScenario(checkbox){
+    if (checkbox.checked){
+        $('#boxForm_superficie').slideUp(0);
+        $('#boxForm_superficieEntera').slideDown(600);
+        $('#CostosInsumoSuperficieEnteraForm_plancha_entera').prop('checked',true);
+        $('#CostosInsumoSuperficieForm_plancha_entera').prop('checked', false);
+    } else {
+        $('#boxForm_superficieEntera').slideUp(0);
+        $('#boxForm_superficie').slideDown(600);
+        $('#CostosInsumoSuperficieEnteraForm_plancha_entera').prop('checked',true);
+        $('#CostosInsumoSuperficieForm_plancha_entera').prop('checked', false);
     }
 }
 
@@ -68,7 +86,7 @@ function submitInsumoDirecto(){
         alert('Ingrese una cantidad a utilizar válida');
         return false;
     }
-    addInsumoToList(idinsumo,cantidad,nombre,'','','');
+    addInsumoToList(idinsumo,cantidad,nombre,'','','','','');
     renderList();
     cancelAddInsumo();
     return false;
@@ -86,7 +104,7 @@ function submitInusmoLineal(){
         alert('Ingrese una cantidad a utilizar válida');
         return false;
     }
-    addInsumoToList(idinsumo,cantidad,nombre,unidad,'','');
+    addInsumoToList(idinsumo,cantidad,nombre,unidad,'','','','');
     renderList();
     cancelAddInsumo();
     return false;
@@ -100,6 +118,7 @@ function submitInsumoSuperficie(){
     var unidad = $("#CostosInsumoSuperficieForm_unidad option:selected").html();
     var largo = $('#CostosInsumoSuperficieForm_largo').val();
     var ancho = $('#CostosInsumoSuperficieForm_ancho').val();
+    var girar = $('#CostosInsumoSuperficieForm_girar').val();
     if (cantidad.length == 0){
         alert('Ingrese la cantidad a utilizar');
         return false;
@@ -121,7 +140,24 @@ function submitInsumoSuperficie(){
         alert('Ingrese el ancho a utilizar válido');
         return false;
     }
-    addInsumoToList(idinsumo,cantidad,nombre,unidad,largo,ancho);
+    addInsumoToList(idinsumo,cantidad,nombre,unidad,largo,ancho,girar,'');
+    renderList();
+    cancelAddInsumo();
+    return false;
+}
+
+function submitInsumoSuperficieEntera(){
+    var nombre = $('#CostosInsumoSuperficieEnteraForm_nombre').val();
+    var idinsumo = $('#CostosInsumoSuperficieEnteraForm_idInsumo').val();
+    var cantidad = $('#CostosInsumoSuperficieEnteraForm_cantidad').val();
+    if (cantidad.length == 0){
+        alert('Ingrese la cantidad a utilizar');
+        return false;
+    } else if (isNaN(cantidad)){
+        alert('Ingrese una cantidad a utilizar válida');
+        return false;
+    }
+    addInsumoToList(idinsumo,cantidad,nombre,'','','','',1);
     renderList();
     cancelAddInsumo();
     return false;
@@ -144,13 +180,20 @@ function mergeInsumoList(list,obj){
            var itemObj = $.parseJSON(item);
            if (itemObj.idInsumo == obj.idInsumo) {
                if (obj.cortes != undefined && obj.cortes.length > 0) {
-                   itemObj.cortes.push(obj.cortes[0]);
+                    if (itemObj.cortes != undefined) {
+                        itemObj.cortes.push(obj.cortes[0]);
+                        list.splice(index, 1);
+                        list.push(JSON.stringify(itemObj));
+                        flagExists = true;
+                    }
                } else {
-                   itemObj.cantidad = parseFloat(itemObj.cantidad) + parseFloat(obj.cantidad);
+                    if (itemObj.cantidad != undefined && itemObj.cantidad > 0) {
+                        itemObj.cantidad = parseFloat(itemObj.cantidad) + parseFloat(obj.cantidad);
+                        list.splice(index, 1);
+                        list.push(JSON.stringify(itemObj));
+                        flagExists = true;
+                    }
                }
-               list.splice(index, 1);
-               list.push(JSON.stringify(itemObj));
-               flagExists = true;
            }
        }
     });
@@ -161,17 +204,21 @@ function mergeInsumoList(list,obj){
     return list;
 }
 
-function addInsumoToList(idinsumo,cantidad,nombre,unidad,largo,ancho){
+function addInsumoToList(idinsumo,cantidad,nombre,unidad,largo,ancho,girar,plancha_entera){
     var obj = {};
     obj.idInsumo=idinsumo;
     obj.cantidad=cantidad;
     obj.nombre=nombre;
+    if (plancha_entera != ''){
+        obj.plancha_entera = 1;
+    }
 
     if (largo.length > 0 || ancho.length > 0){
         var corte = {};
         corte.cantidad = obj.cantidad;
         corte.largo = largo;
         corte.ancho = ancho;
+        corte.girar = girar;
         obj.cantidad = 0;
         obj.cortes = [];
         obj.cortes.push(JSON.stringify(corte));
@@ -216,7 +263,12 @@ function renderList(){
                     var tdCantidad = '';
                     $.each(item.cortes,function(cIndex,cItem){
                         var cte = $.parseJSON(cItem);
-                        tdCantidad += cte.cantidad + ' (' +  cte.largo + ' x ' +  cte.ancho + ' ' +  item.unidad + ");<br> ";
+                        if (cte.girar == '1'){
+                            girar = 'Si';
+                        } else {
+                            girar = 'No';
+                        }
+                        tdCantidad += cte.cantidad + ' (' +  cte.largo + ' x ' +  cte.ancho + ' ' +  item.unidad + ', girar '+ girar +");<br> ";
                     })
                     tdCantidad = $('<td>' + tdCantidad + '</td>');
                 } else if(item.unidad != undefined) {
@@ -269,4 +321,14 @@ function quitarExtra(indexExtra){
     list.splice(indexExtra,1);
     $("#extras_list_field").val(JSON.stringify(list));
     $("#submit-calculo").submit();
+}
+
+function showProductForm(el){
+    $('#product-form-box').slideDown(200);
+    $('#'+el.id).hide();
+}
+
+function hideProductForm(){
+    $('#product-form-box').slideUp(100);
+    $('#showFormButton').show();
 }

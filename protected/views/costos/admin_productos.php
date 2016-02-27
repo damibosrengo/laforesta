@@ -8,7 +8,11 @@ $this->menu=array(
 	array('label'=>'Nuevo Cálculo', 'url'=>array('new')),
 );
 
+foreach(Yii::app()->user->getFlashes() as $key => $message) {
+    echo '<div class="flash-' . $key . '">' . $message . "</div>\n";
+}
 ?>
+
 <h1>Costo de productos</h1>
 
 <?php echo CHtml::button('Reset', array('submit' => array('costos/index'))); ?>
@@ -38,15 +42,11 @@ $this->menu=array(
                     'htmlOptions' => array('placeHolder'=>'A:', 'id'=>'to_date','style'=>'width:80px;display: block;'),
                 ), true ),
         ),
-        array('header'=>'Costo','name'=>'costo','filter'=>'','htmlOptions'=>array('class'=>'right'),
-            'value'=>function ($data){
-                return number_format($data->costo, 2,',','');
-            }
-        ),
 		array(
 			'class'=>'CButtonColumn',
-            'updateButtonUrl'=> '$this->grid->controller->createUrl("/costos/update_product", array("id"=>$data->id_producto))',
-            'deleteButtonUrl'=> '$this->grid->controller->createUrl("/costos/delete_product", array("id"=>$data->id_producto))',
+            'deleteButtonUrl'=> '$this->grid->controller->createUrl("/producto/delete", array("id"=>$data->id_producto))',
+            'viewButtonUrl'=>'$this->grid->controller->createUrl("/producto/view", array("id"=>$data->id_producto))',
+            'template'=>'{view}{delete}'
 		),
 	),
 ));

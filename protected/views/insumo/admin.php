@@ -6,6 +6,7 @@ $this->breadcrumbs=array(
 
 $this->menu=array(
 	array('label'=>'Nuevo Insumo', 'url'=>array('create')),
+    array('label'=>'Importación masiva', 'url'=>array('massiveImport')),
 );
 
 ?>

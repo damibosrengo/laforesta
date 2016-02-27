@@ -34,3 +34,5 @@ assets
 
 #ignore runtime logs
 protected/runtime
+
+upload/*

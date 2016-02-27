@@ -99,9 +99,9 @@ class InsumoController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Insumo']))
+		if(isset($_POST[get_class($model)]))
 		{
-			$model->attributes=$_POST['Insumo'];
+			$model->attributes=$_POST[get_class($model)];
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id_insumo));
 		}
@@ -155,6 +155,26 @@ class InsumoController extends Controller
                 echo CJSON::encode($insumo->attributes);
             }
         }
+    }
+
+    public function actionMassiveImport(){
+        if (isset($_FILES['file'])) {
+        $file = CUploadedFile::getInstanceByName('file');
+            $importer = new InsumoImporter($file->tempName);
+            $importer->import('Insumo', [
+                ['attribute' => 'nombre', 'value' => '$row[0]'],
+                ['attribute' => 'id_tipo', 'value' => '$row[1]'],
+                ['attribute' => 'descripcion', 'value' => '$row[2]'],
+                ['attribute' => 'costo_base', 'value' => '$row[3]'],
+                ['attribute' => 'habilitado', 'value' => '"1"'],
+                ['attribute' => 'largo', 'value' => '$row[4]'],
+                ['attribute' => 'ancho', 'value' => '$row[5]'],
+                ['attribute' => 'id_unidad', 'value' => '$row[6]'],
+                ['attribute' => 'cantidad_total', 'value' => '$row[7]'],
+                ['attribute' => 'costo_x_unidad', 'value' => '$row[7]']
+            ]);
+        }
+        $this->render('importForm');
     }
 
 	/**

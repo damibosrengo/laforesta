@@ -10,6 +10,12 @@ $this->menu=array(
     array('label'=>'Costos', 'url'=>array('index')),
     array('label'=>'Nuevo cálculo','url'=>array('new')),
 );
+
+$model = $this->loadModel();
+if (!empty($_POST['id_producto'])){
+    $model = $model->findByPk($_POST['id_producto']);
+}
+
 ?>
 <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/costos.js"></script>
 <h1>Calcular costo</h1>
@@ -17,6 +23,7 @@ $this->menu=array(
 <form id="submit-calculo" method="post" action="<?php echo Yii::app()->createUrl('costos/calculate'); ?>" onsubmit="return checkCalculo()">
 <input type="hidden" name="insumos_list_field" id="insumos_list_field" value="<?php echo $this->getInsumosListFieldValue(); ?>" />
 <input type="hidden" name="extras_list_field" id="extras_list_field" value="<?php echo $this->getExtrasListFieldValue(); ?>" />
+<input type="hidden" name="id_producto" id="ir_producto" value="<?php echo $model->id_producto ?>" />
     <table class="calculo_list">
     <!------------------------------TABLE HEAD ----------------------------------->
     <tr>
@@ -27,15 +34,13 @@ $this->menu=array(
     </tr>
     <!------------------------------ INSUMOS LIST ----------------------------------->
     <?php $index = 0; ?>
-    <?php foreach ($insumosList as $insumoPost): ?>
-        <?php $itemPost = json_decode($insumoPost,true); ?>
-        <?php $insumoModel = Insumo::model()->findByPk($itemPost['idInsumo']) ?>
-        <?php $totalRow = $insumoModel->getCostoTotalInsumo($itemPost) ?>
+    <?php foreach ($insumosList as $insumo): ?>
+        <?php $totalRow = $insumo->getCostoTotalInsumo() ?>
         <?php $cssClass = ($index%2==0)?'pair':'odd' ?>
         <tr class="<?php echo $cssClass; ?>">
-            <td><?php echo $insumoModel->nombre ?></td>
-            <td><?php echo $insumoModel->getCostoUnitario() ?></td>
-            <td><?php echo $insumoModel->getUso($itemPost) ?></td>
+            <td><?php echo $insumo->nombre ?></td>
+            <td><?php echo $insumo->getCostoUnitario() ?></td>
+            <td><?php echo $insumo->getUso() ?></td>
             <td>
                 <?php
                     if ($totalRow == Insumo::ERROR_PARAMS){
@@ -106,9 +111,14 @@ $this->menu=array(
 </table>
 </form>
 <div class="buttons_actions">
-    <form id="edit_insumos_form" method="post" action="<?php echo Yii::app()->createUrl('costos/new'); ?>">
+    <form id="edit_insumos_form" method="post" action="<?php echo Yii::app()->createUrl('costos/new'); ?>" style="display: inline">
         <input type="hidden" name="insumos_list_field" id="insumos_list_field" value="<?php echo $this->getInsumosListFieldValue(); ?>"/>
         <input type="hidden" name="extras_list_field" id="extras_list_field" value="<?php echo $this->getExtrasListFieldValue(); ?>" />
+        <input type="hidden" name="id_producto" id="ir_producto" value="<?php echo $model->id_producto ?>" />
         <?php echo CHtml::submitButton('Editar Insumos'); ?>
     </form>
+    <?php echo CHtml::button("Guardar producto",array('title'=>"Guardar Producto",'onclick'=>'showProductForm(this)','id'=>'showFormButton')); ?>
+    <?php
+        $this->renderPartial('_productoForm', array('model'=>$model));
+    ?>
 </div>
