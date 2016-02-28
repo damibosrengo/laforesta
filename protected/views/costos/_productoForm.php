@@ -38,7 +38,7 @@
 
 	<div class="row buttons" id="box_submit">
         <?php
-            if (isset($_POST['actionClone']) && $_POST['actionClone'] == 1) {
+            if (isset($_POST['action']) && $_POST['action'] == 'clone') {
                 echo $form->hiddenField($model, 'actionClone', array('value' => 1));
             }
         ?>

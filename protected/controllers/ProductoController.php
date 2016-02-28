@@ -25,7 +25,7 @@ class ProductoController
         if (isset($_POST['Producto'])) {
 
             $model->attributes = $_POST['Producto'];
-            if (isset($_POST['Producto']['actionClone']) && $_POST['Producto']['actionClone'] == 1) {
+            if (isset($_POST['Producto']['action']) && $_POST['Producto']['action'] == 'clone') {
                 $model->_new = true;
                 unset($model->id_producto);
             } elseif (!empty($model->id_producto)) {
@@ -145,7 +145,8 @@ class ProductoController
         $params = array(
             'insumos_list_field' => $model->raw_data_insumos,
             'extras_list_field'  => $model->raw_data_extras,
-            'id_producto'        => $model->id_producto);
+            'id_producto'        => $model->id_producto,
+            'action'             => 'update');
         $params = http_build_query($params);
         //open connection
         $ch = curl_init();
@@ -177,7 +178,7 @@ class ProductoController
             'insumos_list_field' => $model->raw_data_insumos,
             'extras_list_field'  => $model->raw_data_extras,
             'id_producto'        => $model->id_producto,
-            'actionClone'        => 1
+            'action'             => 'clone'
         );
         $params = http_build_query($params);
         //open connection
