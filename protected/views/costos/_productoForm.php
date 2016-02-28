@@ -37,7 +37,12 @@
 
 
 	<div class="row buttons" id="box_submit">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Nuevo' : 'Guardar',array('id'=>'Producto_submit')); ?>
+        <?php
+            if (isset($_POST['actionClone']) && $_POST['actionClone'] == 1) {
+                echo $form->hiddenField($model, 'actionClone', array('value' => 1));
+            }
+        ?>
+        <?php echo CHtml::submitButton($model->isNewRecord ? 'Nuevo' : 'Guardar',array('id'=>'Producto_submit')); ?>
         <?php echo CHtml::button("Cancelar",array('title'=>"Cancelar",'onclick'=>'hideProductForm()','id'=>'hideFormButton')); ?>
 	</div>
 

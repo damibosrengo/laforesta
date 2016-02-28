@@ -45,10 +45,19 @@ foreach(Yii::app()->user->getFlashes() as $key => $message) {
 		array(
 			'class'=>'CButtonColumn',
             'deleteButtonUrl'=> '$this->grid->controller->createUrl("/producto/delete", array("id"=>$data->id_producto))',
+            'updateButtonUrl'=> '$this->grid->controller->createUrl("/producto/update", array("id"=>$data->id_producto))',
             'viewButtonUrl'=>'$this->grid->controller->createUrl("/producto/view", array("id"=>$data->id_producto))',
-            'template'=>'{view}{delete}'
+            'template'=>'{view}{update}{clone}{delete}',
+            'buttons' => array(
+                'clone'=>array(
+                    'label' => 'Clonar',
+                    'url' => '$this->grid->controller->createUrl("/producto/clone", array("id"=>$data->id_producto))',
+                    'imageUrl' =>'/images/clone.png'
+                )
+            )
 		),
 	),
+
 ));
 
 Yii::app()->clientScript->registerScript('re-install-date-picker', "
