@@ -83,6 +83,27 @@ class ProductoController
         ));
     }
 
+    protected function actionExportPdf()
+    {
+        $mPDF1 = Yii::app()->ePdf->mpdf();
+
+        # You can easily override default constructor's params
+        $mPDF1 = Yii::app()->ePdf->mpdf('', 'A4');
+
+        # Load a stylesheet
+        $stylesheet = file_get_contents(Yii::getPathOfAlias('webroot.css') . '/main.css');
+        $mPDF1->WriteHTML($stylesheet, 1);
+
+        # renderPartial (only 'view' of current controller)
+        $mPDF1->WriteHTML($this->renderPartial('application.views.costos.productoView', array('model' => $this->loadModel()), true));
+
+        # Renders image
+        $mPDF1->WriteHTML(CHtml::image(Yii::getPathOfAlias('webroot.css') . '/bg.gif'));
+
+        # Outputs ready PDF
+        $mPDF1->Output();
+    }
+
     protected function showablesAttributes($model)
     {
         $result = array(
