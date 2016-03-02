@@ -92,14 +92,14 @@ class ProductoController
         $mPDF1 = Yii::app()->ePdf->mpdf('', 'A4');
 
         # Load a stylesheet
-        $stylesheet = file_get_contents(Yii::getPathOfAlias('webroot.css') . '/main.css');
+        $stylesheet = file_get_contents(Yii::getPathOfAlias('webroot.css') . '/screen.css');
         $mPDF1->WriteHTML($stylesheet, 1);
 
         # Renders image
 //        $mPDF1->WriteHTML(CHtml::image(Yii::getPathOfAlias('webroot.css') . '/bg.gif'));
 
         # renderPartial (only 'view' of current controller)
-        $mPDF1->WriteHTML($this->renderPartial('application.views.costos.productoView', array('model' => $this->loadModel()), true));
+        $mPDF1->WriteHTML($this->renderPartial('application.views.costos.productoPdf', array('model' => $this->loadModel()), true));
 
         # Outputs ready PDF
         $mPDF1->Output();
