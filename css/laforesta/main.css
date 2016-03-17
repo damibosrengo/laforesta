@@ -2,7 +2,7 @@ body
 {
 	margin: 0;
 	padding: 0;
-	color: #555;
+	color: #414141;
 	font: normal 10pt Arial,Helvetica,sans-serif;
 	background: #ffe7d0;
 }
@@ -63,6 +63,7 @@ body
 {
 	padding:6px 20px 5px 20px;
 	margin:0px;
+	text-align: center;
 }
 
 #mainmenu ul li
@@ -74,16 +75,16 @@ body
 {
 	color:#ffffff;
 	background-color:transparent;
-	font-size:12px;
+	font-size:15px;
 	font-weight:bold;
 	text-decoration:none;
-	padding:5px 8px;
+	padding:5px 50px;
 }
 
 #mainmenu ul li a:hover, #mainmenu ul li.active a
 {
-	color: #6399cd;
-	background-color:#EFF4FA;
+	color: #a95400;
+	background-color:#fff1e4;
 	text-decoration:none;
 }
 
@@ -144,7 +145,7 @@ div.view
 
 div.breadcrumbs
 {
-	font-size: 0.9em;
+	font-size: 0.93em;
 	padding: 5px 20px;
 }
 

@@ -133,12 +133,13 @@ p .right {
 }
 
 a:focus, a:hover {
-    color: #09f;
+    color: #efcb3e;
 }
 
 a {
-    color: #06c;
+    color: #aaa533;
     text-decoration: underline;
+    font-weight: bold;
 }
 
 blockquote {
