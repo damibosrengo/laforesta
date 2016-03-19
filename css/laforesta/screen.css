@@ -69,13 +69,16 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
     font-weight: normal;
-    color: #111;
+    color: #444;
 }
 
 h1 {
     font-size: 2em;
     line-height: 1;
     margin-bottom: 0.5em;
+    font-family: "CityLight";
+    font-weight: bold;
+    letter-spacing: 1px;
 }
 
 h2 {
@@ -222,11 +225,14 @@ th {
 }
 
 thead th {
-    background: #c3d9ff;
+    background: #cb935c;
+    color: #fff1e4;
+    text-align: center;
 }
 
 th, td, caption {
     padding: 4px 10px 4px 5px;
+    font-weight: bold;
 }
 
 tfoot {

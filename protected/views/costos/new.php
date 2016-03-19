@@ -21,7 +21,7 @@ $this->menu=array(
 <div class="form form-costos">
     <?php $options = $this->getOptionsInsumos();?>
 
-    Agregar insumo:
+    <span class="label">Agregar insumo:</span>
 
     <?php
         //AUTOCOMPLETER
@@ -67,7 +67,7 @@ $this->menu=array(
 
 </div>
 <div class="insumos_list">
-    <table id="insumos_list"></table>
+    <table id="insumos_list"><thead><th colspan="3">Cantidades</th></thead></table>
     <form id="submit-calculo" method="post" action="<?php echo Yii::app()->createUrl('costos/calculate'); ?>" onsubmit="return checkInsumos()">
         <input type="hidden" name="insumos_list_field" id="insumos_list_field" value="<?php echo $this->getInsumosListFieldValue(); ?>" />
         <input type="hidden" name="extras_list_field" id="extras_list_field" value="<?php echo $this->getExtrasListFieldValue(); ?>" />

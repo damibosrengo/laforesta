@@ -1,11 +1,11 @@
 <?php /* @var $this Controller */ ?>
 <?php $this->beginContent('//layouts/laforesta/main'); ?>
-<div class="span-19">
+<div class="span-20  text-1">
 	<div id="content">
 		<?php echo $content; ?>
 	</div><!-- content -->
 </div>
-<div class="span-5 last">
+<div class="span-4 last">
 	<div id="sidebar">
 	<?php
 		$this->beginWidget('zii.widgets.CPortlet', array(

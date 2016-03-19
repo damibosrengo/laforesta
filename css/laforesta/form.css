@@ -42,15 +42,33 @@ div.form input,
 div.form textarea,
 div.form select
 {
-	margin: 0.2em 0 0.5em 0;
+	margin: 0.1em 0 0.5em 0;
+	font-family: 'Lucida Grande', Verdana, Geneva, Lucida, Helvetica, Arial, sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+	height: 20px;
+	border: solid #777 1px;
+	color:#444;
+}
+
+div.form span.label {
+	font-family: Citylight;
+	font-size: 15px;
+	font-weight: bold;
+	letter-spacing: 1px;
+	color: #333;
 }
 
 div.form fieldset
 {
-	border: 1px solid #DDD;
+	border: 2px solid #aaa533;
 	padding: 10px;
 	margin: 0 0 10px 0;
     -moz-border-radius:7px;
+}
+
+div.form fieldset {
+	font-size: 16px;
 }
 
 div.form label

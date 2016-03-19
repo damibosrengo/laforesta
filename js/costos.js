@@ -251,7 +251,7 @@ function deleteInsumoList(index) {
 }
 
 function renderList(){
-    $("#insumos_list").empty();
+    $("#insumos_list").children('tbody').empty();
     var insumosList = $("#insumos_list_field").val();
     if (insumosList.length > 0) {
         var objList = $.parseJSON(insumosList);
@@ -276,7 +276,7 @@ function renderList(){
                 } else {
                     var tdCantidad = $('<td>'+  item.cantidad + '</td>');
                 }
-                var tdLkDelete = $('<td><a href="javascript: deleteInsumoList(' + index + ')">Quitar</a></td>');
+                var tdLkDelete = $('<td class="right"><a href="javascript: deleteInsumoList(' + index + ')">Quitar</a></td>');
                 var tr = $('<tr id="tr_' +  item.idInsumo + '"></tr>');
                 tr.append(tdNombre);
                 tr.append(tdCantidad);

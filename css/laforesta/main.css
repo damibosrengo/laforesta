@@ -1,3 +1,8 @@
+@font-face {
+	font-family: "CityLight";
+	src: url(CityLight.ttf) format("truetype");
+}
+
 body
 {
 	margin: 0;
@@ -269,10 +274,17 @@ div.form-costos {
 div.insumos_list{
     width: 45%;
     float:right;
-    margin: 30px 5px 10px 30px;
+    margin: 0px 5px 10px 20px;
 }
 
 div.secondary-form {
     margin-top: 10px;
     display: none;
+}
+
+.text-1 {
+	font-family: Citylight;
+	font-size: 15px;
+	font-weight: bold;
+	letter-spacing: 1px;
 }
