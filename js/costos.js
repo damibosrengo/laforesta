@@ -268,7 +268,7 @@ function renderList(){
                         } else {
                             girar = 'No';
                         }
-                        tdCantidad += cte.cantidad + ' (' +  cte.largo + ' x ' +  cte.ancho + ' ' +  item.unidad + ', girar '+ girar +");<br> ";
+                        tdCantidad += cte.cantidad + ' (' +  cte.largo + ' x ' +  cte.ancho + ' ' +  item.unidad + ', girar '+ girar +")<br> ";
                     })
                     tdCantidad = $('<td>' + tdCantidad + '</td>');
                 } else if(item.unidad != undefined) {

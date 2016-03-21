@@ -180,3 +180,14 @@ div.wide.form .buttons, div.wide.form .hint, div.wide.form .errorMessage
 	clear: left;
 	padding-left: 110px;
 }
+
+
+input.checkbox-align-110{
+	position: absolute;
+	left:110px;
+	top: -1px;
+}
+
+.field_plancha_entera {
+	position: relative;
+}

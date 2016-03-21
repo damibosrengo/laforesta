@@ -127,7 +127,8 @@ p .left {
 }
 
 .right {
-    float: right !important;
+    /*float: right !important;*/
+    text-align: right;
 }
 
 p .right {
