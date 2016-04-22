@@ -102,8 +102,9 @@ class InsumoController extends Controller
 		if(isset($_POST[get_class($model)]))
 		{
 			$model->attributes=$_POST[get_class($model)];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id_insumo));
+			if($model->save()) {
+                $this->redirect(array('view', 'id' => $model->id_insumo));
+            }
 		}
 
 		$this->render('update',array(

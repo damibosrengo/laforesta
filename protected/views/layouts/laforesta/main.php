@@ -25,13 +25,13 @@
 <div class="container" id="page">
 
 	<div id="header">
-		<div id="logo"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/banner1.jpg" alt="la_foresta" /></div>
+		<div id="logo"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/banner_header.jpg" alt="la_foresta" /></div>
 	</div><!-- header -->
 
 	<div id="mainmenu">
 		<?php $this->widget('zii.widgets.CMenu',array(
 			'items'=>array(
-				array('label'=>'Home', 'url'=>array('/site/index')),
+				array('label'=>'Inicio', 'url'=>array('/site/index')),
 				array('label'=>'Insumos', 'url'=>array('/insumo/index')),
 				array('label'=>'Centro de costos', 'url'=>array('/costos/index')),
 			),

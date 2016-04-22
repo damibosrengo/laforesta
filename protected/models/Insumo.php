@@ -59,9 +59,8 @@ class Insumo
             } else {
                 $this->costo_x_unidad = $this->costo_base;
             }
-
-            return parent::beforeSave();
         }
+        return parent::beforeSave();
     }
 
     /**
