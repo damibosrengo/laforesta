@@ -20,7 +20,7 @@ return array(
             'type'=>'checkbox',
             'checked'=>false,
             'value'=>'1',
-            'class'=>'checkbox-align-110',
+            'class'=>'checkbox-align-120',
             'onclick'=> 'javascript:changeSuperficieScenario(this);',
         ),
         'cantidad'=>array(

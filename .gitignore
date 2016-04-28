@@ -30,7 +30,7 @@ phpunit.phar
 log
 
 #ignore assets
-assets
+/assets
 
 #ignore runtime logs
 protected/runtime

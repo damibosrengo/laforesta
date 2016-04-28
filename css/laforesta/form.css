@@ -182,9 +182,9 @@ div.wide.form .buttons, div.wide.form .hint, div.wide.form .errorMessage
 }
 
 
-input.checkbox-align-110{
+input.checkbox-align-120{
 	position: absolute;
-	left:110px;
+	left:120px;
 	top: -1px;
 }
 

@@ -24,7 +24,7 @@ return array(
             'type'=>'checkbox',
             'checked'=>true,
             'value'=>'1',
-            'class'=>'checkbox-align-110',
+            'class'=>'checkbox-align-120',
             'onclick'=> 'javascript:changeSuperficieScenario(this);',
         ),
 
