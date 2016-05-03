@@ -283,8 +283,29 @@ div.secondary-form {
 }
 
 .text-1 {
-	/*font-family: Citylight;*/
 	font-size: 15px;
 	font-weight: bold;
 	letter-spacing: 1px;
+}
+
+.text-2 {
+	font-size: 14px;
+	letter-spacing: 1px;
+	font-family: Arial;
+	font-weight: normal;
+}
+
+#insumo-form h5 {
+	text-decoration: underline;
+	font-style: normal;
+	font-weight: bold;
+}
+
+#insumo-form ul {
+	list-style-type: square;
+	margin-bottom: 40px;
+}
+
+#insumo-form ul li {
+	margin: 15px 0;
 }

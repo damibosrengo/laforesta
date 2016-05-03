@@ -23,6 +23,7 @@ function setTipo(idTipo){
 }
 
 function hideAll(){
+    $("#insumo-form fieldset").hide();
     $('.boxinput_ini').css('display','none');
     $("#insumo-form input, #insumo-form select, #insumo-form textarea").each(function(){
         var input = $(this);
@@ -33,6 +34,7 @@ function hideAll(){
 }
 
 function enableBase(sufix){
+    $("#insumo-form fieldset").show();
     $('#box_nombre, #box_descripcion, #box_costo_base, #box_habilitado, #box_submit').css('display','block');
     $('#Insumo'+sufix+'_nombre, #Insumo'+sufix+'_descripcion, #Insumo'+sufix+'_costo_base, #Insumo'+sufix+'_habilitado, #Insumo_submit').removeAttr('disabled');
     $('#Insumo_nombre, #Insumo_descripcion, #Insumo_costo_base, #Insumo_habilitado').removeAttr('disabled');

@@ -1,5 +1,5 @@
 <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/insumo.js"></script>
-<div class="form">
+<div class="form text-2">
 
 <?php
     $form=$this->beginWidget('CActiveForm', array(
@@ -20,7 +20,7 @@
 	<?php echo $form->errorSummary($model); ?>
 
     <?php  if ($model->getScenario() != 'update'): ?>
-        <p class="note">Tipos de insumos:</p>
+        <h5>Tipos de insumos:</h5>
         <ul>
             <?php foreach ($descripciones as $nombre=>$descripcion): ?>
                 <li class="">
@@ -40,6 +40,7 @@
         </div>
     <?php endif ?>
 
+    <fieldset>
 	<div class="row boxinput_ini" id="box_nombre">
 		<?php echo $form->labelEx($model,'nombre'); ?>
 		<?php echo $form->textField($model,'nombre',array('size'=>60,'maxlength'=>60)); ?>
@@ -91,6 +92,7 @@
 	<div class="row buttons boxinput_ini" id="box_submit">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Nuevo' : 'Guardar',array('id'=>'Insumo_submit')); ?>
 	</div>
+    </fieldset>
 
 <?php $this->endWidget(); ?>
 
