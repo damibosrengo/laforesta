@@ -1,6 +1,15 @@
-<div class="form">
+<?php
+$this->breadcrumbs=array(
+    'Insumos'=>array('index'),
+    'Importar',
+);
 
-    <h1>Importación masiva de insumos</h1>
+$this->menu=array(
+    array('label'=>'Listar Insumos', 'url'=>array('index')),
+);
+?>
+<h1>Importación masiva de insumos</h1>
+<div class="form text-2">
 
     <?php
         foreach (Yii::app()->user->getFlashes() as $key => $message) {
@@ -53,3 +62,4 @@
             <button type="submit">Importar</button>
         </form>
     </div>
+</div>

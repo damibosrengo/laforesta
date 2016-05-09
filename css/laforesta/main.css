@@ -239,6 +239,7 @@ div.search-form
 .operations li a:hover
 {
 	background: #cb935c;
+	color: #555533;
 }
 
 #center_box_home {
@@ -301,11 +302,11 @@ div.secondary-form {
 	font-weight: bold;
 }
 
-#insumo-form ul {
+.text-2 ul {
 	list-style-type: square;
 	margin-bottom: 40px;
 }
 
-#insumo-form ul li {
+.text-2 ul li {
 	margin: 15px 0;
 }

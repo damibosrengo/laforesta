@@ -43,19 +43,19 @@
     <fieldset>
 	<div class="row boxinput_ini" id="box_nombre">
 		<?php echo $form->labelEx($model,'nombre'); ?>
-		<?php echo $form->textField($model,'nombre',array('size'=>60,'maxlength'=>60)); ?>
+		<?php echo $form->textField($model,'nombre',array('class'=>'lf-input-width-1','maxlength'=>60)); ?>
 		<?php echo $form->error($model,'nombre'); ?>
 	</div>
 
 	<div class="row boxinput_ini" id="box_descripcion">
 		<?php echo $form->labelEx($model,'descripcion'); ?>
-		<?php echo $form->textArea($model,'descripcion',array('size'=>300,'maxlength'=>200)); ?>
+		<?php echo $form->textArea($model,'descripcion',array('class'=>'lf-input-width-1','maxlength'=>200)); ?>
 		<?php echo $form->error($model,'descripcion'); ?>
 	</div>
 
 	<div class="row boxinput_ini" id="box_costo_base">
 		<?php echo $form->labelEx($model,'costo_base'); ?>
-		<?php echo $form->textField($model,'costo_base'); ?>
+		<?php echo $form->textField($model,'costo_base',array('class'=>'lf-input-number-1','maxlength'=>10)); ?>
 		<?php echo $form->error($model,'costo_base'); ?>
 	</div>
 
@@ -66,26 +66,26 @@
 	</div>
 
     <div class="row boxinput_ini" id="box_unidad">
-        <?php echo $form->labelEx($model,'id_unidad'); ?>
+        <?php echo $form->labelEx($model,'id_unidad',array('required'=>true)); ?>
         <?php echo $form->dropDownList($model,'id_unidad',CHtml::listData(Unidad::model()->findAll(),'id_unidad','nombre'),array('empty'=>'Selecciona la unidad')); ?>
         <?php echo $form->error($model,'id_unidad'); ?>
     </div>
 
 	<div class="row boxinput_ini" id="box_largo">
-		<?php echo $form->labelEx($model,'largo'); ?>
-		<?php echo $form->textField($model,'largo'); ?>
+		<?php echo $form->labelEx($model,'largo',array('required'=>true)); ?>
+		<?php echo $form->textField($model,'largo',array('class'=>'lf-input-number-1','maxlength'=>10)); ?>
 		<?php echo $form->error($model,'largo'); ?>
 	</div>
 
 	<div class="row boxinput_ini" id="box_ancho">
-		<?php echo $form->labelEx($model,'ancho'); ?>
-		<?php echo $form->textField($model,'ancho'); ?>
+		<?php echo $form->labelEx($model,'ancho',array('required'=>true)); ?>
+		<?php echo $form->textField($model,'ancho',array('class'=>'lf-input-number-1','maxlength'=>10)); ?>
 		<?php echo $form->error($model,'ancho'); ?>
 	</div>
 
 	<div class="row boxinput_ini" id="box_cantidad_total">
-		<?php echo $form->labelEx($model,'cantidad_total'); ?>
-		<?php echo $form->textField($model,'cantidad_total'); ?>
+		<?php echo $form->labelEx($model,'cantidad_total',array('required'=>true)); ?>
+		<?php echo $form->textField($model,'cantidad_total',array('class'=>'lf-input-number-1','maxlength'=>12)); ?>
 		<?php echo $form->error($model,'cantidad_total'); ?>
 	</div>
 
