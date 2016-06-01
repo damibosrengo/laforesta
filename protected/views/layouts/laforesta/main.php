@@ -25,7 +25,11 @@
 <div class="container" id="page">
 
 	<div id="header">
-		<div id="logo"><img src="<?php echo Yii::app()->request->baseUrl; ?>/images/banner_header.jpg" alt="la_foresta" /></div>
+		<div id="logo">
+			<a href="<?php echo Yii::app()->getBaseUrl(true); ?>">
+				<img src="<?php echo Yii::app()->request->baseUrl; ?>/images/banner_header.jpg" alt="la_foresta" />
+			</a>
+		</div>
 	</div><!-- header -->
 
 	<div id="mainmenu">

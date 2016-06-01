@@ -48,5 +48,6 @@ $extrasData = $this->extrasView($model,$subtotal);
 $this->widget('zii.widgets.CDetailView', array(
     'data'       => $model,
     'attributes' => array(array('name'=>'Total','value'=>number_format($subtotal+$subtotalExtra,2))),
+    'htmlOptions' => array('class'=>'detail-view totals')
 ));
 ?>

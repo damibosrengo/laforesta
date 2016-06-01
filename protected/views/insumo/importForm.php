@@ -29,7 +29,8 @@ $this->menu=array(
     );
 
     $formatos = CHtml::listData($formatos, 'tipo', 'campos');
-    $unidades = CHtml::listData(Unidad::model()->findAll(), 'id_unidad', 'nombre');
+//    $unidades = CHtml::listData(Unidad::model()->findAll(), 'id_unidad', 'id_unidad,nombre');
+    $unidades = Unidad::model()->findAll();
     ?>
 
     <ul>
@@ -49,7 +50,7 @@ $this->menu=array(
         <li>Las columna costo_base,largo,ancho,cantidad_total debe ser numérica, usando como separador de decimales '.'</li>
         <li>La columna unidad puede tomar uno de los siguinete valores [
             <?php foreach ($unidades as $unidad): ?>
-                <?php echo $unidad . ','; ?>
+                <?php echo $unidad->id_unidad . ' = '. $unidad->nombre.', '; ?>
             <?php endforeach ?>
             ]
         </li>
