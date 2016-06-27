@@ -1,4 +1,5 @@
 <?php Yii::app()->clientScript->registerCoreScript('jquery'); ?>
+<?php Yii::app()->getClientScript()->registerCssFile(Yii::app()->request->baseUrl.'/css/laforesta/grid.css'); ?>
 <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/costos.js"></script>
 
 <?php
@@ -40,12 +41,12 @@ if (isset($_POST['action'])) {
 
 
 <h1><?php echo $title ?></h1>
-
+<div class="grid-view">
 <form id="submit-calculo" method="post" action="<?php echo Yii::app()->createUrl('costos/calculate'); ?>" onsubmit="return checkCalculo()">
     <input type="hidden" name="insumos_list_field" id="insumos_list_field" value="<?php echo $this->getInsumosListFieldValue(); ?>"/>
     <input type="hidden" name="extras_list_field" id="extras_list_field" value="<?php echo $this->getExtrasListFieldValue(); ?>"/>
     <input type="hidden" name="id_producto" id="ir_producto" value="<?php echo $model->id_producto ?>"/>
-    <table class="calculo_list">
+    <table class="calculo_list items">
         <!------------------------------TABLE HEAD ----------------------------------->
         <tr>
             <th>Insumo</th>
@@ -54,13 +55,18 @@ if (isset($_POST['action'])) {
             <th>Costo total</th>
         </tr>
         <!------------------------------ INSUMOS LIST ----------------------------------->
-        <?php $index = 0; ?>
-        <?php foreach ($insumosList as $insumo): ?><?php $totalRow = $insumo->getCostoTotalInsumo() ?><?php $cssClass = ($index % 2 == 0) ? 'pair' : 'odd' ?>
+        <?php $indexColor = 0; ?>
+        <?php foreach ($insumosList as $insumo): ?>
+            <?php $totalRow = $insumo->getCostoTotalInsumo();
+                $totalRow = round($totalRow,2)
+            ?>
+
+            <?php $cssClass = ($indexColor % 2 == 0) ? 'pair' : 'odd' ?>
             <tr class="<?php echo $cssClass; ?>">
                 <td><?php echo $insumo->nombre ?></td>
-                <td><?php echo $insumo->getCostoUnitario() ?></td>
+                <td class="number"><?php echo $insumo->getCostoUnitario() ?></td>
                 <td><?php echo $insumo->getUso() ?></td>
-                <td>
+                <td class="number">
                     <?php
                     if ($totalRow == Insumo::ERROR_PARAMS) {
                         echo 'Hay un error con los parámetros del insumo';
@@ -72,26 +78,38 @@ if (isset($_POST['action'])) {
                     ?>
                 </td>
             </tr>
-            <?php $index++; ?><?php endforeach ?>
-        <tr>
-            <td class="subtotal" colspan="3">SUBTOTAL INSUMOS</td>
-            <td class="subtotal"><?php echo $this->getInsumosTotal() ?></td>
+            <?php $indexColor++; ?><?php endforeach ?>
+        <tr><td colspan="4" class="separator-row"></td></tr>
+        <tr class="even">
+            <td class="subtotal"  colspan="3">SUBTOTAL INSUMOS</td>
+            <td class="subtotal number"><?php echo round($this->getInsumosTotal(),2) ?></td>
         </tr>
+        <tr><td colspan="4" class="separator-row"></td></tr>
         <!------------------------------EXTRAS LIST ----------------------------------->
-        <?php $index = 0; ?>
-        <?php foreach ($extrasList as $extraItem): ?><?php $item = json_decode($extraItem, true); ?><?php $cssClass = ($index % 2 == 0) ? 'pair' : 'odd' ?>
+        <?php
+            $index = 0;
+            $indexColor++;
+        ?>
+        <?php foreach ($extrasList as $extraItem): ?><?php $item = json_decode($extraItem, true); ?>
+            <?php $cssClass = ($indexColor % 2 == 0) ? 'pair' : 'odd' ?>
             <tr class="<?php echo $cssClass; ?>">
                 <td colspan="2">
                     <?php echo $item['concepto'] ?>
                     <a href="javascript:quitarExtra(<?php echo $index ?>)">(Remover)</a>
                 </td>
                 <td><?php echo $item['uso'] ?></td>
-                <td><?php echo $item['rowtotal'] ?></td>
+                <td class="number"><?php echo round($item['rowtotal'],2) ?></td>
             </tr>
-            <?php $index++; ?><?php endforeach ?>
-        <tr>
+            <?php
+                $index++;
+                $indexColor++;
+            ?>
+
+        <?php endforeach ?>
+        <tr><td colspan="4" class="separator-row"></td></tr>
+        <tr class="even">
             <td class="subtotal" colspan="3">SUBTOTAL EXTRAS</td>
-            <td class="subtotal"><?php echo $this->getExtrasTotal() ?> </td>
+            <td class="subtotal number"><?php echo round($this->getExtrasTotal(),2) ?> </td>
         </tr>
         <tr>
             <td class="total" colspan="3">TOTAL</td>
@@ -127,6 +145,7 @@ if (isset($_POST['action'])) {
         </tr>
     </table>
 </form>
+</div>
 <div class="buttons_actions">
     <form id="edit_insumos_form" method="post" action="<?php echo Yii::app()->createUrl('costos/new'); ?>" style="display: inline">
         <input type="hidden" name="insumos_list_field" id="insumos_list_field" value="<?php echo $this->getInsumosListFieldValue(); ?>"/>
