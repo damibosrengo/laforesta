@@ -69,7 +69,7 @@ if (isset($_POST['action'])) {
                 <td class="number">
                     <?php
                     if ($totalRow == Insumo::ERROR_PARAMS) {
-                        echo 'Hay un error con los parámetros del insumo';
+                        echo '<span style="color: red">Hay un error con los parámetros del insumo</span>';
                     } elseif ($totalRow == Insumo::ERROR_CONNECTION) {
                         echo 'Hubo un error al calcular el costo de este insumo';
                     } else {
@@ -93,9 +93,13 @@ if (isset($_POST['action'])) {
         <?php foreach ($extrasList as $extraItem): ?><?php $item = json_decode($extraItem, true); ?>
             <?php $cssClass = ($indexColor % 2 == 0) ? 'pair' : 'odd' ?>
             <tr class="<?php echo $cssClass; ?>">
-                <td colspan="2">
+                <td>
                     <?php echo $item['concepto'] ?>
-                    <a href="javascript:quitarExtra(<?php echo $index ?>)">(Remover)</a>
+                </td>
+                <td class="small center">
+                    <a href="javascript:quitarExtra(<?php echo $index ?>)">
+                        <img src="<?php echo Yii::app()->request->baseUrl.'/images/delete.png' ?>" alt="remover" />
+                    </a>
                 </td>
                 <td><?php echo $item['uso'] ?></td>
                 <td class="number"><?php echo round($item['rowtotal'],2) ?></td>
@@ -111,10 +115,13 @@ if (isset($_POST['action'])) {
             <td class="subtotal" colspan="3">SUBTOTAL EXTRAS</td>
             <td class="subtotal number"><?php echo round($this->getExtrasTotal(),2) ?> </td>
         </tr>
+        <tr><td colspan="4" class="separator-row"></td></tr>
         <tr>
             <td class="total" colspan="3">TOTAL</td>
-            <td class="subtotal"><?php echo $this->getTotal() ?> </td>
+            <td class="total number"><?php echo round($this->getTotal(),2) ?> </td>
         </tr>
+        <tr><td colspan="4" class="separator-row"></td></tr>
+        <tr><td colspan="4" class="separator-row"></td></tr>
         <tr>
             <td class="extras">
                 Añadir % en concepto de:

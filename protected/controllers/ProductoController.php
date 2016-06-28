@@ -25,7 +25,7 @@ class ProductoController
         if (isset($_POST['Producto'])) {
 
             $model->attributes = $_POST['Producto'];
-            if (isset($_POST['Producto']['action']) && $_POST['Producto']['action'] == 'clone') {
+            if (isset($_POST['Producto']['actionClone']) && $_POST['Producto']['actionClone'] == 1) {
                 $model->_new = true;
                 unset($model->id_producto);
             } elseif (!empty($model->id_producto)) {

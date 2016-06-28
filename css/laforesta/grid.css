@@ -138,10 +138,27 @@
     border-color: #555533;
     border-width: 2px;
     color: #555533;
-    margin-top: 3px;
 }
 
 .grid-view table.items td.separator-row {
     height: 20px;
     border: none;
+}
+
+td.small {
+    width: 20px;
+}
+
+td.center {
+    text-align: center;
+}
+
+.grid-view table.items td.total {
+    font-size: 16px;
+    padding: 6px 0.3em;
+    font-weight: bold;
+    border-color: #555533;
+    border-width: 2px;
+    color: #555533;
+    background-color: #ffb366;
 }
