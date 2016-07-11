@@ -1,0 +1,71 @@
+table.detail-view .null
+{
+	color: pink;
+}
+
+table.detail-view
+{
+	background: white;
+	border-collapse: collapse;
+	width: 100%;
+	margin: 0;
+	border: 1px #FFD324 solid;
+	margin-bottom: 1.5em;
+}
+
+table.detail-view th, table.detail-view td
+{
+	font-size: 0.9em;
+	border: 1px #ffdebc solid;
+	padding: 0.3em;
+}
+
+table.detail-view th
+{
+	font-family: freesans;
+	font-size: 0.85em;
+	color: #000000;
+	/*background: url("../gridview/bg.gif") repeat-x scroll left top white;*/
+	text-align: right;
+	width: 160px;
+}
+
+.detail-view table.items th a:hover
+{
+	color: #a95400;
+}
+
+table.detail-view tr.odd
+{
+	background:#ffdebc;
+}
+
+table.totals tr th, table.totals tr td {
+	font-size: 17px;
+	padding: 12px 0.3em;
+	font-weight: bold;
+	border-color: #555533;
+	border-width: 4px;
+	color: #555533;
+}
+
+table.totals tr th {
+	border-right: none;
+}
+
+table.totals tr td {
+	border-left: none;
+}
+
+table.detail-view tr.even
+{
+	background:#FfF8F8;;
+}
+
+table.detail-view tr.odd th
+{
+}
+
+table.detail-view tr.even th
+{
+}

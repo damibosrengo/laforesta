@@ -1,4 +1,4 @@
-<div class="form secondary-form" id="product-form-box">
+<div class="form text-2 secondary-form" id="product-form-box">
 
 <?php
     $form=$this->beginWidget('CActiveForm', array(
@@ -17,16 +17,16 @@
 	<?php echo $form->errorSummary($model); ?>
 
     <p class="note">Los campos con <span class="required">*</span> son obligatorios.</p>
-
+<fieldset>
 	<div class="row" id="box_nombre">
 		<?php echo $form->labelEx($model,'nombre'); ?>
-		<?php echo $form->textField($model,'nombre',array('size'=>60,'maxlength'=>60,'value'=>$model->nombre)); ?>
+		<?php echo $form->textField($model,'nombre',array('size'=>60,'maxlength'=>60,'value'=>$model->nombre,'class'=>'lf-input-width-1')); ?>
 		<?php echo $form->error($model,'nombre'); ?>
 	</div>
 
 	<div class="row" id="box_descripcion">
 		<?php echo $form->labelEx($model,'descripcion'); ?>
-		<?php echo $form->textArea($model,'descripcion',array('size'=>300,'maxlength'=>200,'value'=>$model->nombre)); ?>
+		<?php echo $form->textArea($model,'descripcion',array('size'=>300,'maxlength'=>200,'value'=>$model->nombre,'class'=>'lf-input-width-1')); ?>
 		<?php echo $form->error($model,'descripcion'); ?>
 	</div>
 
@@ -45,7 +45,7 @@
         <?php echo CHtml::submitButton($model->isNewRecord ? 'Nuevo' : 'Guardar',array('id'=>'Producto_submit')); ?>
         <?php echo CHtml::button("Cancelar",array('title'=>"Cancelar",'onclick'=>'hideProductForm()','id'=>'hideFormButton')); ?>
 	</div>
-
+</fieldset>
 <?php $this->endWidget(); ?>
 
 </div><!-- form -->

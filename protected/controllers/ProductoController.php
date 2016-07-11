@@ -92,7 +92,8 @@ class ProductoController
         $mPDF1 = Yii::app()->ePdf->mpdf('', 'A4');
 
         # Load a stylesheet
-        $stylesheet = file_get_contents(Yii::getPathOfAlias('webroot.css') . '/screen.css');
+        $stylesheet = file_get_contents(Yii::getPathOfAlias('webroot.css') . '/laforesta/screen.css');
+        $stylesheet .= file_get_contents(Yii::getPathOfAlias('webroot.css') . '/laforesta/pdf_styles.css');
         $mPDF1->WriteHTML($stylesheet, 1);
 
         # Renders image

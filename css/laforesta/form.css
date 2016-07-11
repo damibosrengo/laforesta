@@ -213,3 +213,8 @@ input.lf-input-number-1 {
 	border: solid #aaa533 1px;
 	font-weight: bold;
 }
+
+
+div#product-form-box {
+	margin-top: 30px;
+}
