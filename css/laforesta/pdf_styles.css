@@ -15,7 +15,7 @@ table.detail-view
 
 table.detail-view th, table.detail-view td
 {
-	font-size: 0.9em;
+	font-size: 13px;
 	border: 1px #ffdebc solid;
 	padding: 0.3em;
 }
@@ -23,9 +23,8 @@ table.detail-view th, table.detail-view td
 table.detail-view th
 {
 	font-family: freesans;
-	font-size: 0.85em;
+	font-size: 14px;
 	color: #000000;
-	/*background: url("../gridview/bg.gif") repeat-x scroll left top white;*/
 	text-align: right;
 	width: 160px;
 }

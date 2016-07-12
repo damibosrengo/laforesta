@@ -45,10 +45,10 @@ class InsumoDirecto
     public function getDescriptionUso($dataUso)
     {
         if ($dataUso['cantidad'] == 1) {
-            return '(x 1 unidad)';
+            return '(1 unidad)';
         }
 
-        return '(x ' . $dataUso['cantidad'] . ' unidades)';
+        return '(' . $dataUso['cantidad'] . ' unidades)';
     }
 
 }

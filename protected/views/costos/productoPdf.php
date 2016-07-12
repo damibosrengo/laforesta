@@ -1,5 +1,5 @@
 
-<h1><?php echo $model->nombre; ?></h1>
+<h1 style="text-align: center"><?php echo $model->nombre; ?></h1>
 
 <?php
 
@@ -36,5 +36,6 @@ $extrasData = $this->extrasView($model,$subtotal);
 $this->widget('zii.widgets.CDetailView', array(
     'data'       => $model,
     'attributes' => array(array('name'=>'Total','value'=>number_format($subtotal+$subtotalExtra,2))),
+    'htmlOptions' => array('class'=>'detail-view totals')
 ));
 ?>
