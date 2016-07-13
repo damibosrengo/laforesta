@@ -48,6 +48,7 @@ foreach (Yii::app()->user->getFlashes() as $key => $message) {
             'updateButtonUrl' => '$this->grid->controller->createUrl("/producto/update", array("id"=>$data->id_producto))',
             'viewButtonUrl'   => '$this->grid->controller->createUrl("/producto/view", array("id"=>$data->id_producto))',
             'template'        => '{view}{update}{clone}{export}{delete}',
+            'htmlOptions'     => array('class'=>'button-column-130'),
             'buttons'         => array(
                 'clone'  => array(
                     'label'    => 'Clonar',

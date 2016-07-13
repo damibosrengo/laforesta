@@ -90,12 +90,23 @@
 .grid-view .button-column
 {
 	text-align: center;
-	width: 60px;
+	width: 90px;
 }
 
-.grid-view .button-column img
+.grid-view .button-column-130
+{
+	text-align: center;
+	width: 130px;
+}
+
+.grid-view .button-column img, .grid-view .button-column-130 img
 {
 	border: 0;
+	width: 20px;
+}
+
+.grid-view .button-column a, .grid-view .button-column-130 a {
+	margin: auto 3px;
 }
 
 .grid-view .checkbox-column
