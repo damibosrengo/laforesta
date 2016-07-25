@@ -73,7 +73,7 @@ $this->menu=array(
         <input type="hidden" name="extras_list_field" id="extras_list_field" value="<?php echo $this->getExtrasListFieldValue(); ?>" />
         <input type="hidden" name="id_producto" id="ir_producto" value="<?php echo $_POST['id_producto'] ?>" />
         <input type="hidden" name="action" id="action" value="<?php echo $_POST['action'] ?>"/>
-        <?php echo CHtml::submitButton('Calcular',array('style'=>'float:right')); ?>
+        <?php echo CHtml::htmlButton('Calcular',array('style'=>'float:right','type'=>'submit','class'=>'std')); ?>
     </form>
 </div>
 
