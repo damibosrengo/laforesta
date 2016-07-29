@@ -28,7 +28,7 @@ return array(
     ),
 
     'buttons'=>array(
-        'login'=>array(
+        'aceptar'=>array(
             'type'=>'submit',
             'label'=>'Aceptar',
         ),

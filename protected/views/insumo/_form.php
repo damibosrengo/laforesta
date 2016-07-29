@@ -90,7 +90,7 @@
 	</div>
 
 	<div class="row buttons boxinput_ini" id="box_submit">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Nuevo' : 'Guardar',array('id'=>'Insumo_submit')); ?>
+		<?php echo CHtml::htmlButton($model->isNewRecord ? 'Nuevo' : 'Guardar',array('id'=>'Insumo_submit','type'=>'submit','class'=>'std')); ?>
 	</div>
     </fieldset>
 

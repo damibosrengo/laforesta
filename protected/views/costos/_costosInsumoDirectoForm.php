@@ -25,8 +25,10 @@ return array(
 
     'buttons'=>array(
         'login'=>array(
-            'type'=>'submit',
+            'type'=>'htmlButton',
             'label'=>'Aceptar',
+            'class'=>'std',
+            'onclick'=> 'javascript:submitInsumoDirecto()',
         ),
         'cancel'=>array(
             'onclick'=> 'javascript:cancelAddInsumo();',
