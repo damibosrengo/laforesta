@@ -13,7 +13,7 @@ $this->menu=array(
 
 <h1>Administrar Insumos</h1>
 
-<?php echo CHtml::button('Reset', array('submit' => array('insumo/index'))); ?>
+<?php echo CHtml::htmlButton('Reset', array('class'=>'std','submit' => array('insumo/index'))); ?>
 <?php $tipos =CHtml::listData(TipoInsumo::model()->findAll(),'id_tipo','nombre'); ?>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
@@ -30,7 +30,7 @@ $this->menu=array(
             'value'=>'($data->habilitado=="1")?("Habilitado"):("Deshabilitado")'),
         array('header'=>'Costo','name'=>'costo_base','filter'=>'','htmlOptions'=>array('class'=>'right'),
             'value'=>function ($data){
-                        return number_format($data->costo_base, 2,',','');
+                        return number_format($data->costo_base, 2);
                     }
             ),
 		array(

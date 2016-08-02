@@ -24,7 +24,7 @@ return array(
     ),
 
     'buttons'=>array(
-        'login'=>array(
+        'aceptar'=>array(
             'type'=>'htmlButton',
             'label'=>'Aceptar',
             'class'=>'std',
@@ -32,8 +32,9 @@ return array(
         ),
         'cancel'=>array(
             'onclick'=> 'javascript:cancelAddInsumo();',
-            'type'=>'reset',
-            'label'=>'Cancelar'
+            'type'=>'htmlButton',
+            'label'=>'Cancelar',
+            'class'=>'std'
         )
     ),
 );

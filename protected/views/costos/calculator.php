@@ -133,7 +133,7 @@ if (isset($_POST['action'])) {
                 <input type="text" class="tiny_text" name="porcentaje" id="porcentaje"/> %
             </td>
             <td>
-                <?php echo CHtml::submitButton('Añadir', array('style' => 'float:right')); ?>
+                <?php echo CHtml::htmlButton('Añadir', array('style' => 'float:right','class'=>"std",'type'=>'submit')); ?>
             </td>
         </tr>
         <tr>
@@ -147,7 +147,7 @@ if (isset($_POST['action'])) {
                 <input type="text" class="tiny_text" name="fijo" id="fijo"/>
             </td>
             <td>
-                <?php echo CHtml::submitButton('Añadir', array('style' => 'float:right')); ?>
+                <?php echo CHtml::htmlButton('Añadir', array('style' => 'float:right','class'=>"std",'type'=>'submit')); ?>
             </td>
         </tr>
     </table>
@@ -159,9 +159,9 @@ if (isset($_POST['action'])) {
         <input type="hidden" name="extras_list_field" id="extras_list_field" value="<?php echo $this->getExtrasListFieldValue(); ?>"/>
         <input type="hidden" name="id_producto" id="ir_producto" value="<?php echo $model->id_producto ?>"/>
         <input type="hidden" name="action" id="action" value="<?php echo $_POST['action'] ?>"/>
-        <?php echo CHtml::submitButton('Editar Insumos'); ?>
+        <?php echo CHtml::htmlButton('Editar Insumos',array('type'=>'submit','class'=>'std')); ?>
     </form>
-    <?php echo CHtml::button("Guardar producto", array('title' => "Guardar Producto", 'onclick' => 'showProductForm(this)', 'id' => 'showFormButton')); ?>
+    <?php echo CHtml::htmlButton("Guardar producto", array('class'=>'std','title' => "Guardar Producto", 'onclick' => 'showProductForm(this)', 'id' => 'showFormButton')); ?>
     <?php
     $this->renderPartial('_productoForm', array('model' => $model));
     ?>

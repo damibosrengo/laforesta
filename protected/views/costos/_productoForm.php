@@ -42,8 +42,8 @@
                 echo $form->hiddenField($model, 'actionClone', array('value' => 1));
             }
         ?>
-        <?php echo CHtml::submitButton($model->isNewRecord ? 'Nuevo' : 'Guardar',array('id'=>'Producto_submit')); ?>
-        <?php echo CHtml::button("Cancelar",array('title'=>"Cancelar",'onclick'=>'hideProductForm()','id'=>'hideFormButton')); ?>
+        <?php echo CHtml::htmlButton($model->isNewRecord ? 'Nuevo' : 'Guardar',array('id'=>'Producto_submit','type'=>'submit','class'=>'std')); ?>
+        <?php echo CHtml::htmlButton("Cancelar",array('title'=>"Cancelar",'onclick'=>'hideProductForm()','id'=>'hideFormButton','class'=>'std')); ?>
 	</div>
 </fieldset>
 <?php $this->endWidget(); ?>

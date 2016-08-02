@@ -60,7 +60,7 @@ $this->menu=array(
         <form action="<?php $this->createUrl('insumo/MassiveImport') ?>" method="post" enctype="multipart/form-data">
             <label for="file_import">Archivo a importar: </label>
             <input type="file" name="file" id="file_import"/>
-            <button type="submit">Importar</button>
+            <button type="submit" class="std">Importar</button>
         </form>
     </div>
 </div>

@@ -15,7 +15,7 @@ foreach (Yii::app()->user->getFlashes() as $key => $message) {
 
 <h1>Costo de productos</h1>
 
-<?php echo CHtml::button('Reset', array('submit' => array('costos/index'))); ?>
+<?php echo CHtml::htmlButton('Reset', array('class'=>'std','submit' => array('costos/index'))); ?>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
     'id'              => 'insumo-grid',

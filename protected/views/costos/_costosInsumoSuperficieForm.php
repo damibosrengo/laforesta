@@ -48,13 +48,16 @@ return array(
 
     'buttons'=>array(
         'aceptar'=>array(
-            'type'=>'submit',
+            'type'=>'htmlButton',
             'label'=>'Aceptar',
+            'class'=>'std',
+            'onclick'=> 'javascript: submitInsumoSuperficie()',
         ),
         'cancel'=>array(
             'onclick'=> 'javascript:cancelAddInsumo();',
-            'type'=>'reset',
-            'label'=>'Cancelar'
+            'type'=>'htmlButton',
+            'label'=>'Cancelar',
+            'class'=>'std',
         )
     ),
 );
