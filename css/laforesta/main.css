@@ -89,6 +89,15 @@ button.std {
     cursor: pointer;
 }
 
+button.cl {
+    height: 28px;
+    background: url(bk_button2.jpg) repeat-x left top;
+    font-weight: bold;
+    color: #fff1e4;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
 div.flash-error, div.flash-notice, div.flash-success {
     padding: .8em;
     margin-bottom: 1em;

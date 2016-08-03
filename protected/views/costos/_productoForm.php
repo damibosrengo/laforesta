@@ -43,7 +43,7 @@
             }
         ?>
         <?php echo CHtml::htmlButton($model->isNewRecord ? 'Nuevo' : 'Guardar',array('id'=>'Producto_submit','type'=>'submit','class'=>'std')); ?>
-        <?php echo CHtml::htmlButton("Cancelar",array('title'=>"Cancelar",'onclick'=>'hideProductForm()','id'=>'hideFormButton','class'=>'std')); ?>
+        <?php echo CHtml::htmlButton("Cancelar",array('title'=>"Cancelar",'onclick'=>'hideProductForm()','id'=>'hideFormButton','class'=>'cl')); ?>
 	</div>
 </fieldset>
 <?php $this->endWidget(); ?>

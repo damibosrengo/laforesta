@@ -34,7 +34,7 @@ return array(
             'onclick'=> 'javascript:cancelAddInsumo();',
             'type'=>'htmlButton',
             'label'=>'Cancelar',
-            'class'=>'std'
+            'class'=>'cl'
         )
     ),
 );
