@@ -47,6 +47,12 @@ body
 	font-size: 200%;
 }
 
+#logo img
+{
+    display:block;
+    margin:auto;
+}
+
 #mainmenu
 {
 	background:white url(bg.gif) repeat-x left top;
@@ -226,4 +232,45 @@ div.search-form
 .operations li a:hover
 {
 	background: #80CFFF;
+}
+
+#center_box_home {
+    margin: 10px auto;
+    padding:15px;
+    text-align:center;
+}
+
+#center_box_home img {
+    display: block;
+    margin:12px auto;
+}
+
+table.items tr td.right {
+    text-align: right;
+    padding-right: 2px;
+}
+
+div.boxinput_ini {
+    display: none;
+}
+
+div.add-insumo-boxform{
+    width: auto;
+    display: none;
+}
+
+div.form-costos {
+    width: 50%;
+    float: left;
+}
+
+div.insumos_list{
+    width: 45%;
+    float:right;
+    margin: 30px 5px 10px 30px;
+}
+
+div.secondary-form {
+    margin-top: 10px;
+    display: none;
 }
