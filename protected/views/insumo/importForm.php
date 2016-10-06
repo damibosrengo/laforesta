@@ -36,7 +36,7 @@ $this->menu=array(
     <ul>
         <li>Cargue un archivo en formato csv con separador ';'</li>
         <li>La cabecera del archivo debe ser [nombre;tipo;descripcion;costo_base;largo;ancho;id_unidad;cantidad_total]</li>
-        <li>La columna tipo puede tomar uno de los siguientes valores [simple,superficie,lineal]</li>
+        <li>La columna tipo puede tomar uno de los siguientes valores [1 = simple, 2 = superficie, 3 = lineal]</li>
         <li>
             Dependiendo el tipo los siguientes campos son obligatorios:
             <ul>
