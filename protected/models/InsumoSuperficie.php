@@ -171,7 +171,7 @@ class InsumoSuperficie
 
     public function getDescriptionUso($dataUso)
     {
-        if ($dataUso['plancha_entera'] == 1) {
+        if (isset($dataUso['plancha_entera']) && $dataUso['plancha_entera'] == 1) {
             if ($dataUso['cantidad'] == 1) {
                 return '(x 1 plancha)';
             } else {
