@@ -141,19 +141,31 @@ class ProductoController
         return $insumosData;
     }
 
+    protected function calculateTotalExtra($extra, $total)
+    {
+        if ($extra['type'] == Extra::TIPO_EXTRA_PORCENTAJE) {
+            $result = ($extra['valor_bruto'] * $total) / 100;
+
+            return $result;
+        }
+
+        return $extra['valor_bruto'];
+    }
+
     public function extrasView($model, $subtotal)
     {
-        $extrasProducto = $model->extras;
+        $extrasProducto = json_decode($model->raw_data_extras, true);
         $extrasView = array();
         $subtotalExtras = 0;
         foreach ($extrasProducto as $extra) {
             $detail = '';
-            if ($extra->type == Extra::TIPO_EXTRA_PORCENTAJE) {
-                $detail = '(' . $extra->valor . '%)';
+            $data = json_decode($extra,true);
+            if ($data['type'] == Extra::TIPO_EXTRA_PORCENTAJE) {
+                $detail = '(' . $data['uso'] .')';
             }
-            $extraValue = $extra->getRowTotal($subtotal);
+            $extraValue = $this->calculateTotalExtra($data,$subtotal);
             $subtotalExtras += $extraValue;
-            $dataExtra = array('name' => $extra->concepto, 'value' => number_format($extraValue, 2) . ' ' . $detail);
+            $dataExtra = array('name' => $data['concepto'], 'value' => number_format($extraValue, 2) . ' ' . $detail);
             $extrasView[] = $dataExtra;
         }
         $extrasView[] = array('name' => 'Subtotal extras', 'value' => number_format($subtotalExtras, 2));
