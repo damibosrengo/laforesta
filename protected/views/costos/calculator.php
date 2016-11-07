@@ -64,7 +64,7 @@ if (isset($_POST['action'])) {
             <?php $cssClass = ($indexColor % 2 == 0) ? 'pair' : 'odd' ?>
             <tr class="<?php echo $cssClass; ?>">
                 <td><?php echo $insumo->nombre ?></td>
-                <td class="number"><?php echo $insumo->getCostoUnitario() ?></td>
+                <td class="number"><?php echo number_format($insumo->getCostoUnitario(),2) ?></td>
                 <td><?php echo $insumo->getUso() ?></td>
                 <td class="number">
                     <?php
@@ -73,7 +73,7 @@ if (isset($_POST['action'])) {
                     } elseif ($totalRow == Insumo::ERROR_CONNECTION) {
                         echo 'Hubo un error al calcular el costo de este insumo';
                     } else {
-                        echo $totalRow;
+                        echo number_format($totalRow,2) ;
                     }
                     ?>
                 </td>
@@ -102,7 +102,7 @@ if (isset($_POST['action'])) {
                     </a>
                 </td>
                 <td><?php echo $item['uso'] ?></td>
-                <td class="number"><?php echo round($item['rowtotal'],2) ?></td>
+                <td class="number"><?php echo number_format($item['rowtotal'],2) ?></td>
             </tr>
             <?php
                 $index++;
@@ -158,7 +158,7 @@ if (isset($_POST['action'])) {
         <input type="hidden" name="insumos_list_field" id="insumos_list_field" value="<?php echo $this->getInsumosListFieldValue(); ?>"/>
         <input type="hidden" name="extras_list_field" id="extras_list_field" value="<?php echo $this->getExtrasListFieldValue(); ?>"/>
         <input type="hidden" name="id_producto" id="ir_producto" value="<?php echo $model->id_producto ?>"/>
-        <input type="hidden" name="action" id="action" value="<?php echo $_POST['action'] ?>"/>
+        <input type="hidden" name="action" id="action" value="<?php echo (isset($_POST['action']))?$_POST['action']:''; ?>"/>
         <?php echo CHtml::htmlButton('Editar Insumos',array('type'=>'submit','class'=>'std')); ?>
     </form>
     <?php echo CHtml::htmlButton("Guardar producto", array('class'=>'std','title' => "Guardar Producto", 'onclick' => 'showProductForm(this)', 'id' => 'showFormButton')); ?>
