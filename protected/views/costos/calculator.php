@@ -82,7 +82,9 @@ if (isset($_POST['action'])) {
         <tr><td colspan="4" class="separator-row"></td></tr>
         <tr class="even">
             <td class="subtotal"  colspan="3">SUBTOTAL INSUMOS</td>
-            <td class="subtotal number"><?php echo round($this->getInsumosTotal(),2) ?></td>
+
+            <?php $insumosSubtotal = round($this->getInsumosTotal(),2) ?>
+            <td class="subtotal number"><?php echo $insumosSubtotal ?></td>
         </tr>
         <tr><td colspan="4" class="separator-row"></td></tr>
         <!------------------------------EXTRAS LIST ----------------------------------->
@@ -102,7 +104,7 @@ if (isset($_POST['action'])) {
                     </a>
                 </td>
                 <td><?php echo $item['uso'] ?></td>
-                <td class="number"><?php echo number_format($item['rowtotal'],2) ?></td>
+                <td class="number"><?php echo number_format(ProductoController::calculateTotalExtra($item,$insumosSubtotal),2) ?></td>
             </tr>
             <?php
                 $index++;
@@ -113,7 +115,7 @@ if (isset($_POST['action'])) {
         <tr><td colspan="4" class="separator-row"></td></tr>
         <tr class="even">
             <td class="subtotal" colspan="3">SUBTOTAL EXTRAS</td>
-            <td class="subtotal number"><?php echo round($this->getExtrasTotal(),2) ?> </td>
+            <td class="subtotal number"><?php echo round($this->getExtrasTotal($insumosSubtotal),2) ?> </td>
         </tr>
         <tr><td colspan="4" class="separator-row"></td></tr>
         <tr>

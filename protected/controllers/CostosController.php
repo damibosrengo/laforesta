@@ -6,6 +6,8 @@
  * Date: 18/04/15
  * Time: 16:59
  */
+
+require_once "ProductoController.php";
 class CostosController extends Controller
 {
     /**
@@ -103,14 +105,14 @@ class CostosController extends Controller
         return $this->insumosTotal;
     }
 
-    public function getExtrasTotal()
+    public function getExtrasTotal($subtotal)
     {
         if (empty($this->extrasTotal)) {
             $list = $this->getExtrasList();
             $result = 0;
             foreach ($list as $insumoJson) {
                 $item = json_decode($insumoJson, true);
-                $totalRow = $item['rowtotal'];
+                $totalRow = ProductoController::calculateTotalExtra($item,$subtotal);
                 $result += $totalRow;
             }
             $this->extrasTotal = $result;
@@ -120,7 +122,8 @@ class CostosController extends Controller
 
     public function getTotal()
     {
-        return $this->getInsumosTotal() + $this->getExtrasTotal();
+        $insumoTotals = $this->getInsumosTotal();
+        return  $insumoTotals + $this->getExtrasTotal($insumoTotals);
     }
 
     /**
