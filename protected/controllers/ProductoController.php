@@ -141,7 +141,7 @@ class ProductoController
         return $insumosData;
     }
 
-    protected function calculateTotalExtra($extra, $total)
+    public static function calculateTotalExtra($extra, $total)
     {
         if ($extra['type'] == Extra::TIPO_EXTRA_PORCENTAJE) {
             $result = ($extra['valor_bruto'] * $total) / 100;
@@ -163,7 +163,7 @@ class ProductoController
             if ($data['type'] == Extra::TIPO_EXTRA_PORCENTAJE) {
                 $detail = '(' . $data['uso'] .')';
             }
-            $extraValue = $this->calculateTotalExtra($data,$subtotal);
+            $extraValue = self::calculateTotalExtra($data,$subtotal);
             $subtotalExtras += $extraValue;
             $dataExtra = array('name' => $data['concepto'], 'value' => number_format($extraValue, 2) . ' ' . $detail);
             $extrasView[] = $dataExtra;
