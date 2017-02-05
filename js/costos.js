@@ -47,7 +47,7 @@ function buildForm(insumo){
             }
             case TIPO_INSUMO_SUPERFICIE:
             {
-                $('#boxForm_superficieEntera').slideDown(600);
+                $('#boxForm_superficie').slideDown(600);
                 $('#CostosInsumoSuperficieEnteraForm_idInsumo').val(insumo.id_insumo);
                 $('#CostosInsumoSuperficieEnteraForm_nombre').val(insumo.nombre);
                 $('#CostosInsumoSuperficieForm_unidad option:eq('+insumo.id_unidad+')').prop('selected','selected');

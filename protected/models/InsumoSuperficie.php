@@ -124,10 +124,26 @@ class InsumoSuperficie
         $planchas = 0;
         foreach ($cortes as $corte) {
             $covertura = $corte['cover'];
-            if ($covertura > 50) {
+            if ($covertura > 90) {
                 $planchas += 1;
-            } else {
+            } elseif ($covertura > 80) {
+                $planchas += 0.9;
+            } elseif ($covertura > 70) {
+                $planchas += 0.8;
+            } elseif ($covertura > 60) {
+                $planchas += 0.7;
+            } elseif ($covertura > 50) {
+                $planchas += 0.6;
+            } elseif ($covertura > 40) {
                 $planchas += 0.5;
+            } elseif ($covertura > 30) {
+                $planchas += 0.4;
+            } elseif ($covertura > 20) {
+                $planchas += 0.3;
+            } elseif ($covertura > 10) {
+                $planchas += 0.2;
+            } else {
+                $planchas += 0.1;
             }
         }
 
