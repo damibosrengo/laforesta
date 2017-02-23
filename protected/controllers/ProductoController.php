@@ -136,7 +136,7 @@ class ProductoController
             $dataCalculo = array('name' => $nombre, 'value' => number_format($costo, 2) . ' ' . $descripcionUso);
             $insumosData[] = $dataCalculo;
         }
-        $insumosData[] = array('name' => 'Subtotal', 'value' => number_format($subtotal, 2));
+        $insumosData[] = array('name' => 'Subtotal', 'value' => round($subtotal,2));
 
         return $insumosData;
     }
@@ -168,7 +168,7 @@ class ProductoController
             $dataExtra = array('name' => $data['concepto'], 'value' => number_format($extraValue, 2) . ' ' . $detail);
             $extrasView[] = $dataExtra;
         }
-        $extrasView[] = array('name' => 'Subtotal extras', 'value' => number_format($subtotalExtras, 2));
+        $extrasView[] = array('name' => 'Subtotal extras', 'value' => round($subtotalExtras,2));
 
         return $extrasView;
     }

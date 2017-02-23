@@ -47,9 +47,8 @@ class InsumoSuperficie
         }
         foreach ($cortes as $c) {
             $cut = json_decode($c, true);
-            if (($cut['largo'] >= $this->largo || $cut['ancho'] >= $this->ancho)
-                && ($cut['largo'] >= $this->ancho || $cut['ancho'] >= $this->largo)
-            ) {
+            if ($cut['largo'] >= $this->largo || $cut['ancho'] >= $this->ancho)
+            {
                 return false;
             }
         }
